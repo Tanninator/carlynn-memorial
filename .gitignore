@@ -1,0 +1,25 @@
+.DS_Store
+
+# Claude Code local workspace
+.claude/
+
+# Local-only spec / plan / agent docs (not deployed)
+docs/superpowers/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+
+# Playwright debug artifacts (never deploy these)
+.playwright-mcp/
+test-results/
+*-debug.png
+
+# Locally-rendered print artifacts (PDFs + their HTML source)
+print/
+
+# Large video source files — hosted on YouTube, never committed
+assets/*.mov

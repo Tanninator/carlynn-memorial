@@ -1,0 +1,202 @@
+# RSVP feature — one-time setup
+
+These commands are run by the host (not by the implementation agent).
+They cannot be checked in — they create cloud resources and store secrets.
+
+## 1. Create the D1 database
+
+```bash
+wrangler d1 create carlynn-rsvps
+```
+
+The output ends with a JSON block that contains a `database_id`. Paste that
+UUID into `wrangler.jsonc`, replacing `REPLACE_AFTER_WRANGLER_D1_CREATE` in
+the `d1_databases` block. Save (and commit) `wrangler.jsonc` before proceeding to the next step — otherwise the deploy will use the placeholder and every D1 call will fail.
+
+## 2. Apply the migration
+
+Local (for `wrangler dev`):
+
+```bash
+wrangler d1 migrations apply carlynn-rsvps --local
+```
+
+Production:
+
+```bash
+wrangler d1 migrations apply carlynn-rsvps --remote
+```
+
+## 3. Set the admin token
+
+Generate a long random token and store it as a Worker secret:
+
+```bash
+openssl rand -hex 32          # copy the output
+wrangler secret put ADMIN_TOKEN
+# paste the token at the prompt
+```
+
+You'll paste this same token into `admin.html` when you visit the admin
+page for the first time. It's stored in your browser's `sessionStorage`
+for the rest of that browsing session only.
+
+**To rotate the token later:** run `wrangler secret put ADMIN_TOKEN` again with a new value, then `wrangler deploy`. Old browser sessions will get a 401 on the next admin call and will be prompted for the new token.
+
+## 4. Configure Cloudflare Turnstile (bot prevention)
+
+1. Sign in to the Cloudflare dashboard and go to **Turnstile**:
+   <https://dash.cloudflare.com/?to=/:account/turnstile>.
+2. Click **Add site**. Set the hostnames to your production domain
+   (e.g., `carlynnwu.com`). Pick **Managed** mode.
+3. Cloudflare gives you two values:
+   - **Site key** (public — safe to commit) — paste it into
+     `scripts/rsvp-config.js`, replacing the testing key.
+   - **Secret key** (private) — set it as a Worker secret:
+     ```bash
+     wrangler secret put TURNSTILE_SECRET_KEY
+     ```
+
+For local development, `scripts/rsvp-config.js` and the Worker default to
+Cloudflare's public testing keys (`1x00000000000000000000AA` site key and
+`1x0000000000000000000000000000000AA` secret), which always pass. Production
+must use real keys.
+
+## 5. Inspecting RSVPs from the CLI
+
+```bash
+wrangler d1 execute carlynn-rsvps --remote \
+  --command "SELECT id, created_at, name, email, party_size, guest_names FROM rsvps ORDER BY created_at DESC"
+```
+
+To delete a row (e.g., a duplicate):
+
+```bash
+wrangler d1 execute carlynn-rsvps --remote \
+  --command "DELETE FROM rsvps WHERE id = 42"
+```
+
+## 6. Deploying
+
+```bash
+wrangler deploy
+```
+
+## 7. Lantern Wall — additional setup
+
+The lantern wall reuses the same D1 database (`carlynn-rsvps`) plus a new R2
+bucket for photos and a new Worker secret for the post password.
+
+### Apply lantern migrations
+
+Local:
+
+```bash
+wrangler d1 migrations apply carlynn-rsvps --local
+```
+
+Production:
+
+```bash
+wrangler d1 migrations apply carlynn-rsvps --remote
+```
+
+This creates the `lanterns` table (`0002_create_lanterns.sql`) and inserts
+the seed messages (`0003_seed_lanterns.sql`).
+
+### Create the R2 bucket
+
+```bash
+wrangler r2 bucket create carlynn-lanterns
+```
+
+The binding `MEDIA` in `wrangler.jsonc` points at this bucket. Photos are
+served back through the Worker at `/media/<key>` (cached aggressively
+because keys are content-addressed by post id).
+
+### Set the post password
+
+This is the password family and friends paste once when posting a lantern.
+It is **separate** from `ADMIN_TOKEN` and from the site-unlock password.
+
+```bash
+openssl rand -base64 18       # or any memorable phrase
+wrangler secret put POST_PASSWORD
+```
+
+Hand the value out via text/email. To rotate it: run `wrangler secret put
+POST_PASSWORD` again with a new value, then `wrangler deploy`. Existing
+visitors with the old password cached in `sessionStorage` will get a 401
+on their next post and be re-prompted.
+
+### Inspecting and deleting lanterns
+
+Most moderation should happen in the admin panel (`/admin`, Lanterns tab).
+For CLI access:
+
+```bash
+wrangler d1 execute carlynn-rsvps --remote \
+  --command "SELECT id, created_at, name, role, substr(msg,1,80) FROM lanterns ORDER BY created_at DESC"
+```
+
+To delete a row from the CLI you must remove the matching R2 object too:
+
+```bash
+wrangler d1 execute carlynn-rsvps --remote \
+  --command "SELECT id, media_key FROM lanterns WHERE id = 'the-uuid'"
+wrangler d1 execute carlynn-rsvps --remote \
+  --command "DELETE FROM lanterns WHERE id = 'the-uuid'"
+wrangler r2 object delete carlynn-lanterns/lanterns/the-uuid.jpg   # if media_key was non-null
+```
+
+The admin panel does this in one click.
+
+## 8. RSVP email notifications
+
+Every successful `POST /api/rsvp` fires an email (with a JSON attachment of
+the entry) to the address in `NOTIFY_TO` — defaults to
+`godwin.law@acts2.network`. The email is sent via [Resend](https://resend.com)
+and is **fire-and-forget**: the API still returns 200 even if Resend is down
+or the API key is missing. Failures are logged as `rsvp_notify_*` in the
+Worker tail.
+
+### Set the Resend API key
+
+1. Sign up at <https://resend.com>, create an API key under
+   **API Keys → Create API Key**.
+2. Store it as a Worker secret:
+   ```bash
+   wrangler secret put RESEND_API_KEY
+   ```
+
+If the secret is unset, the Worker logs `rsvp_notify_skipped` and the rest of
+the RSVP flow keeps working — useful for local `wrangler dev` runs.
+
+### Pick a `NOTIFY_FROM`
+
+Two options, in `wrangler.jsonc` under `vars`:
+
+- **`onboarding@resend.dev`** (default) — Resend's sandbox sender. Works with
+  no DNS setup, but only delivers to email addresses that own the Resend
+  account. Sign up using `godwin.law@acts2.network` if you want to use this
+  for real.
+- **`noreply@mail.<your-domain>`** (recommended for production) — verify a
+  subdomain of the memorial site's domain in Resend's **Domains** page.
+  Resend prints three DNS records (SPF, DKIM, return-path); add them in
+  Cloudflare DNS, wait for verification, then change `NOTIFY_FROM` and
+  `wrangler deploy`.
+
+### Change the recipient
+
+Edit `NOTIFY_TO` in `wrangler.jsonc` and redeploy. No secret rotation needed.
+
+### Local testing
+
+Drop the key into `.dev.vars` (gitignored) so `wrangler dev` picks it up:
+
+```
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Optionally override the recipient for tests by also adding
+`NOTIFY_TO=your-test-inbox@example.com`.

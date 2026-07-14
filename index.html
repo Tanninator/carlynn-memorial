@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carlynn Wu — In Honored Memory</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/shared.css">
+<script src="scripts/lantern-wall.js"></script>
+<script src="scripts/rsvp-config.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<style>
+  :root {
+    --navy-deep: #0a1422; --navy: #0f1d31; --navy-2: #16263e; --navy-line: #1f3251;
+    --brass: #c89968; --brass-deep: #a87a4a; --brass-light: #e2c089;
+    --ivory: #f3ead7; --ivory-soft: #d8cdb4; --muted: #8a8068;
+  }
+  body { font-family: "Inter", system-ui, sans-serif; background: var(--navy-deep); color: var(--ivory); }
+  .serif { font-family: "Cormorant Garamond", serif; font-weight: 500; }
+  a { color: var(--brass-light); }
+
+  .topbar { background: rgba(10,20,34,0.85); border-bottom: 1px solid var(--navy-line); }
+  .topbar-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .crest { display: flex; align-items: center; gap: 14px; }
+  .crest-mark { width: 34px; height: 34px; border: 1px solid var(--brass); display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 16px; }
+  .crest-text small { display: block; color: var(--brass); font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; }
+  .crest-text strong { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 17px; letter-spacing: 0.04em; }
+  nav.links { display: flex; gap: 28px; }
+  nav.links a { color: var(--ivory-soft); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+  nav.links a:hover { color: var(--brass-light); }
+  @media (max-width: 760px) { nav.links { display: none; } }
+
+  .hero { position: relative; min-height: 92vh; padding: 120px 32px 80px; display: flex; align-items: center; justify-content: center; }
+  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%, rgba(200,153,104,0.18), transparent 55%), linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
+  .hero-frame { position: relative; z-index: 1; max-width: 1080px; width: 100%; text-align: center; }
+  .ribbon { display: inline-flex; align-items: center; gap: 16px; color: var(--brass); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 28px; }
+  .ribbon::before, .ribbon::after { content: ""; width: 60px; height: 1px; background: var(--brass); }
+  .hero h1 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(56px, 9vw, 124px); line-height: 0.95; letter-spacing: -0.015em; margin: 0 0 20px; }
+  .hero h1 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
+  .rank { font-size: 13px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ivory-soft); margin-bottom: 36px; }
+  .rank b { color: var(--brass-light); font-weight: 500; }
+  .portrait-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center; margin: 30px 0 28px; }
+  .portrait-row .rule { height: 1px; background: linear-gradient(90deg, transparent, var(--brass) 50%, transparent); }
+  .portrait { width: 280px; height: 360px; border: 1px solid var(--brass); padding: 6px; background: var(--navy); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 760px) { .portrait-row { grid-template-columns: 1fr; } .portrait-row .rule { display: none; } .portrait { width: 220px; height: 290px; margin: 0 auto; } }
+  .dates { font-family: "Cormorant Garamond", serif; font-size: clamp(20px, 2.2vw, 26px); color: var(--ivory-soft); }
+  .dates .dash { color: var(--brass); margin: 0 14px; }
+  .epitaph { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(18px, 1.6vw, 22px); color: var(--ivory-soft); max-width: 620px; margin: 24px auto 0; line-height: 1.5; }
+
+  .section-num { font-family: "Cormorant Garamond", serif; color: var(--brass); }
+  .section-meta small { color: var(--brass); }
+  .section-meta h2 { font-family: "Cormorant Garamond", serif; color: var(--ivory); }
+  .section-meta h2 em { color: var(--brass-light); }
+
+  .recording { background: var(--navy-deep); border-top: 1px solid var(--navy-line); }
+  .recording-intro { max-width: 720px; margin: -12px auto 40px; text-align: center; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 21px; line-height: 1.6; color: var(--ivory-soft); }
+  .placeholder-text { color: var(--muted); border-color: var(--navy-line); }
+  .notify-form { color: var(--ivory); border-color: var(--brass); }
+  .notify-form input::placeholder { color: var(--muted); }
+  .notify-form button { background: var(--brass); color: var(--navy-deep); }
+
+  .bio { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%); border-block: 1px solid var(--navy-line); }
+  .bio-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 5fr 7fr; gap: 80px; }
+  @media (max-width: 900px) { .bio-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .bio-photo { aspect-ratio: 4/5; border: 1px solid var(--brass); padding: 6px; background: var(--navy); }
+  .bio-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .bio-body p { font-family: "Cormorant Garamond", serif; font-size: 22px; line-height: 1.55; margin: 0 0 20px; }
+  .bio-body p.lede::first-letter { font-size: 64px; float: left; line-height: 0.9; padding: 6px 14px 0 0; color: var(--brass); font-weight: 600; }
+  .pull { margin: 36px 0; padding: 24px 0 24px 32px; border-left: 2px solid var(--brass); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 26px; line-height: 1.4; color: var(--brass-light); }
+  .pull cite { display: block; margin-top: 14px; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; font-style: normal; color: var(--muted); }
+  .story-cta { margin-top: 36px; }
+  .story-cta a {
+    display: inline-block;
+    padding: 14px 28px;
+    border: 1px solid var(--brass);
+    color: var(--brass-light);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .story-cta a:hover { background: var(--brass); color: var(--navy-deep); }
+
+  .timeline { background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%); }
+  .tl-row { color: var(--navy-line); }
+  .tl-row h4 { color: var(--ivory); font-family: "Cormorant Garamond", serif; }
+  .tl-row .y { font-family: "Cormorant Garamond", serif; color: var(--brass); }
+  .tl-row p { color: var(--ivory-soft); }
+  .tl-row .ph { color: var(--muted); }
+
+  .gallery { background: var(--navy-deep); }
+  .gal-cell { background: var(--navy-2); border-color: var(--navy-line); }
+  .gal-cta { max-width: 1280px; margin: 40px auto 0; text-align: center; }
+  .gal-cta a { display: inline-block; padding: 14px 28px; border: 1px solid var(--brass); color: var(--brass-light); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; transition: background 0.2s ease, color 0.2s ease; }
+  .gal-cta a:hover { background: var(--brass); color: var(--navy-deep); }
+
+  .tribute { background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%); border-top: 1px solid var(--navy-line); }
+  .vt-wrap { max-width: 1180px; margin: 0 auto; }
+  .vt-frame { position: relative; border: 1px solid var(--brass); padding: 14px; background: rgba(10,20,34,0.55); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+  .vt-frame::before, .vt-frame::after { content: ""; position: absolute; width: 18px; height: 18px; border: 1px solid var(--brass); }
+  .vt-frame::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .vt-frame::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  .vt-screen { display: block; width: 100%; padding: 0; border: 0; aspect-ratio: 16 / 9; position: relative; overflow: hidden; background: #08111d; color: var(--brass-light); cursor: pointer; }
+  .vt-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vt-scrim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(10,20,34,0.2), rgba(10,20,34,0.66)); transition: background 0.25s ease; }
+  .vt-screen:hover .vt-scrim, .vt-screen:focus-visible .vt-scrim { background: radial-gradient(ellipse at 50% 45%, rgba(10,20,34,0.1), rgba(10,20,34,0.55)); }
+  .vt-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 84px; height: 84px; color: var(--brass-light); transition: transform 0.25s ease, color 0.25s ease; }
+  .vt-play svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 4px 18px rgba(0,0,0,0.5)); }
+  .vt-screen:hover .vt-play, .vt-screen:focus-visible .vt-play { transform: translate(-50%, -50%) scale(1.06); color: var(--ivory); }
+  .vt-screen:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
+  .vt-caption { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: var(--brass-light); font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; z-index: 1; }
+  .vt-screen.is-live { cursor: default; background: #000; }
+  .vt-screen.is-live iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  @media (max-width: 760px) {
+    .vt-play { width: 64px; height: 64px; }
+    .vt-caption { bottom: 10px; font-size: 10px; }
+  }
+
+  .claim { max-width: 760px; margin: 0 auto; border: 1px solid var(--brass); padding: 48px; background: rgba(10,20,34,0.6); position: relative; }
+  .claim::before, .claim::after { content: ""; position: absolute; width: 18px; height: 18px; border: 1px solid var(--brass); }
+  .claim::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .claim::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  @media (max-width: 640px) { .claim { padding: 32px 22px; } }
+  .claim h3 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(24px, 2.5vw, 30px); margin: 0 0 6px; text-align: center; }
+  .claim h3 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
+  .claim .lead { color: var(--ivory-soft); font-size: 14px; text-align: center; max-width: 460px; margin: 0 auto 36px; line-height: 1.55; }
+
+  .selected-display { padding: 16px 18px; border: 1px dashed var(--navy-line); color: var(--muted); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; text-align: center; margin-bottom: 28px; transition: all 0.25s; }
+  .selected-display.has { color: var(--ivory); border-style: solid; border-color: var(--brass); background: rgba(200,153,104,0.06); padding: 18px 20px; text-align: left; }
+  .selected-display.has .lbl { display: block; color: var(--brass); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .selected-display.has .nm { display: block; font-family: "Cormorant Garamond", serif; font-size: 19px; letter-spacing: 0; text-transform: none; color: var(--ivory); line-height: 1.25; }
+  .selected-display.has .au { display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass); margin-top: 8px; }
+
+  .claim .field { margin-bottom: 22px; }
+  .claim .field > label { display: block; color: var(--brass); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; margin-bottom: 10px; font-weight: 500; }
+  .claim .field input[type="text"], .claim .field input[type="email"], .claim .field textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--navy-line); padding: 10px 0; color: var(--ivory); font: inherit; font-size: 16px; outline: none; transition: border-color 0.2s; font-family: inherit; }
+  .claim .field input:focus, .claim .field textarea:focus { border-color: var(--brass); }
+  .claim .field textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+  .claim .field input::placeholder, .claim .field textarea::placeholder { color: var(--muted); }
+  .claim .field-err { color: #e2806c; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 8px; min-height: 1em; }
+  .claim-turnstile { margin-top: 20px; display: flex; justify-content: center; min-height: 65px; }
+  .claim-turnstile-fallback { color: #d99c8a; font-size: 12px; text-align: center; }
+
+  .format-row { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--navy-line); position: relative; }
+  .format-row label { padding: 14px 8px; text-align: center; cursor: pointer; border-right: 1px solid var(--navy-line); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ivory-soft); transition: all 0.2s; user-select: none; }
+  .format-row label:last-child { border-right: 0; }
+  .format-row label:hover:not(.active) { color: var(--brass-light); background: rgba(200,153,104,0.04); }
+  .format-row label.active { background: var(--brass); color: var(--navy-deep); font-weight: 600; }
+  .format-row input { position: absolute; opacity: 0; pointer-events: none; }
+
+  .conditional { display: none; animation: fadein 0.3s ease; }
+  .conditional.show { display: block; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .claim-actions { margin-top: 30px; display: flex; justify-content: flex-end; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .claim button[type="submit"] { background: var(--brass); color: var(--navy-deep); border: 0; padding: 16px 36px; font: inherit; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .claim button[type="submit"]:hover:not(:disabled) { background: var(--brass-light); }
+  .claim button[type="submit"]:disabled { background: var(--navy-line); color: var(--muted); cursor: not-allowed; }
+
+  .claim-success { display: none; text-align: center; padding: 24px 12px; }
+  .claim-success.show { display: block; }
+  .claim-success .seal { width: 72px; height: 72px; border: 1px solid var(--brass); margin: 0 auto 22px; display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 30px; font-style: italic; }
+  .claim-success h3 { margin-bottom: 10px; }
+  .claim-success p { color: var(--ivory-soft); max-width: 460px; margin: 0 auto; line-height: 1.6; font-size: 14px; }
+  .claim-success .reset { margin-top: 28px; color: var(--brass-light); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; background: transparent; border: 0; cursor: pointer; border-bottom: 1px solid var(--brass); padding: 4px 0; font-family: inherit; }
+
+  .lanterns { background: linear-gradient(180deg, var(--navy-2) 0%, var(--navy) 100%); }
+
+  footer.foot { background: var(--navy-deep); border-top: 1px solid var(--navy-line); padding: 80px 32px 40px; text-align: center; }
+  .foot-mark { width: 56px; height: 56px; border: 1px solid var(--brass); margin: 0 auto 24px; display: grid; place-items: center; font-family: "Cormorant Garamond", serif; color: var(--brass-light); font-size: 24px; }
+  footer.foot h4 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 24px; margin: 0 0 12px; }
+  footer.foot p { color: var(--ivory-soft); max-width: 540px; margin: 0 auto 16px; line-height: 1.6; font-size: 14px; }
+  .foot-rule { width: 80px; height: 1px; background: var(--brass); margin: 28px auto; }
+  .foot-links { display: flex; gap: 32px; justify-content: center; margin-top: 16px; color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; }
+  .foot-links a { color: var(--brass); }
+  .foot-copy { color: var(--muted); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 16px; }
+  .back-to-picker { background: rgba(10,20,34,0.85); border-color: var(--navy-line); color: var(--ivory-soft); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crest">
+      <div class="crest-mark">W</div>
+      <div class="crest-text"><small>In Honored Memory</small><strong>Carlynn Wu</strong></div>
+    </div>
+    <nav class="links">
+      <a href="story.html">His Story</a>
+      <a href="#service">Service</a>
+      <a href="#tribute">Tribute</a>
+      <a href="#lanterns">Lanterns</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-frame">
+    <h1>Carlynn <em>Wu</em></h1>
+    <div class="rank"><b>Husband</b> &nbsp;·&nbsp; <b>Father</b> &nbsp;·&nbsp; <b>Fire Captain</b> &nbsp;·&nbsp; <b>Friend</b></div>
+    <div class="portrait-row">
+      <div class="rule"></div>
+      <div class="portrait"><img src="assets/mel-portrait.png" alt="Portrait of Carlynn Wu" onerror="this.style.display='none'"></div>
+      <div class="rule"></div>
+    </div>
+    <div class="dates">May 17, 1954 <span class="dash">·</span> May 7, 2026</div>
+  </div>
+</section>
+
+<section class="block bio" id="story">
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div class="section-meta"><small>His Story</small><h2>A life <em>in love and fire</em></h2></div>
+  </div>
+  <div class="bio-grid">
+    <div class="bio-photo"><img src="assets/family-1950s.jpg" alt="The Wu family in the 1950s — Edward, mother, baby Lisa, father, and Carlynn" onerror="this.style.display='none'"></div>
+    <div class="bio-body">
+      <p class="lede">Mel was born in Oakland May 1954 into a first generation immigrant family. His father was a butcher, his mom a seamstress. His dad was a gifted gardener, took care of everything and Mom was the best cook I ever met. Mel was the middle child of three. His brother, Edward, was five years his senior and his sister, Lisa, five years his junior.</p>
+      <p>He shared many vignettes of his happy childhood. Early on were indications of a fun-loving mischievous rascal&hellip;</p>
+      <div class="pull">&ldquo;He was real, made mistakes, rectified them, was generous, trustworthy and displayed class that was akin to character and integrity.&rdquo;<cite>&mdash; Joanne, on Mel</cite></div>
+      <div class="story-cta"><a href="story.html">Read his full story &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="block recording" id="service">
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div class="section-meta"><small>The Memorial Service</small><h2>Watch the <em>recording</em></h2></div>
+  </div>
+  <p class="recording-intro">We gathered on Saturday, May 30, 2026 to remember Carlynn. If you couldn't be with us &mdash; or would like to relive the day &mdash; the full service is here to watch whenever you wish.</p>
+  <div class="vt-wrap">
+    <div class="vt-frame">
+      <button type="button" class="vt-screen" id="rec-screen" data-video-id="zpj6g2HDkvE" aria-label="Play the memorial service recording for Carlynn Wu">
+        <img class="vt-poster" src="https://i.ytimg.com/vi/zpj6g2HDkvE/hqdefault.jpg" alt="" onerror="this.style.display='none'">
+        <span class="vt-scrim" aria-hidden="true"></span>
+        <span class="vt-play" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="30"/>
+            <path d="M26 22l18 10-18 10z" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="vt-caption">Memorial Service &middot; In Loving Memory</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="block tribute" id="tribute">
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div class="section-meta"><small>Through the Years</small><h2>A life <em>in pictures</em></h2></div>
+  </div>
+  <div class="vt-wrap">
+    <div class="vt-frame">
+      <button type="button" class="vt-screen" id="vt-screen" data-video-id="dKlYnooDGbE" aria-label="Play tribute video — Carlynn Wu, a life in pictures">
+        <img class="vt-poster" src="assets/tribute-poster.jpg" alt="Carlynn Wu in his fire-captain gear, holding his child" onerror="this.style.display='none'">
+        <span class="vt-scrim" aria-hidden="true"></span>
+        <span class="vt-play" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="30"/>
+            <path d="M26 22l18 10-18 10z" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="vt-caption">In Loving Memory &middot; 11 min</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="block lanterns" id="lanterns">
+  <div class="section-head">
+    <div class="section-num">04</div>
+    <div class="section-meta"><small>Lantern Wall</small><h2>Light a lantern <em>in his memory</em></h2></div>
+  </div>
+  <lantern-wall id="hg" endpoint="/api/lanterns" style="--lw-bg: rgba(10,20,34,0.6); --lw-glow: rgba(200,153,104,0.35); --lw-ink: #f3ead7; --lw-ink-soft: #d8cdb4; --lw-line: rgba(200,153,104,0.3); --lw-accent: #c89968; --lw-serif: 'Cormorant Garamond', serif;"></lantern-wall>
+</section>
+
+<footer class="foot">
+  <div class="foot-mark">W</div>
+  <div class="foot-rule"></div>
+  <div class="foot-links">
+    <a href="#service">Service</a>
+    <a href="#tribute">Tribute</a>
+    <a href="#lanterns">Lanterns</a>
+  </div>
+  <div class="foot-rule"></div>
+  <div class="foot-copy">In Honored Memory · Carlynn's Family · MMXXVI</div>
+</footer>
+
+<script>
+(function () {
+  // Click-to-play for every YouTube player on the page (service recording + tribute).
+  document.querySelectorAll(".vt-screen[data-video-id]").forEach(function (screen) {
+    screen.addEventListener("click", function () {
+      var id = screen.getAttribute("data-video-id");
+      if (!id) return;
+      var live = document.createElement("div");
+      live.className = "vt-screen is-live";
+      var iframe = document.createElement("iframe");
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
+      iframe.title = screen.getAttribute("aria-label") || "Carlynn Wu memorial video";
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture; web-share";
+      iframe.setAttribute("allowfullscreen", "");
+      live.appendChild(iframe);
+      screen.replaceWith(live);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

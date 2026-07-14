@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Carlynn Wu</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #0a1422; --navy: #0f1d31; --navy-line: #1f3251;
+    --brass: #c89968; --brass-light: #e2c089;
+    --ivory: #f3ead7; --ivory-soft: #d8cdb4; --muted: #8a8068;
+  }
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: var(--ivory); min-height: 100vh; padding: 32px;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: var(--brass-light); }
+
+  .gate { max-width: 420px; margin: 8vh auto 0; text-align: center; }
+  .gate h1 {
+    font-family: "Cormorant Garamond", serif; font-weight: 500;
+    font-size: 32px; margin: 0 0 24px;
+  }
+  .gate p { color: var(--ivory-soft); font-size: 14px; margin: 0 0 24px; }
+  .gate form { display: flex; flex-direction: column; gap: 14px; }
+  .gate label {
+    text-align: left; font-size: 10px; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--brass);
+  }
+  .gate input {
+    background: transparent; border: 1px solid var(--navy-line);
+    color: var(--ivory); font: inherit; font-size: 14px;
+    padding: 12px 14px; outline: none;
+  }
+  .gate input:focus { border-color: var(--brass); }
+  .gate button {
+    background: var(--brass); color: var(--navy-deep); border: 0;
+    padding: 12px 18px; font: inherit; font-size: 11px;
+    letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; cursor: pointer;
+  }
+  .gate button:hover { background: var(--brass-light); }
+  .gate .err {
+    color: #d99c8a; font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; min-height: 16px; margin-top: 4px;
+  }
+
+  .panel { max-width: 1100px; margin: 0 auto; }
+  .panel-head {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1px solid var(--navy-line); padding-bottom: 18px; margin-bottom: 22px;
+    gap: 18px; flex-wrap: wrap;
+  }
+  .panel-head h1 {
+    font-family: "Cormorant Garamond", serif; font-weight: 500;
+    font-size: 28px; margin: 0;
+  }
+  .panel-head .stats { color: var(--ivory-soft); font-size: 13px; }
+  .panel-head .stats b { color: var(--brass-light); font-weight: 500; }
+  .panel-head button.export {
+    background: transparent; color: var(--brass-light);
+    border: 1px solid var(--brass); padding: 10px 16px;
+    font: inherit; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer;
+  }
+  .panel-head button.export:hover { background: var(--brass); color: var(--navy-deep); }
+  .panel-head button.signout {
+    background: transparent; color: var(--ivory-soft);
+    border: 1px solid var(--navy-line); padding: 10px 14px;
+    font: inherit; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+  }
+  .panel-head button.signout:hover { color: var(--brass-light); border-color: var(--brass); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    text-align: left; padding: 12px 10px;
+    border-bottom: 1px solid var(--navy-line); vertical-align: top;
+  }
+  th {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--brass); font-weight: 500;
+  }
+  td { font-size: 14px; color: var(--ivory); }
+  td.email { color: var(--ivory-soft); font-size: 13px; }
+  td.guests { color: var(--ivory-soft); font-size: 13px; }
+  td.size { color: var(--brass-light); font-variant-numeric: tabular-nums; }
+  td.when { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  td.role { color: var(--ivory-soft); font-size: 13px; }
+  td.msg { font-size: 13px; max-width: 360px; }
+  td.thumb { position: relative; }
+  td.thumb img { width: 56px; height: 56px; object-fit: cover; display: block; border: 1px solid var(--navy-line); }
+  td.thumb .more {
+    display: inline-block; margin-top: 4px;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ivory-soft);
+  }
+  td.actions button {
+    background: transparent; color: #d99c8a;
+    border: 1px solid #6b3a30; padding: 7px 11px;
+    font: inherit; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; cursor: pointer;
+  }
+  td.actions button:hover { background: #d99c8a; color: var(--navy-deep); border-color: #d99c8a; }
+  td.actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+  td.row-actions { white-space: nowrap; text-align: right; }
+
+  th.select-col, td.select-col {
+    width: 36px; padding-left: 0; padding-right: 0; text-align: center;
+  }
+  th.select-col input[type="checkbox"],
+  td.select-col input[type="checkbox"] {
+    accent-color: var(--brass);
+    width: 16px; height: 16px; margin: 0; cursor: pointer;
+    vertical-align: middle;
+  }
+
+  .row-btn {
+    background: transparent; color: var(--ivory-soft);
+    border: 1px solid var(--navy-line); padding: 6px 10px;
+    font: inherit; font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; cursor: pointer; margin-left: 6px;
+  }
+  .row-btn:hover { color: var(--brass-light); border-color: var(--brass); }
+  .row-btn.danger:hover { color: #d99c8a; border-color: #d99c8a; }
+
+  dialog#edit-dlg {
+    background: var(--navy); color: var(--ivory);
+    border: 1px solid var(--navy-line); padding: 28px;
+    max-width: 460px; width: calc(100% - 48px);
+    font: inherit;
+  }
+  dialog#edit-dlg::backdrop { background: rgba(10, 20, 34, 0.7); }
+  dialog#edit-dlg h2 {
+    font-family: "Cormorant Garamond", serif; font-weight: 500;
+    font-size: 22px; margin: 0 0 18px;
+  }
+  dialog#edit-dlg form { display: flex; flex-direction: column; gap: 14px; }
+  dialog#edit-dlg label {
+    font-size: 10px; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--brass);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  dialog#edit-dlg input,
+  dialog#edit-dlg textarea {
+    background: transparent; border: 1px solid var(--navy-line);
+    color: var(--ivory); font: inherit; font-size: 14px;
+    padding: 10px 12px; outline: none; letter-spacing: normal;
+    text-transform: none;
+  }
+  dialog#edit-dlg input:focus,
+  dialog#edit-dlg textarea:focus { border-color: var(--brass); }
+  dialog#edit-dlg textarea { min-height: 100px; resize: vertical; }
+  dialog#edit-dlg .hint {
+    font-size: 11px; letter-spacing: normal; text-transform: none;
+    color: var(--muted);
+  }
+  dialog#edit-dlg .err {
+    color: #d99c8a; font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; min-height: 16px;
+  }
+  dialog#edit-dlg .actions {
+    display: flex; gap: 10px; justify-content: flex-end; margin-top: 6px;
+  }
+  dialog#edit-dlg .actions button {
+    background: transparent; color: var(--ivory-soft);
+    border: 1px solid var(--navy-line); padding: 10px 16px;
+    font: inherit; font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; cursor: pointer;
+  }
+  dialog#edit-dlg .actions button[type="submit"] {
+    background: var(--brass); color: var(--navy-deep); border-color: var(--brass);
+    font-weight: 600;
+  }
+  dialog#edit-dlg .actions button[type="submit"]:hover { background: var(--brass-light); border-color: var(--brass-light); }
+  dialog#edit-dlg .actions button.cancel:hover { color: var(--brass-light); border-color: var(--brass); }
+  .empty { text-align: center; color: var(--muted); padding: 40px 0; font-style: italic; }
+
+  .tabs {
+    display: flex; gap: 0; margin-bottom: 22px;
+    border-bottom: 1px solid var(--navy-line);
+  }
+  .tabs button {
+    background: transparent; color: var(--ivory-soft); border: 0;
+    padding: 12px 20px; font: inherit; font-size: 11px;
+    letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tabs button:hover { color: var(--brass-light); }
+  .tabs button.active { color: var(--brass-light); border-bottom-color: var(--brass); }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<section class="gate" id="gate" aria-labelledby="gate-title">
+  <h1 id="gate-title">Admin</h1>
+  <p>Paste the admin token to manage RSVPs and lanterns.</p>
+  <form id="gate-form" autocomplete="off">
+    <label for="tok">Admin token</label>
+    <input id="tok" type="password" autocomplete="off" autofocus required>
+    <button type="submit">Unlock</button>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+</section>
+
+<section class="panel hidden" id="panel" aria-labelledby="panel-title">
+  <div class="panel-head">
+    <h1 id="panel-title">Admin</h1>
+    <div class="stats" id="stats"></div>
+    <div>
+      <button type="button" class="export hidden" id="export">Export CSV</button>
+      <button type="button" class="signout" id="signout">Sign out</button>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button type="button" class="active" data-tab="rsvps" role="tab" aria-selected="true">RSVPs</button>
+    <button type="button" data-tab="lanterns" role="tab" aria-selected="false">Lanterns</button>
+  </div>
+
+  <div class="view active" id="view-rsvps" role="tabpanel">
+    <div id="rsvps-wrap">
+      <div class="empty" id="rsvps-empty">Loading…</div>
+    </div>
+  </div>
+
+  <div class="view" id="view-lanterns" role="tabpanel">
+    <div id="lanterns-wrap">
+      <div class="empty" id="lanterns-empty">Loading…</div>
+    </div>
+  </div>
+</section>
+
+<dialog id="edit-dlg" aria-labelledby="edit-title">
+  <h2 id="edit-title">Edit RSVP</h2>
+  <form id="edit-form" autocomplete="off">
+    <label>
+      Name
+      <input id="edit-name" type="text" maxlength="80" required>
+    </label>
+    <label>
+      Email
+      <input id="edit-email" type="email" maxlength="120" required>
+    </label>
+    <label>
+      Guests
+      <textarea id="edit-guests" rows="4"></textarea>
+      <span class="hint">One name per line. Up to 10.</span>
+    </label>
+    <div class="err" id="edit-err" role="alert"></div>
+    <div class="actions">
+      <button type="button" class="cancel" id="edit-cancel">Cancel</button>
+      <button type="submit">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  const TOKEN_KEY = "carlynn-memorial::admin-token";
+  const gate = document.getElementById("gate");
+  const panel = document.getElementById("panel");
+  const gateForm = document.getElementById("gate-form");
+  const tokInput = document.getElementById("tok");
+  const errEl = document.getElementById("err");
+  const statsEl = document.getElementById("stats");
+  const exportBtn = document.getElementById("export");
+  const signOutBtn = document.getElementById("signout");
+  const tabBtns = panel.querySelectorAll("[data-tab]");
+  const views = {
+    rsvps: document.getElementById("view-rsvps"),
+    lanterns: document.getElementById("view-lanterns"),
+  };
+  const wraps = {
+    rsvps: document.getElementById("rsvps-wrap"),
+    lanterns: document.getElementById("lanterns-wrap"),
+  };
+
+  const editDlg = document.getElementById("edit-dlg");
+  const editForm = document.getElementById("edit-form");
+  const editName = document.getElementById("edit-name");
+  const editEmail = document.getElementById("edit-email");
+  const editGuests = document.getElementById("edit-guests");
+  const editErr = document.getElementById("edit-err");
+  const editCancel = document.getElementById("edit-cancel");
+
+  let token = "";
+  let activeTab = "rsvps";
+  let rsvpData = null;
+  let lanternData = null;
+  let editingId = null;
+  let selectedRsvpIds = new Set();
+
+  function authHeaders() {
+    return { Authorization: "Bearer " + token };
+  }
+
+  async function fetchJson(url, init) {
+    const res = await fetch(url, init);
+    if (res.status === 401) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      throw new Error("unauthorized");
+    }
+    if (!res.ok) throw new Error("server_" + res.status);
+    return res.json();
+  }
+
+  async function loadRsvps() {
+    rsvpData = await fetchJson("/api/rsvps", { headers: authHeaders() });
+    renderRsvps();
+    if (activeTab === "rsvps") updateStats();
+  }
+
+  async function loadLanterns() {
+    lanternData = await fetchJson("/api/lanterns");
+    renderLanterns();
+    if (activeTab === "lanterns") updateStats();
+  }
+
+  function updateStats() {
+    if (activeTab === "rsvps" && rsvpData) {
+      const totalParties = Number(rsvpData?.total_parties) || (rsvpData.rsvps || []).length;
+      const totalAttendees = Number(rsvpData?.total_attendees) || 0;
+      // both values coerced via Number above, so innerHTML is safe
+      statsEl.innerHTML =
+        "<b>" + totalParties + "</b> parties · " +
+        "<b>" + totalAttendees + "</b> attendees";
+      exportBtn.classList.remove("hidden");
+    } else if (activeTab === "lanterns" && lanternData) {
+      const total = (lanternData.lanterns || []).length;
+      statsEl.innerHTML = "<b>" + total + "</b> lanterns";
+      exportBtn.classList.add("hidden");
+    } else {
+      statsEl.textContent = "";
+      exportBtn.classList.add("hidden");
+    }
+  }
+
+  function onMasterCheckboxChange(e) {
+    const rsvps = Array.isArray(rsvpData?.rsvps) ? rsvpData.rsvps : [];
+    if (e.target.checked) {
+      selectedRsvpIds = new Set(rsvps.map((r) => Number(r.id)));
+    } else {
+      selectedRsvpIds.clear();
+    }
+    const rowCheckboxes = wraps.rsvps.querySelectorAll(
+      'input[type="checkbox"][data-action="select"]'
+    );
+    rowCheckboxes.forEach((cb) => {
+      const tr = cb.closest("tr[data-id]");
+      if (!tr) return;
+      const id = Number(tr.dataset.id);
+      cb.checked = selectedRsvpIds.has(id);
+    });
+    updateMasterCheckbox();
+    updateExportButtonLabel();
+  }
+
+  function updateMasterCheckbox() {
+    const master = document.getElementById("rsvp-select-all");
+    if (!master) return;
+    const total = Array.isArray(rsvpData?.rsvps) ? rsvpData.rsvps.length : 0;
+    const sel = selectedRsvpIds.size;
+    if (sel === 0) {
+      master.checked = false;
+      master.indeterminate = false;
+    } else if (sel === total) {
+      master.checked = true;
+      master.indeterminate = false;
+    } else {
+      master.checked = false;
+      master.indeterminate = true;
+    }
+  }
+
+  function updateExportButtonLabel() {
+    const sel = selectedRsvpIds.size;
+    exportBtn.textContent = sel > 0 ? "Export " + sel + " selected" : "Export CSV";
+  }
+
+  function renderRsvps() {
+    const rsvps = Array.isArray(rsvpData?.rsvps) ? rsvpData.rsvps : [];
+    wraps.rsvps.innerHTML = "";
+    if (!rsvps.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No RSVPs yet.";
+      wraps.rsvps.appendChild(empty);
+      return;
+    }
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+
+    const thSelect = document.createElement("th");
+    thSelect.className = "select-col";
+    const masterCb = document.createElement("input");
+    masterCb.type = "checkbox";
+    masterCb.id = "rsvp-select-all";
+    masterCb.setAttribute("aria-label", "Select all RSVPs");
+    masterCb.addEventListener("change", onMasterCheckboxChange);
+    thSelect.appendChild(masterCb);
+    headRow.appendChild(thSelect);
+
+    for (const label of ["When", "Name", "Email", "Guests", "Party", ""]) {
+      const th = document.createElement("th");
+      th.textContent = label;
+      headRow.appendChild(th);
+    }
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+    const tbody = document.createElement("tbody");
+    for (const r of rsvps) {
+      const tr = document.createElement("tr");
+      tr.dataset.id = String(r.id);
+
+      const tdSelect = document.createElement("td");
+      tdSelect.className = "select-col";
+      const rowCb = document.createElement("input");
+      rowCb.type = "checkbox";
+      rowCb.dataset.action = "select";
+      rowCb.setAttribute("aria-label", "Select RSVP from " + r.name);
+      rowCb.checked = selectedRsvpIds.has(Number(r.id));
+      tdSelect.appendChild(rowCb);
+      tr.appendChild(tdSelect);
+
+      tr.appendChild(td("when", formatWhen(r.created_at)));
+      tr.appendChild(td("", r.name));
+      tr.appendChild(td("email", r.email));
+      tr.appendChild(td("guests", (r.guest_names || []).join(", ")));
+      tr.appendChild(td("size", String(r.party_size)));
+
+      const tdActions = document.createElement("td");
+      tdActions.className = "row-actions";
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.className = "row-btn";
+      editBtn.dataset.action = "edit";
+      editBtn.textContent = "Edit";
+      const delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "row-btn danger";
+      delBtn.dataset.action = "delete";
+      delBtn.textContent = "Remove";
+      tdActions.appendChild(editBtn);
+      tdActions.appendChild(delBtn);
+      tr.appendChild(tdActions);
+
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    tbody.addEventListener("click", onRsvpRowAction);
+    wraps.rsvps.appendChild(table);
+    updateMasterCheckbox();
+    updateExportButtonLabel();
+  }
+
+  function recomputeRsvpTotals() {
+    if (!rsvpData) return;
+    const rsvps = Array.isArray(rsvpData.rsvps) ? rsvpData.rsvps : [];
+    rsvpData.total_parties = rsvps.length;
+    rsvpData.total_attendees = rsvps.reduce(
+      (sum, r) => sum + (Number(r.party_size) || 0),
+      0
+    );
+  }
+
+  function findRsvpIndex(id) {
+    if (!rsvpData || !Array.isArray(rsvpData.rsvps)) return -1;
+    return rsvpData.rsvps.findIndex((r) => Number(r.id) === Number(id));
+  }
+
+  function onRsvpRowAction(e) {
+    const target = e.target;
+    if (target instanceof HTMLInputElement && target.dataset.action === "select") {
+      const tr = target.closest("tr[data-id]");
+      if (!tr) return;
+      const id = Number(tr.dataset.id);
+      if (!Number.isFinite(id)) return;
+      if (target.checked) selectedRsvpIds.add(id);
+      else selectedRsvpIds.delete(id);
+      updateMasterCheckbox();
+      updateExportButtonLabel();
+      return;
+    }
+    const btn = e.target.closest("button[data-action]");
+    if (!btn) return;
+    const tr = btn.closest("tr[data-id]");
+    if (!tr) return;
+    const id = Number(tr.dataset.id);
+    if (!Number.isFinite(id)) return;
+    if (btn.dataset.action === "delete") deleteRsvp(id);
+    else if (btn.dataset.action === "edit") openEditRsvp(id);
+  }
+
+  async function deleteRsvp(id) {
+    const idx = findRsvpIndex(id);
+    if (idx < 0) return;
+    const r = rsvpData.rsvps[idx];
+    if (!confirm("Remove RSVP from " + r.name + " (" + r.email + ")?")) return;
+    let res;
+    try {
+      res = await fetch("/api/rsvps/" + id, { method: "DELETE", headers: authHeaders() });
+    } catch {
+      alert("Couldn't reach the server.");
+      return;
+    }
+    if (res.status === 401) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      token = "";
+      showGate("Session expired.");
+      return;
+    }
+    if (!res.ok && res.status !== 404) {
+      alert("Couldn't remove that RSVP.");
+      return;
+    }
+    rsvpData.rsvps.splice(idx, 1);
+    selectedRsvpIds.delete(id);
+    recomputeRsvpTotals();
+    renderRsvps();
+    if (activeTab === "rsvps") updateStats();
+  }
+
+  function openEditRsvp(id) {
+    const idx = findRsvpIndex(id);
+    if (idx < 0) return;
+    const r = rsvpData.rsvps[idx];
+    editingId = id;
+    editName.value = r.name;
+    editEmail.value = r.email;
+    editGuests.value = (r.guest_names || []).join("\n");
+    editErr.textContent = "";
+    editDlg.showModal();
+    editName.focus();
+  }
+
+  function parseGuestsTextarea() {
+    return editGuests.value
+      .split(/\r?\n/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  async function submitEditRsvp(e) {
+    e.preventDefault();
+    if (editingId == null) return;
+    const idx = findRsvpIndex(editingId);
+    if (idx < 0) {
+      editDlg.close();
+      return;
+    }
+    const payload = {
+      name: editName.value.trim(),
+      email: editEmail.value.trim(),
+      guests: parseGuestsTextarea(),
+    };
+    editErr.textContent = "";
+    let res;
+    try {
+      res = await fetch("/api/rsvps/" + editingId, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", ...authHeaders() },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      editErr.textContent = "Couldn't reach the server.";
+      return;
+    }
+    if (res.status === 401) {
+      editDlg.close();
+      sessionStorage.removeItem(TOKEN_KEY);
+      token = "";
+      showGate("Session expired.");
+      return;
+    }
+    let data = null;
+    try { data = await res.json(); } catch {}
+    if (!res.ok) {
+      editErr.textContent = (data && data.error) || "Couldn't save changes.";
+      return;
+    }
+    const row = rsvpData.rsvps[idx];
+    row.name = payload.name;
+    row.email = payload.email;
+    row.guest_names = payload.guests;
+    row.party_size = payload.guests.length + 1;
+    recomputeRsvpTotals();
+    renderRsvps();
+    if (activeTab === "rsvps") updateStats();
+    editingId = null;
+    editDlg.close();
+  }
+
+  function renderLanterns() {
+    const lanterns = Array.isArray(lanternData?.lanterns) ? lanternData.lanterns : [];
+    wraps.lanterns.innerHTML = "";
+    if (!lanterns.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No lanterns yet.";
+      wraps.lanterns.appendChild(empty);
+      return;
+    }
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    thead.innerHTML =
+      "<tr><th>When</th><th>Name</th><th>Role</th><th>Message</th><th>Photo</th><th></th></tr>";
+    table.appendChild(thead);
+    const tbody = document.createElement("tbody");
+    for (const r of lanterns) {
+      const tr = document.createElement("tr");
+      tr.appendChild(td("when", formatWhen(r.created_at)));
+      tr.appendChild(td("", r.name));
+      tr.appendChild(td("role", r.role || ""));
+      tr.appendChild(td("msg", truncate(r.msg || "", 220)));
+
+      const tdThumb = document.createElement("td");
+      tdThumb.className = "thumb";
+      const media = Array.isArray(r.media) ? r.media : [];
+      if (media.length) {
+        const img = document.createElement("img");
+        img.src = "/media/" + media[0].key;
+        img.alt = "";
+        img.loading = "lazy";
+        tdThumb.appendChild(img);
+        if (media.length > 1) {
+          const more = document.createElement("span");
+          more.className = "more";
+          more.textContent = "+" + (media.length - 1) + " more";
+          tdThumb.appendChild(more);
+        }
+      }
+      tr.appendChild(tdThumb);
+
+      const tdAct = document.createElement("td");
+      tdAct.className = "actions";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Delete";
+      btn.addEventListener("click", () => deleteLantern(r.id, btn));
+      tdAct.appendChild(btn);
+      tr.appendChild(tdAct);
+
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    wraps.lanterns.appendChild(table);
+  }
+
+  async function deleteLantern(id, btn) {
+    if (!confirm("Delete this lantern? This cannot be undone.")) return;
+    btn.disabled = true;
+    btn.textContent = "Deleting…";
+    try {
+      const res = await fetch("/api/lanterns/" + encodeURIComponent(id), {
+        method: "DELETE",
+        headers: authHeaders(),
+      });
+      if (res.status === 401) {
+        sessionStorage.removeItem(TOKEN_KEY);
+        showGate("Session expired.");
+        return;
+      }
+      if (!res.ok) throw new Error("server_" + res.status);
+      lanternData.lanterns = (lanternData.lanterns || []).filter((l) => l.id !== id);
+      renderLanterns();
+      updateStats();
+    } catch {
+      btn.disabled = false;
+      btn.textContent = "Delete";
+      alert("Couldn't delete that lantern. Try again.");
+    }
+  }
+
+  function td(cls, text) {
+    const el = document.createElement("td");
+    if (cls) el.className = cls;
+    el.textContent = text;
+    return el;
+  }
+
+  function truncate(s, n) {
+    if (s.length <= n) return s;
+    return s.slice(0, n).trimEnd() + "…";
+  }
+
+  function formatWhen(s) {
+    // SQLite datetime('now') returns "YYYY-MM-DD HH:MM:SS" in UTC
+    const d = new Date(String(s).replace(" ", "T") + "Z");
+    if (isNaN(d.getTime())) return s;
+    return d.toLocaleString();
+  }
+
+  function downloadRsvpCsv() {
+    const all = Array.isArray(rsvpData?.rsvps) ? rsvpData.rsvps : [];
+    const subset = selectedRsvpIds.size
+      ? all.filter((r) => selectedRsvpIds.has(Number(r.id)))
+      : all;
+    const maxGuests = subset.reduce(
+      (m, r) => Math.max(m, (r.guest_names || []).length),
+      0
+    );
+    const headers = ["created_at", "name", "email", "party_size"];
+    for (let i = 1; i <= maxGuests; i++) headers.push("guest_" + i);
+    const rows = [headers];
+    for (const r of subset) {
+      const row = [r.created_at, r.name, r.email, String(r.party_size)];
+      for (let i = 0; i < maxGuests; i++) row.push((r.guest_names || [])[i] ?? "");
+      rows.push(row);
+    }
+    const csv = rows.map((row) => row.map(csvEscape).join(",")).join("\r\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const dt = new Date();
+    const yyyy = dt.getFullYear();
+    const mm = String(dt.getMonth() + 1).padStart(2, "0");
+    const dd = String(dt.getDate()).padStart(2, "0");
+    a.href = url;
+    a.download = "rsvps-" + yyyy + "-" + mm + "-" + dd + ".csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function csvEscape(v) {
+    let s = String(v ?? "");
+    if (/^[=+\-@\t\r]/.test(s)) s = "\t" + s;
+    if (/[",\r\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function showGate(message) {
+    errEl.textContent = message ?? "";
+    panel.classList.add("hidden");
+    gate.classList.remove("hidden");
+    tokInput.value = "";
+    tokInput.focus();
+  }
+
+  function showPanel() {
+    gate.classList.add("hidden");
+    panel.classList.remove("hidden");
+  }
+
+  function activateTab(tab) {
+    if (activeTab !== tab && tab !== "rsvps" && selectedRsvpIds.size) {
+      selectedRsvpIds.clear();
+      if (rsvpData) renderRsvps();
+    }
+    activeTab = tab;
+    tabBtns.forEach((b) => {
+      const on = b.dataset.tab === tab;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    Object.entries(views).forEach(([k, el]) => {
+      el.classList.toggle("active", k === tab);
+    });
+    updateStats();
+    if (tab === "lanterns" && !lanternData) {
+      loadLanterns().catch((err) => {
+        if (err.message === "unauthorized") showGate("Session expired.");
+        else wraps.lanterns.innerHTML = '<div class="empty">Couldn\\u2019t load lanterns.</div>';
+      });
+    }
+  }
+
+  async function tryToken(t, isInitial) {
+    try {
+      // Validate the token by hitting /api/rsvps (gated). Lanterns load lazily on tab switch.
+      token = t;
+      await loadRsvps();
+      sessionStorage.setItem(TOKEN_KEY, t);
+      showPanel();
+      activateTab(activeTab);
+    } catch (err) {
+      token = "";
+      if (err.message === "unauthorized") {
+        showGate(isInitial ? "" : "That token isn't right.");
+      } else {
+        showGate("Couldn't reach the server.");
+      }
+    }
+  }
+
+  gateForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const t = tokInput.value.trim();
+    if (!t) return;
+    tryToken(t, false);
+  });
+
+  exportBtn.addEventListener("click", () => {
+    if (activeTab === "rsvps" && rsvpData) downloadRsvpCsv();
+  });
+
+  signOutBtn.addEventListener("click", () => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    token = "";
+    rsvpData = null;
+    lanternData = null;
+    editingId = null;
+    selectedRsvpIds.clear();
+    if (editDlg.open) editDlg.close();
+    showGate();
+  });
+
+  editForm.addEventListener("submit", submitEditRsvp);
+  editCancel.addEventListener("click", () => {
+    editingId = null;
+    editDlg.close();
+  });
+
+  tabBtns.forEach((b) => {
+    b.addEventListener("click", () => activateTab(b.dataset.tab));
+  });
+
+  const stored = sessionStorage.getItem(TOKEN_KEY);
+  if (stored) tryToken(stored, true);
+})();
+</script>
+
+</body>
+</html>
