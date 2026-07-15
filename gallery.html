@@ -28,7 +28,7 @@
   .topbar { position: sticky; top: 0; z-index: 50; background: rgba(10,20,34,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--navy-line); }
   .topbar-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
   .crest { display: flex; align-items: center; gap: 14px; }
-  .crest-mark { width: 34px; height: 34px; border: 1px solid var(--brass); display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 16px; }
+  .crest-mark { width: 34px; height: 34px; border: 1px solid var(--brass); display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 16px; text-decoration: none; }
   .crest-text small { display: block; color: var(--brass); font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; }
   .crest-text strong { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 17px; letter-spacing: 0.04em; }
   nav.links { display: flex; gap: 28px; }
@@ -138,7 +138,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="crest">
-      <div class="crest-mark">CW</div>
+      <a class="crest-mark" href="index.html">CW</a>
       <div class="crest-text"><small>In Loving Memory</small><strong>Carli Wu</strong></div>
     </div>
     <div class="topbar-right">
