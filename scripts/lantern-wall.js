@@ -492,7 +492,7 @@
           <label for="lname">From</label>
           <input id="lname" type="text" name="name" placeholder="Your name" maxlength="${NAME_MAX}" required>
           <label for="lrole">Your relationship to Carlynn <span style="color:var(--lw-ink-soft);opacity:0.6;text-transform:none;letter-spacing:0;font-size:11px">(optional)</span></label>
-          <input id="lrole" type="text" name="role" placeholder="e.g. Son · Friend · Hayward Fire Department crew" maxlength="${ROLE_MAX}">
+          <input id="lrole" type="text" name="role" placeholder="e.g. Uncle · Aunt · Family friend" maxlength="${ROLE_MAX}">
           <label for="lmsg">Your message</label>
           <textarea id="lmsg" name="msg" placeholder="A memory, a thank-you, a goodbye. As long as you'd like." maxlength="${MSG_MAX}" required></textarea>
           <div class="preview" id="preview"></div>

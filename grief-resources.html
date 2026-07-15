@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Service — Carlynn Wu</title>
+<title>Grief Resources — Carlynn Wu</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,24 +30,24 @@
   nav.links a[aria-current="page"] { color: var(--brass-light); }
   @media (max-width: 760px) { nav.links { display: none; } }
 
-  .svc-title { padding: 120px 32px 60px; text-align: center; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
-  .svc-title .ribbon { display: inline-flex; align-items: center; gap: 16px; color: var(--brass); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 28px; }
-  .svc-title .ribbon::before, .svc-title .ribbon::after { content: ""; width: 60px; height: 1px; background: var(--brass); }
-  .svc-title h1 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(48px, 7vw, 88px); line-height: 0.98; margin: 0 0 18px; color: var(--ivory); }
-  .svc-title h1 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
-  .svc-title p { color: var(--ivory-soft); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 20px; max-width: 620px; margin: 0 auto; line-height: 1.5; }
+  .gr-title { padding: 120px 32px 50px; text-align: center; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
+  .gr-title .ribbon { display: inline-flex; align-items: center; gap: 16px; color: var(--brass); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 28px; }
+  .gr-title .ribbon::before, .gr-title .ribbon::after { content: ""; width: 60px; height: 1px; background: var(--brass); }
+  .gr-title h1 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(44px, 6.5vw, 84px); line-height: 0.98; margin: 0 0 18px; color: var(--ivory); }
+  .gr-title h1 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
+  .gr-title p { color: var(--ivory-soft); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 20px; max-width: 640px; margin: 0 auto; line-height: 1.5; }
 
-  .svc-wrap { max-width: 680px; margin: 0 auto; padding: 20px 32px 90px; }
-  .svc-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--navy-line); align-items: baseline; }
-  .svc-row:first-child { border-top: 1px solid var(--navy-line); }
-  .svc-label { color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; }
-  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); }
-  @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 6px; } }
-
-  .svc-cta { text-align: center; margin-top: 48px; }
-  .svc-cta a { display: inline-block; padding: 15px 42px; background: var(--brass); color: var(--navy-deep); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; transition: filter 0.2s ease; }
-  .svc-cta a:hover { filter: brightness(1.07); }
-  .svc-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 18px; line-height: 1.5; }
+  .gr-list { max-width: 760px; margin: 0 auto; padding: 24px 32px 90px; }
+  .res-item {
+    display: block; border: 1px solid var(--navy-line); padding: 24px 26px; margin-bottom: 16px;
+    transition: border-color 0.2s ease, transform 0.2s ease; text-decoration: none;
+  }
+  a.res-item:hover { border-color: var(--brass); transform: translateY(-2px); }
+  .res-kind { color: var(--brass); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; }
+  .res-title { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); margin: 8px 0 6px; }
+  a.res-item:hover .res-title { color: var(--brass-light); }
+  .res-desc { color: var(--ivory-soft); font-size: 14px; line-height: 1.55; margin: 8px 0 0; }
+  .res-tbd { color: var(--muted); font-style: italic; text-align: center; font-family: "Cormorant Garamond", serif; font-size: 18px; padding: 24px 0 0; }
 
   footer.foot { background: var(--navy-deep); border-top: 1px solid var(--navy-line); padding: 80px 32px 40px; text-align: center; }
   .foot-mark { width: 56px; height: 56px; border: 1px solid var(--brass); margin: 0 auto 24px; display: grid; place-items: center; font-family: "Cormorant Garamond", serif; color: var(--brass-light); font-size: 24px; }
@@ -68,9 +68,9 @@
     <nav class="links">
       <a href="index.html">Home</a>
       <a href="story.html">Her Story</a>
-      <a href="service.html" aria-current="page">Service</a>
+      <a href="service.html">Service</a>
       <a href="gallery.html">Photographs</a>
-      <a href="grief-resources.html">Grief Resources</a>
+      <a href="grief-resources.html" aria-current="page">Grief Resources</a>
       <a href="index.html#lanterns">Lanterns</a>
     </nav>
   </div>
@@ -78,22 +78,20 @@
 
 <main>
 
-<section class="svc-title">
-  <div class="ribbon">In Loving Memory</div>
-  <h1>Celebrating <em>Carlynn</em></h1>
-  <p>We warmly invite family and friends to gather in remembrance. Details are being finalized and will be shared here as soon as they are confirmed.</p>
+<section class="gr-title">
+  <div class="ribbon">For Those Who Grieve</div>
+  <h1>Grief <em>Resources</em></h1>
+  <p>A gathering of writing, conversations, and books that others have found comforting in the wake of a loss. We will continue to add to this list.</p>
 </section>
 
-<section class="svc-wrap">
-  <div class="svc-details">
-    <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Reception</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Parking</span><span class="svc-value">To be announced</span></div>
-  </div>
-  <div class="svc-cta"><a href="index.html#service">RSVP for the Memorial &rarr;</a></div>
-  <p class="svc-note">Please let us know if you plan to attend so we can prepare a place for you.</p>
+<section class="gr-list">
+  <a class="res-item" href="https://www.nytimes.com/2026/07/08/podcasts/grief-parenting-child-death.html" target="_blank" rel="noopener noreferrer">
+    <div class="res-kind">Podcast &middot; The New York Times</div>
+    <div class="res-title">Ask Me About My Dead Son</div>
+    <p class="res-desc">How to show up for someone who&rsquo;s grieving the loss of a child.</p>
+  </a>
+
+  <p class="res-tbd">More resources are being gathered and will appear here soon.</p>
 </section>
 
 </main>
