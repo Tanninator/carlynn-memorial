@@ -491,7 +491,7 @@
           <div class="banner error" id="formError" style="display:none" role="alert"></div>
           <label for="lname">From</label>
           <input id="lname" type="text" name="name" placeholder="Your name" maxlength="${NAME_MAX}" required>
-          <label for="lrole">Your relationship to Carlynn <span style="color:var(--lw-ink-soft);opacity:0.6;text-transform:none;letter-spacing:0;font-size:11px">(optional)</span></label>
+          <label for="lrole">Your relationship to Carli <span style="color:var(--lw-ink-soft);opacity:0.6;text-transform:none;letter-spacing:0;font-size:11px">(optional)</span></label>
           <input id="lrole" type="text" name="role" placeholder="e.g. Uncle · Aunt · Family friend" maxlength="${ROLE_MAX}">
           <label for="lmsg">Your message</label>
           <textarea id="lmsg" name="msg" placeholder="A memory, a thank-you, a goodbye. As long as you'd like." maxlength="${MSG_MAX}" required></textarea>
@@ -528,7 +528,7 @@
             <button class="close" id="closeBtn" aria-label="Close">×</button>
             <div class="media" id="media" style="display:none" role="region" aria-roledescription="carousel" aria-label="Photos"></div>
             <div class="body">
-              <div class="stamp">A Message for Carlynn</div>
+              <div class="stamp">A Message for Carli</div>
               <h3 id="mName"></h3>
               <div class="role" id="mRole"></div>
               <div class="text" id="mText"></div>
