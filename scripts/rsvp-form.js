@@ -165,7 +165,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
         return `
           <div class="done" role="status">
             <h3>Thank you</h3>
-            <p>We look forward to seeing you on May 30.</p>
+            <p>Thank you for letting us know. We'll be in touch with details.</p>
             <a href="#" data-action="another">Submit another RSVP</a>
           </div>
         `;
@@ -197,7 +197,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
 
       return `
         <h2 class="title">Kindly Reply</h2>
-        <p class="lede">Let us know you'll be there so we can plan a place for you at lunch.</p>
+        <p class="lede">Let us know you'll be there so we can plan a place for you.</p>
         ${errorBanner}
         <form data-form novalidate>
           <label class="fld">

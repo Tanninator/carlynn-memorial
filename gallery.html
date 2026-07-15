@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Photographs — Carlynn Wu</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<script>
-  if (sessionStorage.getItem("carlynn-memorial::unlocked") !== "1") {
-    location.replace("login.html");
-  }
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -122,8 +117,8 @@
 
 <section class="head">
   <div class="ribbon">Photographs</div>
-  <h1>A lifetime, <em>in pictures</em></h1>
-  <p>Family photos collected over the years. Click any image to view full size.</p>
+  <h1>Her life, <em>in pictures</em></h1>
+  <p>Moments with Carlynn, and a few of her own paintings. Click any image to view full size.</p>
 </section>
 
 <div id="grid" class="grid"></div>
@@ -154,7 +149,7 @@
   let rendered = 0;
   let lbIndex = -1;
 
-  function srcFor(name) { return "assets/gallery/" + name; }
+  function srcFor(name) { return name.indexOf("/") >= 0 ? name : "assets/gallery/" + name; }
 
   function renderBatch() {
     const next = photos.slice(rendered, rendered + PAGE_SIZE);

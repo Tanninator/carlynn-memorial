@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Service — Carlynn Wu</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/shared.css">
+<style>
+  :root {
+    --navy-deep: #0a1422; --navy: #0f1d31; --navy-2: #16263e; --navy-line: #1f3251;
+    --brass: #c89968; --brass-deep: #a87a4a; --brass-light: #e2c089;
+    --ivory: #f3ead7; --ivory-soft: #d8cdb4; --muted: #8a8068;
+  }
+  body { font-family: "Inter", system-ui, sans-serif; background: var(--navy-deep); color: var(--ivory); }
+  a { color: var(--brass-light); }
+
+  .topbar { background: rgba(10,20,34,0.85); border-bottom: 1px solid var(--navy-line); }
+  .topbar-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .crest { display: flex; align-items: center; gap: 14px; }
+  .crest-mark { width: 34px; height: 34px; border: 1px solid var(--brass); display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 16px; }
+  .crest-text small { display: block; color: var(--brass); font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; }
+  .crest-text strong { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 17px; letter-spacing: 0.04em; }
+  nav.links { display: flex; gap: 28px; }
+  nav.links a { color: var(--ivory-soft); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+  nav.links a:hover { color: var(--brass-light); }
+  nav.links a[aria-current="page"] { color: var(--brass-light); }
+  @media (max-width: 760px) { nav.links { display: none; } }
+
+  .svc-title { padding: 120px 32px 60px; text-align: center; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
+  .svc-title .ribbon { display: inline-flex; align-items: center; gap: 16px; color: var(--brass); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 28px; }
+  .svc-title .ribbon::before, .svc-title .ribbon::after { content: ""; width: 60px; height: 1px; background: var(--brass); }
+  .svc-title h1 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(48px, 7vw, 88px); line-height: 0.98; margin: 0 0 18px; color: var(--ivory); }
+  .svc-title h1 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
+  .svc-title p { color: var(--ivory-soft); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 20px; max-width: 620px; margin: 0 auto; line-height: 1.5; }
+
+  .svc-wrap { max-width: 680px; margin: 0 auto; padding: 20px 32px 90px; }
+  .svc-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--navy-line); align-items: baseline; }
+  .svc-row:first-child { border-top: 1px solid var(--navy-line); }
+  .svc-label { color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; }
+  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); }
+  @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 6px; } }
+
+  .svc-cta { text-align: center; margin-top: 48px; }
+  .svc-cta a { display: inline-block; padding: 15px 42px; background: var(--brass); color: var(--navy-deep); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; transition: filter 0.2s ease; }
+  .svc-cta a:hover { filter: brightness(1.07); }
+  .svc-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 18px; line-height: 1.5; }
+
+  footer.foot { background: var(--navy-deep); border-top: 1px solid var(--navy-line); padding: 80px 32px 40px; text-align: center; }
+  .foot-mark { width: 56px; height: 56px; border: 1px solid var(--brass); margin: 0 auto 24px; display: grid; place-items: center; font-family: "Cormorant Garamond", serif; color: var(--brass-light); font-size: 24px; }
+  .foot-rule { width: 80px; height: 1px; background: var(--brass); margin: 28px auto; }
+  .foot-links { display: flex; gap: 32px; justify-content: center; color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; flex-wrap: wrap; }
+  .foot-links a { color: var(--brass); }
+  .foot-copy { color: var(--muted); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crest">
+      <div class="crest-mark">W</div>
+      <div class="crest-text"><small>In Honored Memory</small><strong>Carlynn Wu</strong></div>
+    </div>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="story.html">Her Story</a>
+      <a href="service.html" aria-current="page">Service</a>
+      <a href="gallery.html">Photographs</a>
+      <a href="index.html#lanterns">Lanterns</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="svc-title">
+  <div class="ribbon">In Loving Memory</div>
+  <h1>Celebrating <em>Carlynn</em></h1>
+  <p>We warmly invite family and friends to gather in remembrance. Details are being finalized and will be shared here as soon as they are confirmed.</p>
+</section>
+
+<section class="svc-wrap">
+  <div class="svc-details">
+    <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Reception</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Parking</span><span class="svc-value">To be announced</span></div>
+  </div>
+  <div class="svc-cta"><a href="index.html#service">RSVP for the Memorial &rarr;</a></div>
+  <p class="svc-note">Please let us know if you plan to attend so we can prepare a place for you.</p>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-mark">W</div>
+  <div class="foot-rule"></div>
+  <div class="foot-links">
+    <a href="index.html">Memorial</a>
+    <a href="story.html">Her Story</a>
+    <a href="service.html">Service</a>
+    <a href="gallery.html">Photographs</a>
+  </div>
+  <div class="foot-rule"></div>
+  <div class="foot-copy">In Honored Memory · Carlynn's Family · MMXXVI</div>
+</footer>
+
+</body>
+</html>

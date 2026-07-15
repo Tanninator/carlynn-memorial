@@ -136,7 +136,7 @@ async function sendRsvpNotification(env, rsvp) {
     console.warn("rsvp_notify_skipped", "RESEND_API_KEY not set");
     return;
   }
-  const to = env.NOTIFY_TO || "godwin.law@acts2.network";
+  const to = env.NOTIFY_TO || "brian.tan@acts2.network";
   const from = env.NOTIFY_FROM || "onboarding@resend.dev";
 
   const json = JSON.stringify(rsvp, null, 2);

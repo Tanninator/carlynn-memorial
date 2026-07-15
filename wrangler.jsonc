@@ -21,15 +21,21 @@
 		}
 	],
 	"vars": {
-		"NOTIFY_TO": "godwin.law@acts2.network",
+		"NOTIFY_TO": "brian.tan@acts2.network",
 		"NOTIFY_FROM": "onboarding@resend.dev"
 	},
 	"d1_databases": [
 		{
 			"binding": "DB",
 			"database_name": "carlynn-rsvps",
-			"database_id": "REPLACE_AFTER_WRANGLER_D1_CREATE",
+			"database_id": "cc43dac3-e2fa-4af1-9dfc-9bd3b07f632a",
 			"migrations_dir": "migrations"
+		},
+		{
+			"binding": "carlynn_rsvps",
+			"database_name": "carlynn-rsvps",
+			"database_id": "cc43dac3-e2fa-4af1-9dfc-9bd3b07f632a",
+			"remote": true
 		}
 	],
 	"r2_buckets": [

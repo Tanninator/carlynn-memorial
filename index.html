@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/shared.css">
 <script src="scripts/lantern-wall.js"></script>
+<script src="scripts/rsvp-form.js"></script>
 <script src="scripts/rsvp-config.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <style>
@@ -50,6 +51,73 @@
   .dates { font-family: "Cormorant Garamond", serif; font-size: clamp(20px, 2.2vw, 26px); color: var(--ivory-soft); }
   .dates .dash { color: var(--brass); margin: 0 14px; }
   .epitaph { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(18px, 1.6vw, 22px); color: var(--ivory-soft); max-width: 620px; margin: 24px auto 0; line-height: 1.5; }
+
+  .hero-cta { margin-top: 34px; }
+  .rsvp-open {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 15px 42px; cursor: pointer;
+    background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+  .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); }
+  .rsvp-open:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
+
+  .rsvp-dialog {
+    border: 1px solid var(--brass); background: var(--navy); color: var(--ivory);
+    padding: 0; max-width: 480px; width: calc(100% - 40px);
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  }
+  .rsvp-dialog::backdrop { background: rgba(5,10,18,0.72); backdrop-filter: blur(3px); }
+  .rsvp-dialog-head { display: flex; justify-content: flex-end; padding: 10px 12px 0; }
+  .rsvp-close {
+    background: transparent; border: 0; color: var(--ivory-soft);
+    font-size: 26px; line-height: 1; cursor: pointer; padding: 2px 8px;
+  }
+  .rsvp-close:hover { color: var(--brass-light); }
+  .rsvp-turnstile {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 18px 28px 26px; border-top: 1px solid var(--navy-line);
+  }
+  .rsvp-turnstile small { color: var(--muted); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; }
+
+  .topbar-right { display: flex; align-items: center; gap: 28px; }
+  .rsvp-top { padding: 9px 24px; font-size: 11px; letter-spacing: 0.28em; }
+  @media (max-width: 760px) { .topbar-right { gap: 0; } }
+
+  .rsvp-svc { padding: 2px 28px 0; }
+  .rsvp-svc-title { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 20px; color: var(--brass-light); margin: 0 0 8px; }
+  .rsvp-svc-row { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--navy-line); }
+  .rsvp-svc-row:first-of-type { border-top: 1px solid var(--navy-line); }
+  .rsvp-svc-label { color: var(--brass); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; align-self: center; }
+  .rsvp-svc-value { font-family: "Cormorant Garamond", serif; font-size: 16px; color: var(--ivory); }
+
+  .gal-strip {
+    display: flex; gap: 14px; overflow-x: auto;
+    max-width: 1280px; margin: 0 auto; padding: 4px 4px 18px;
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+    scrollbar-color: var(--brass-deep) var(--navy-line);
+  }
+  .gal-strip .gal-item {
+    flex: 0 0 auto; width: clamp(200px, 26vw, 280px); aspect-ratio: 1 / 1;
+    border: 1px solid var(--brass); padding: 4px; background: var(--navy);
+    scroll-snap-align: start;
+  }
+  .gal-strip .gal-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gal-strip::-webkit-scrollbar { height: 8px; }
+  .gal-strip::-webkit-scrollbar-thumb { background: var(--brass-deep); border-radius: 4px; }
+  .gal-strip::-webkit-scrollbar-track { background: var(--navy-line); }
+
+  .svc-details { max-width: 640px; margin: 8px auto 0; }
+  .svc-row { display: grid; grid-template-columns: 160px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--navy-line); align-items: baseline; }
+  .svc-row:first-child { border-top: 1px solid var(--navy-line); }
+  .svc-label { color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; }
+  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 22px; color: var(--ivory); }
+  @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 4px; } }
+  .svc-cta { text-align: center; margin-top: 42px; }
+  .svc-detail-note { margin-top: 18px; font-size: 12px; letter-spacing: 0.08em; }
 
   .section-num { font-family: "Cormorant Garamond", serif; color: var(--brass); }
   .section-meta small { color: var(--brass); }
@@ -189,47 +257,70 @@
       <div class="crest-mark">W</div>
       <div class="crest-text"><small>In Honored Memory</small><strong>Carlynn Wu</strong></div>
     </div>
-    <nav class="links">
-      <a href="story.html">His Story</a>
-      <a href="#service">Service</a>
-      <a href="#tribute">Tribute</a>
-      <a href="#lanterns">Lanterns</a>
-    </nav>
+    <div class="topbar-right">
+      <nav class="links">
+        <a href="story.html">Her Story</a>
+        <a href="service.html">Service</a>
+        <a href="gallery.html">Photographs</a>
+        <a href="#lanterns">Lanterns</a>
+      </nav>
+      <button type="button" class="rsvp-open rsvp-top">RSVP</button>
+    </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-frame">
     <h1>Carlynn <em>Wu</em></h1>
-    <div class="rank"><b>Husband</b> &nbsp;·&nbsp; <b>Father</b> &nbsp;·&nbsp; <b>Fire Captain</b> &nbsp;·&nbsp; <b>Friend</b></div>
+    <div class="rank"><b>Beloved Daughter &amp; Sister</b></div>
     <div class="portrait-row">
       <div class="rule"></div>
-      <div class="portrait"><img src="assets/mel-portrait.png" alt="Portrait of Carlynn Wu" onerror="this.style.display='none'"></div>
+      <div class="portrait"><img src="assets/carlynn-portrait.webp" alt="Portrait of Carlynn Wu, laughing" onerror="this.style.display='none'"></div>
       <div class="rule"></div>
     </div>
-    <div class="dates">May 17, 1954 <span class="dash">·</span> May 7, 2026</div>
+    <div class="dates">September 10, 2021 <span class="dash">·</span> July 12, 2026</div>
   </div>
 </section>
 
 <section class="block bio" id="story">
   <div class="section-head">
     <div class="section-num">01</div>
-    <div class="section-meta"><small>His Story</small><h2>A life <em>in love and fire</em></h2></div>
+    <div class="section-meta"><small>Who She Was</small><h2>A little life, <em>full of color</em></h2></div>
   </div>
   <div class="bio-grid">
-    <div class="bio-photo"><img src="assets/family-1950s.jpg" alt="The Wu family in the 1950s — Edward, mother, baby Lisa, father, and Carlynn" onerror="this.style.display='none'"></div>
+    <div class="bio-photo"><img src="assets/carlynn-easel-teal.webp" alt="Carlynn in a teal dress, smiling beside her easel" onerror="this.style.display='none'"></div>
     <div class="bio-body">
-      <p class="lede">Mel was born in Oakland May 1954 into a first generation immigrant family. His father was a butcher, his mom a seamstress. His dad was a gifted gardener, took care of everything and Mom was the best cook I ever met. Mel was the middle child of three. His brother, Edward, was five years his senior and his sister, Lisa, five years his junior.</p>
-      <p>He shared many vignettes of his happy childhood. Early on were indications of a fun-loving mischievous rascal&hellip;</p>
-      <div class="pull">&ldquo;He was real, made mistakes, rectified them, was generous, trustworthy and displayed class that was akin to character and integrity.&rdquo;<cite>&mdash; Joanne, on Mel</cite></div>
-      <div class="story-cta"><a href="story.html">Read his full story &rarr;</a></div>
+      <p class="lede">Carlynn was five years old, and in those five short years she filled our world with more color than most people manage in a lifetime. She was bright and tender-hearted, endlessly curious, and already a gifted little artist &mdash; happiest with a paintbrush in her hand and a fresh sheet of paper in front of her.</p>
+      <p>She was a devoted big sister to baby Leonardo, and the beloved daughter of Cindy and Peter. She left us suddenly on July 12, 2026. What remains &mdash; her paintings, her laughter, the way she looked at the world &mdash; we hold close, and we gather here to remember it together.</p>
+      <div class="pull">&ldquo;Every heart she touched is brighter for having known her.&rdquo;<cite>&mdash; In loving memory</cite></div>
+      <div class="story-cta"><a href="story.html">More of her story &rarr;</a></div>
     </div>
   </div>
 </section>
 
-<section class="block recording" id="service">
+<section class="block service-block" id="service">
   <div class="section-head">
     <div class="section-num">02</div>
+    <div class="section-meta"><small>The Service</small><h2>Celebrating <em>her life</em></h2></div>
+  </div>
+  <p class="recording-intro">We warmly invite you to gather with us in remembrance of Carlynn. The details below are being finalized &mdash; please check back soon, and let us know you&rsquo;re coming.</p>
+  <div class="svc-details">
+    <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Reception</span><span class="svc-value">To be announced</span></div>
+  </div>
+  <div class="svc-cta">
+    <button type="button" class="rsvp-open" id="rsvp-open">RSVP for the Memorial</button>
+    <p class="svc-detail-note"><a href="service.html">See full service details &rarr;</a></p>
+  </div>
+</section>
+
+<!-- STASHED per request: "Watch the recording" section, hidden from view but preserved.
+     Un-comment to restore. Update the service date and data-video-id before doing so.
+<section class="block recording" id="service-recording">
+  <div class="section-head">
+    <div class="section-num">05</div>
     <div class="section-meta"><small>The Memorial Service</small><h2>Watch the <em>recording</em></h2></div>
   </div>
   <p class="recording-intro">We gathered on Saturday, May 30, 2026 to remember Carlynn. If you couldn't be with us &mdash; or would like to relive the day &mdash; the full service is here to watch whenever you wish.</p>
@@ -249,33 +340,29 @@
     </div>
   </div>
 </section>
+-->
 
 <section class="block tribute" id="tribute">
   <div class="section-head">
     <div class="section-num">03</div>
-    <div class="section-meta"><small>Through the Years</small><h2>A life <em>in pictures</em></h2></div>
+    <div class="section-meta"><small>Photographs</small><h2>Her life <em>in pictures</em></h2></div>
   </div>
-  <div class="vt-wrap">
-    <div class="vt-frame">
-      <button type="button" class="vt-screen" id="vt-screen" data-video-id="dKlYnooDGbE" aria-label="Play tribute video — Carlynn Wu, a life in pictures">
-        <img class="vt-poster" src="assets/tribute-poster.jpg" alt="Carlynn Wu in his fire-captain gear, holding his child" onerror="this.style.display='none'">
-        <span class="vt-scrim" aria-hidden="true"></span>
-        <span class="vt-play" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="32" cy="32" r="30"/>
-            <path d="M26 22l18 10-18 10z" fill="currentColor" stroke="none"/>
-          </svg>
-        </span>
-        <span class="vt-caption">In Loving Memory &middot; 11 min</span>
-      </button>
-    </div>
+  <p class="recording-intro">A collection of moments with Carlynn &mdash; at play, on family adventures, and lost in her painting.</p>
+  <div class="gal-strip">
+    <div class="gal-item"><img src="assets/carlynn-portrait.webp" alt="Portrait of Carlynn, laughing" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/cindy-carlynn-sunset.webp" alt="Cindy holding Carlynn close at sunset" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/carlynn-cindy-painting.webp" alt="Carlynn and her mother painting together at an easel" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art-1.webp" alt="An abstract painting by Carlynn" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/carlynn-poppies.webp" alt="Carlynn walking a path lined with poppies" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/family-hospital.webp" alt="The family welcoming baby Leonardo" loading="lazy" onerror="this.style.display='none'"></div>
   </div>
+  <div class="story-cta" style="text-align:center; margin-top:36px;"><a href="gallery.html">See more photographs &rarr;</a></div>
 </section>
 
 <section class="block lanterns" id="lanterns">
   <div class="section-head">
     <div class="section-num">04</div>
-    <div class="section-meta"><small>Lantern Wall</small><h2>Light a lantern <em>in his memory</em></h2></div>
+    <div class="section-meta"><small>Lantern Wall</small><h2>Light a lantern <em>in her memory</em></h2></div>
   </div>
   <lantern-wall id="hg" endpoint="/api/lanterns" style="--lw-bg: rgba(10,20,34,0.6); --lw-glow: rgba(200,153,104,0.35); --lw-ink: #f3ead7; --lw-ink-soft: #d8cdb4; --lw-line: rgba(200,153,104,0.3); --lw-accent: #c89968; --lw-serif: 'Cormorant Garamond', serif;"></lantern-wall>
 </section>
@@ -284,13 +371,32 @@
   <div class="foot-mark">W</div>
   <div class="foot-rule"></div>
   <div class="foot-links">
-    <a href="#service">Service</a>
-    <a href="#tribute">Tribute</a>
+    <a href="#story">Her Story</a>
+    <a href="service.html">Service</a>
+    <a href="gallery.html">Photographs</a>
     <a href="#lanterns">Lanterns</a>
   </div>
   <div class="foot-rule"></div>
   <div class="foot-copy">In Honored Memory · Carlynn's Family · MMXXVI</div>
 </footer>
+
+<dialog class="rsvp-dialog" id="rsvp-dialog" aria-label="RSVP for the memorial">
+  <div class="rsvp-dialog-head">
+    <button type="button" class="rsvp-close" id="rsvp-close" aria-label="Close">&times;</button>
+  </div>
+  <div class="rsvp-svc">
+    <h3 class="rsvp-svc-title">The Service</h3>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Date</span><span class="rsvp-svc-value">To be announced</span></div>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Time</span><span class="rsvp-svc-value">To be announced</span></div>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Location</span><span class="rsvp-svc-value">To be announced</span></div>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Reception</span><span class="rsvp-svc-value">To be announced</span></div>
+  </div>
+  <rsvp-form id="rsvp-form" endpoint="/api/rsvp"></rsvp-form>
+  <div class="rsvp-turnstile">
+    <div id="rsvp-turnstile-widget"></div>
+    <small>Spam protection by Cloudflare</small>
+  </div>
+</dialog>
 
 <script>
 (function () {
@@ -309,6 +415,58 @@
       live.appendChild(iframe);
       screen.replaceWith(live);
     });
+  });
+})();
+
+(function () {
+  // RSVP dialog: opens the <rsvp-form>, mounts the Turnstile widget in light DOM
+  // (it can't run inside the form's shadow root) and relays the token to the form.
+  var openBtns = document.querySelectorAll(".rsvp-open");
+  var dialog = document.getElementById("rsvp-dialog");
+  var closeBtn = document.getElementById("rsvp-close");
+  var form = document.getElementById("rsvp-form");
+  if (!openBtns.length || !dialog || !form || typeof dialog.showModal !== "function") return;
+
+  var widgetId = null;
+  var attempts = 0;
+
+  function ensureTurnstile() {
+    if (widgetId !== null) return;
+    if (window.turnstile && typeof window.turnstile.render === "function" && window.RSVP_TURNSTILE_SITE_KEY) {
+      widgetId = window.turnstile.render("#rsvp-turnstile-widget", {
+        sitekey: window.RSVP_TURNSTILE_SITE_KEY,
+        theme: "dark",
+        callback: function (token) { form.setTurnstileToken(token); },
+        "expired-callback": function () { form.clearTurnstileToken(); },
+        "error-callback": function () { form.clearTurnstileToken(); }
+      });
+    } else if (attempts++ < 40) {
+      // api.js loads async — retry until the global is ready.
+      setTimeout(ensureTurnstile, 200);
+    }
+  }
+
+  openBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (form.isDone) form.reset();
+      dialog.showModal();
+      ensureTurnstile();
+    });
+  });
+
+  closeBtn.addEventListener("click", function () { dialog.close(); });
+
+  // Click on the backdrop (outside the card) closes the dialog.
+  dialog.addEventListener("click", function (e) {
+    if (e.target === dialog) dialog.close();
+  });
+
+  // Fresh token each time it's reopened — Turnstile tokens are single-use.
+  dialog.addEventListener("close", function () {
+    form.clearTurnstileToken();
+    if (widgetId !== null && window.turnstile) {
+      try { window.turnstile.reset(widgetId); } catch (_) {}
+    }
   });
 })();
 </script>
