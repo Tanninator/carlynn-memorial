@@ -52,6 +52,29 @@
   .dates .dash { color: var(--brass); margin: 0 14px; }
   .epitaph { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(18px, 1.6vw, 22px); color: var(--ivory-soft); max-width: 620px; margin: 24px auto 0; line-height: 1.5; }
 
+  /* Gold flowers & butterflies drifting up from the bottom of the hero */
+  .flutter { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .flutter .fl { position: absolute; bottom: -10%; will-change: transform, opacity; animation-name: fl-rise; animation-timing-function: linear; animation-iteration-count: infinite; }
+  .flutter .fl-in { display: block; width: 100%; height: 100%; transform-origin: center; animation-name: fl-sway; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+  .flutter svg { display: block; width: 100%; height: 100%; }
+  .flutter .is-flower svg { fill: var(--brass-light); }
+  .flutter .is-bfly svg { fill: var(--brass); transform-origin: center; animation-name: fl-flap; animation-duration: 0.85s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+  @keyframes fl-rise {
+    0%   { transform: translateY(0);       opacity: 0; }
+    10%  { opacity: var(--fl-op, 0.6); }
+    88%  { opacity: var(--fl-op, 0.6); }
+    100% { transform: translateY(-118vh);   opacity: 0; }
+  }
+  @keyframes fl-sway {
+    from { transform: translateX(-16px) rotate(-14deg); }
+    to   { transform: translateX(16px) rotate(14deg); }
+  }
+  @keyframes fl-flap {
+    from { transform: scaleX(0.5); }
+    to   { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) { .flutter { display: none; } }
+
   .hero-cta { margin-top: 34px; }
   .rsvp-open {
     display: inline-flex; align-items: center; gap: 12px;
@@ -271,6 +294,7 @@
 </header>
 
 <section class="hero">
+  <div class="flutter" aria-hidden="true"></div>
   <div class="hero-frame">
     <h1>Carlynn <em>Wu</em></h1>
     <div class="rank"><b>Beloved daughter, loving sister, and cherished friend</b></div>
@@ -470,6 +494,59 @@
       try { window.turnstile.reset(widgetId); } catch (_) {}
     }
   });
+})();
+
+(function () {
+  // Gold flowers & butterflies drifting up from the bottom of the hero.
+  var host = document.querySelector(".hero .flutter");
+  if (!host) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var FLOWER =
+    '<svg viewBox="0 0 24 24"><g>' +
+    '<ellipse cx="12" cy="6.2" rx="2.3" ry="4.4"/>' +
+    '<ellipse cx="12" cy="6.2" rx="2.3" ry="4.4" transform="rotate(72 12 12)"/>' +
+    '<ellipse cx="12" cy="6.2" rx="2.3" ry="4.4" transform="rotate(144 12 12)"/>' +
+    '<ellipse cx="12" cy="6.2" rx="2.3" ry="4.4" transform="rotate(216 12 12)"/>' +
+    '<ellipse cx="12" cy="6.2" rx="2.3" ry="4.4" transform="rotate(288 12 12)"/>' +
+    '<circle cx="12" cy="12" r="2.1" fill-opacity="0.65"/></g></svg>';
+  var BUTTERFLY =
+    '<svg viewBox="0 0 24 24"><g>' +
+    '<ellipse cx="8" cy="8.6" rx="5" ry="4"/>' +
+    '<ellipse cx="16" cy="8.6" rx="5" ry="4"/>' +
+    '<ellipse cx="8.9" cy="15.4" rx="3.5" ry="3.1"/>' +
+    '<ellipse cx="15.1" cy="15.4" rx="3.5" ry="3.1"/>' +
+    '<rect x="11.5" y="6" width="1" height="12.5" rx="0.5" fill-opacity="0.85"/></g></svg>';
+
+  var N = 16;
+  for (var i = 0; i < N; i++) {
+    var isButterfly = i % 3 === 0;
+    var size = 14 + Math.random() * 24;
+    var dur = 16 + Math.random() * 12;
+    var swayDur = 3 + Math.random() * 3;
+
+    var outer = document.createElement("span");
+    outer.className = "fl " + (isButterfly ? "is-bfly" : "is-flower");
+    outer.style.left = (Math.random() * 100).toFixed(2) + "%";
+    outer.style.width = size.toFixed(1) + "px";
+    outer.style.height = size.toFixed(1) + "px";
+    outer.style.animationDuration = dur.toFixed(2) + "s";
+    outer.style.animationDelay = (-Math.random() * dur).toFixed(2) + "s";
+    outer.style.setProperty("--fl-op", (0.3 + Math.random() * 0.4).toFixed(2));
+
+    var inner = document.createElement("span");
+    inner.className = "fl-in";
+    inner.style.animationDuration = swayDur.toFixed(2) + "s";
+    inner.style.animationDelay = (-Math.random() * swayDur).toFixed(2) + "s";
+    inner.innerHTML = isButterfly ? BUTTERFLY : FLOWER;
+
+    if (isButterfly) {
+      inner.firstChild.style.animationDuration = (0.7 + Math.random() * 0.5).toFixed(2) + "s";
+    }
+
+    outer.appendChild(inner);
+    host.appendChild(outer);
+  }
 })();
 </script>
 
