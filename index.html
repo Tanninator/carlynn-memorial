@@ -24,7 +24,7 @@
   a { color: var(--brass-light); }
 
   .topbar { background: rgba(10,20,34,0.85); border-bottom: 1px solid var(--navy-line); }
-  .topbar-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .topbar-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 100; }
   .crest { display: flex; align-items: center; gap: 14px; }
   .crest-mark { width: 34px; height: 34px; border: 1px solid var(--brass); display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 16px; }
   .crest-text small { display: block; color: var(--brass); font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; }
@@ -32,7 +32,29 @@
   nav.links { display: flex; gap: 28px; }
   nav.links a { color: var(--ivory-soft); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
   nav.links a:hover { color: var(--brass-light); }
-  @media (max-width: 760px) { nav.links { display: none; } }
+  nav.links a[aria-current="page"] { color: var(--brass-light); }
+  .nav-toggle { display: none; }
+  @media (max-width: 760px) {
+    nav.links { display: none; }
+    nav.links.open {
+      display: flex; flex-direction: column; gap: 0;
+      position: absolute; top: calc(100% + 1px); right: 32px;
+      min-width: 210px; padding: 6px 0;
+      background: var(--navy); border: 1px solid var(--navy-line);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55); z-index: 60;
+    }
+    nav.links.open a { padding: 13px 22px; font-size: 12px; letter-spacing: 0.22em; }
+    nav.links.open a[aria-current="page"] { background: rgba(200,153,104,0.10); }
+    .nav-toggle {
+      display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+      width: 44px; height: 38px; padding: 0 11px; margin-right: 16px;
+      background: transparent; border: 1px solid var(--brass); cursor: pointer;
+    }
+    .nav-toggle span { display: block; height: 2px; background: var(--brass-light); transition: transform 0.25s ease, opacity 0.2s ease; }
+    .nav-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
 
   .hero { position: relative; min-height: 92vh; padding: 120px 32px 80px; display: flex; align-items: center; justify-content: center; }
   .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%, rgba(200,153,104,0.18), transparent 55%), linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
@@ -73,6 +95,11 @@
     from { transform: scaleX(0.5); }
     to   { transform: scaleX(1); }
   }
+  /* Release compositor work + stop repaints once the hero scrolls out of view (helps mobile scroll). */
+  .flutter.is-idle .fl,
+  .flutter.is-idle .fl-in,
+  .flutter.is-idle .is-bfly svg { animation-play-state: paused; }
+  .flutter.is-idle .fl { will-change: auto; }
   @media (prefers-reduced-motion: reduce) { .flutter { display: none; } }
 
   .hero-cta { margin-top: 34px; }
@@ -281,13 +308,15 @@
       <div class="crest-text"><small>In Loving Memory</small><strong>Carli Wu</strong></div>
     </div>
     <div class="topbar-right">
-      <nav class="links">
+      <nav class="links" id="nav-links">
+        <a href="index.html" aria-current="page">Home</a>
         <a href="story.html">Her Story</a>
         <a href="service.html">Service</a>
-        <a href="gallery.html">Photographs</a>
+        <a href="gallery.html">Gallery</a>
         <a href="grief-resources.html">Grief Resources</a>
-        <a href="#lanterns">Lanterns</a>
+        <a href="index.html#lanterns">Lanterns</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
       <button type="button" class="rsvp-open rsvp-top">RSVP</button>
     </div>
   </div>
@@ -296,7 +325,7 @@
 <section class="hero">
   <div class="flutter" aria-hidden="true"></div>
   <div class="hero-frame">
-    <h1>Carlynn <em>Wu</em></h1>
+    <h1>Carlynn Yuehan <em>Wu</em></h1>
     <div class="rank"><b>Beloved daughter, loving sister, and cherished friend</b></div>
     <div class="portrait-row">
       <div class="rule"></div>
@@ -370,7 +399,7 @@
 <section class="block tribute" id="tribute">
   <div class="section-head">
     <div class="section-num">03</div>
-    <div class="section-meta"><small>Photographs</small><h2>Her life <em>in pictures</em></h2></div>
+    <div class="section-meta"><small>Gallery</small><h2>Her life <em>in pictures</em></h2></div>
   </div>
   <p class="recording-intro">A collection of moments with Carli &mdash; at play, on family adventures, and lost in her painting.</p>
   <div class="gal-strip">
@@ -398,7 +427,7 @@
   <div class="foot-links">
     <a href="#story">Her Story</a>
     <a href="service.html">Service</a>
-    <a href="gallery.html">Photographs</a>
+    <a href="gallery.html">Gallery</a>
     <a href="grief-resources.html">Grief Resources</a>
     <a href="#lanterns">Lanterns</a>
   </div>
@@ -472,13 +501,22 @@
     }
   }
 
+  function openDialog() {
+    if (form.isDone) form.reset();
+    if (!dialog.open) dialog.showModal();
+    ensureTurnstile();
+  }
+
   openBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      if (form.isDone) form.reset();
-      dialog.showModal();
-      ensureTurnstile();
-    });
+    btn.addEventListener("click", openDialog);
   });
+
+  // Other pages deep-link into the RSVP dialog via index.html#rsvp.
+  function maybeOpenFromHash() {
+    if (location.hash === "#rsvp") openDialog();
+  }
+  maybeOpenFromHash();
+  window.addEventListener("hashchange", maybeOpenFromHash);
 
   closeBtn.addEventListener("click", function () { dialog.close(); });
 
@@ -547,8 +585,41 @@
     outer.appendChild(inner);
     host.appendChild(outer);
   }
+
+  // Pause the drift (and drop will-change layers) whenever the hero isn't on screen,
+  // so scrolling the rest of the page stays smooth on mobile.
+  var hero = host.closest(".hero");
+  if (hero && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      host.classList.toggle("is-idle", !entries[0].isIntersecting);
+    }, { rootMargin: "120px" });
+    io.observe(hero);
+  }
 })();
 </script>
 
+<script>
+(function () {
+  var toggle = document.querySelector(".nav-toggle");
+  var links = document.getElementById("nav-links");
+  if (!toggle || !links) return;
+  function close() {
+    links.classList.remove("open");
+    toggle.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+  }
+  toggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = links.classList.toggle("open");
+    toggle.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
+  document.addEventListener("click", function (e) {
+    if (!links.contains(e.target) && !toggle.contains(e.target)) close();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+})();
+</script>
 </body>
 </html>

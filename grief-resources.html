@@ -28,7 +28,33 @@
   nav.links a { color: var(--ivory-soft); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
   nav.links a:hover { color: var(--brass-light); }
   nav.links a[aria-current="page"] { color: var(--brass-light); }
-  @media (max-width: 760px) { nav.links { display: none; } }
+  .nav-toggle { display: none; }
+  .topbar-inner { position: relative; z-index: 100; }
+  .topbar-right { display: flex; align-items: center; gap: 28px; }
+  .rsvp-open { display: inline-flex; align-items: center; padding: 9px 24px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
+  .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
+  @media (max-width: 760px) {
+    nav.links { display: none; }
+    nav.links.open {
+      display: flex; flex-direction: column; gap: 0;
+      position: absolute; top: calc(100% + 1px); right: 32px;
+      min-width: 210px; padding: 6px 0;
+      background: var(--navy); border: 1px solid var(--navy-line);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55); z-index: 60;
+    }
+    nav.links.open a { padding: 13px 22px; font-size: 12px; letter-spacing: 0.22em; }
+    nav.links.open a[aria-current="page"] { background: rgba(200,153,104,0.10); }
+    .nav-toggle {
+      display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+      width: 44px; height: 38px; padding: 0 11px; margin-right: 16px;
+      background: transparent; border: 1px solid var(--brass); cursor: pointer;
+    }
+    .nav-toggle span { display: block; height: 2px; background: var(--brass-light); transition: transform 0.25s ease, opacity 0.2s ease; }
+    .nav-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .topbar-right { gap: 0; }
+  }
 
   .gr-title { padding: 120px 32px 50px; text-align: center; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
   .gr-title .ribbon { display: inline-flex; align-items: center; gap: 16px; color: var(--brass); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 28px; }
@@ -65,14 +91,18 @@
       <div class="crest-mark">CW</div>
       <div class="crest-text"><small>In Loving Memory</small><strong>Carli Wu</strong></div>
     </div>
-    <nav class="links">
+    <div class="topbar-right">
+    <nav class="links" id="nav-links">
       <a href="index.html">Home</a>
       <a href="story.html">Her Story</a>
       <a href="service.html">Service</a>
-      <a href="gallery.html">Photographs</a>
+      <a href="gallery.html">Gallery</a>
       <a href="grief-resources.html" aria-current="page">Grief Resources</a>
       <a href="index.html#lanterns">Lanterns</a>
     </nav>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a href="index.html#rsvp" class="rsvp-open rsvp-top">RSVP</a>
+    </div>
   </div>
 </header>
 
@@ -103,12 +133,35 @@
     <a href="index.html">Memorial</a>
     <a href="story.html">Her Story</a>
     <a href="service.html">Service</a>
-    <a href="gallery.html">Photographs</a>
+    <a href="gallery.html">Gallery</a>
     <a href="grief-resources.html">Grief Resources</a>
   </div>
   <div class="foot-rule"></div>
   <div class="foot-copy">In Loving Memory · Carli's Family · MMXXVI</div>
 </footer>
 
+<script>
+(function () {
+  var toggle = document.querySelector(".nav-toggle");
+  var links = document.getElementById("nav-links");
+  if (!toggle || !links) return;
+  function close() {
+    links.classList.remove("open");
+    toggle.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+  }
+  toggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = links.classList.toggle("open");
+    toggle.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
+  document.addEventListener("click", function (e) {
+    if (!links.contains(e.target) && !toggle.contains(e.target)) close();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+})();
+</script>
 </body>
 </html>
