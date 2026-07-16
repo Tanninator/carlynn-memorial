@@ -49,6 +49,17 @@ input.txt {
 input.txt:focus { border-bottom-color: var(--rsvp-accent); }
 input.txt:disabled { opacity: 0.6; }
 
+.attend { margin: 4px 0 22px; }
+.attend > .label {
+  display: block; color: var(--rsvp-accent);
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.radios { display: flex; flex-wrap: wrap; gap: 14px 28px; }
+.radio { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; font-family: var(--rsvp-serif); font-size: 18px; color: var(--rsvp-ink); }
+.radio input { accent-color: var(--rsvp-accent); width: 17px; height: 17px; cursor: pointer; }
+.radio input:disabled { cursor: not-allowed; opacity: 0.6; }
+
 .guests { margin: 4px 0 22px; }
 .guests > .label {
   display: block; color: var(--rsvp-accent);
@@ -119,6 +130,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       this._turnstileToken = "";
       this._pendingName = "";
       this._pendingEmail = "";
+      this._attendance = "";
       this._root = this.attachShadow({ mode: "open" });
     }
 
@@ -133,6 +145,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       this._turnstileToken = "";
       this._pendingName = "";
       this._pendingEmail = "";
+      this._attendance = "";
       this._render();
       this.dispatchEvent(new CustomEvent("rsvp-reset", { bubbles: true, composed: true }));
     }
@@ -216,6 +229,16 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
                    ${isSubmitting ? "disabled" : ""}>
           </label>
 
+          <div class="attend">
+            <span class="label">Will you attend&hellip;</span>
+            <div class="radios">
+              <label class="radio"><input type="radio" name="attendance" value="in_person"
+                     ${this._attendance === "in_person" ? "checked" : ""} ${isSubmitting ? "disabled" : ""}> In person</label>
+              <label class="radio"><input type="radio" name="attendance" value="virtual"
+                     ${this._attendance === "virtual" ? "checked" : ""} ${isSubmitting ? "disabled" : ""}> Virtually</label>
+            </div>
+          </div>
+
           <div class="guests">
             <span class="label">Guests you'll bring</span>
             ${guestRows}
@@ -290,8 +313,10 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       this._snapshotGuests();
       const nameEl = this._root.querySelector('input[name="name"]');
       const emailEl = this._root.querySelector('input[name="email"]');
+      const attEl = this._root.querySelector('input[name="attendance"]:checked');
       if (nameEl) this._pendingName = nameEl.value;
       if (emailEl) this._pendingEmail = emailEl.value;
+      if (attEl) this._attendance = attEl.value;
     }
 
     async _submit() {
@@ -300,12 +325,17 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       const emailEl = this._root.querySelector('input[name="email"]');
       const name = (nameEl?.value ?? "").trim();
       const email = (emailEl?.value ?? "").trim();
+      const attendance = this._root.querySelector('input[name="attendance"]:checked')?.value || "";
+      this._attendance = attendance;
       const guests = this._guests.map((g) => g.trim()).filter(Boolean);
       const turnstileToken = this._turnstileToken;
 
       if (!name) return this._fail("Please enter your name.");
       if (!email) return this._fail("Please enter your email.");
       if (!/^\S+@\S+\.\S+$/.test(email)) return this._fail("That email address doesn't look right.");
+      if (attendance !== "in_person" && attendance !== "virtual") {
+        return this._fail("Please let us know if you'll attend in person or virtually.");
+      }
       if (guests.length > GUESTS_MAX) return this._fail(`Please list at most ${GUESTS_MAX} additional guests.`);
       if (!turnstileToken) return this._fail("Please complete the bot check.");
 
@@ -318,7 +348,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
         res = await fetch(this._endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, guests, turnstileToken }),
+          body: JSON.stringify({ name, email, attendance, guests, turnstileToken }),
         });
       } catch {
         // re-fill the inputs on error

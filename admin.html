@@ -411,7 +411,7 @@
     thSelect.appendChild(masterCb);
     headRow.appendChild(thSelect);
 
-    for (const label of ["When", "Name", "Email", "Guests", "Party", ""]) {
+    for (const label of ["When", "Name", "Email", "Attendance", "Guests", "Party", ""]) {
       const th = document.createElement("th");
       th.textContent = label;
       headRow.appendChild(th);
@@ -433,9 +433,12 @@
       tdSelect.appendChild(rowCb);
       tr.appendChild(tdSelect);
 
+      const attLabel = r.attendance === "in_person" ? "In person"
+        : r.attendance === "virtual" ? "Virtual" : "—";
       tr.appendChild(td("when", formatWhen(r.created_at)));
       tr.appendChild(td("", r.name));
       tr.appendChild(td("email", r.email));
+      tr.appendChild(td("attendance", attLabel));
       tr.appendChild(td("guests", (r.guest_names || []).join(", ")));
       tr.appendChild(td("size", String(r.party_size)));
 
@@ -710,11 +713,13 @@
       (m, r) => Math.max(m, (r.guest_names || []).length),
       0
     );
-    const headers = ["created_at", "name", "email", "party_size"];
+    const headers = ["created_at", "name", "email", "attendance", "party_size"];
     for (let i = 1; i <= maxGuests; i++) headers.push("guest_" + i);
     const rows = [headers];
     for (const r of subset) {
-      const row = [r.created_at, r.name, r.email, String(r.party_size)];
+      const attLabel = r.attendance === "in_person" ? "In person"
+        : r.attendance === "virtual" ? "Virtual" : "";
+      const row = [r.created_at, r.name, r.email, attLabel, String(r.party_size)];
       for (let i = 0; i < maxGuests; i++) row.push((r.guest_names || [])[i] ?? "");
       rows.push(row);
     }
