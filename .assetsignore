@@ -39,3 +39,6 @@ carousel.png
 
 # Large video source files — hosted on YouTube, never deployed (Cloudflare caps assets at ~25MB)
 assets/*.mov
+
+# Full-size art originals — only the optimized assets/art/web + assets/art/thumb are served
+assets/art/*.JPG

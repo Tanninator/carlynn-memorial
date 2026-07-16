@@ -156,7 +156,7 @@
   .rsvp-svc-row { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--navy-line); }
   .rsvp-svc-row:first-of-type { border-top: 1px solid var(--navy-line); }
   .rsvp-svc-label { color: var(--brass); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; align-self: center; }
-  .rsvp-svc-value { font-family: "Cormorant Garamond", serif; font-size: 16px; color: var(--ivory); }
+  .rsvp-svc-value { font-family: "Cormorant Garamond", serif; font-size: 16px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
 
   .gal-strip {
     display: flex; gap: 14px; overflow-x: auto;
@@ -178,7 +178,7 @@
   .svc-row { display: grid; grid-template-columns: 160px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--navy-line); align-items: baseline; }
   .svc-row:first-child { border-top: 1px solid var(--navy-line); }
   .svc-label { color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; }
-  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 22px; color: var(--ivory); }
+  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 22px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
   @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 4px; } }
   .svc-cta { text-align: center; margin-top: 42px; }
   .svc-detail-note { margin-top: 18px; font-size: 12px; letter-spacing: 0.08em; }
@@ -373,10 +373,9 @@
   </div>
   <p class="recording-intro">We warmly invite you to gather with us in remembrance of Carli. The details below are being finalized &mdash; please check back soon, and let us know you&rsquo;re coming.</p>
   <div class="svc-details">
+      <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
     <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">Saturday, July 25, 2026</span></div>
-    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
-    <div class="svc-row"><span class="svc-label">Reception</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">10 AM PST</span></div>
   </div>
   <div class="svc-cta">
     <button type="button" class="rsvp-open" id="rsvp-open">RSVP for the Memorial</button>
@@ -434,9 +433,12 @@
   </div>
   <p class="recording-intro">Carli was happiest with a paintbrush in her hand. A few of her paintings &mdash; full of color and joy.</p>
   <div class="gal-strip">
-    <div class="gal-item"><img src="assets/art-1.webp" alt="An abstract painting by Carli in pinks, greens, and blues" loading="lazy" onerror="this.style.display='none'"></div>
-    <div class="gal-item"><img src="assets/art-2.webp" alt="An abstract painting by Carli in pink and green" loading="lazy" onerror="this.style.display='none'"></div>
-    <div class="gal-item"><img src="assets/art-3.webp" alt="An abstract painting by Carli in blue with golden dots" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art/thumb/0162004D-34B8-455C-91B2-A231C789FBA5.jpg" alt="A painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art/thumb/03DE0D78-88B6-4243-8F15-976D7C10F795.jpg" alt="A painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art/thumb/0E136B6F-052D-47FA-A5B7-93F53A561FCD.jpg" alt="A painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art/thumb/105B2829-DF35-42BC-97D6-E5ED86EA20A5.jpg" alt="A painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art/thumb/13E1BDF8-F066-42E7-BB11-5D6BCA42044D.jpg" alt="A painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art/thumb/1599D091-7156-4D55-9E57-38A263AF50AF.jpg" alt="A painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
   </div>
   <div class="story-cta" style="text-align:center; margin-top:36px;"><a href="gallery.html#sec-art">See all of her artwork &rarr;</a></div>
 </section>
@@ -469,10 +471,9 @@
   </div>
   <div class="rsvp-svc">
     <h3 class="rsvp-svc-title">The Service</h3>
+      <div class="rsvp-svc-row"><span class="rsvp-svc-label">Location</span><span class="rsvp-svc-value">Valley Presbyterian Church, Portola Valley</span></div>
     <div class="rsvp-svc-row"><span class="rsvp-svc-label">Date</span><span class="rsvp-svc-value">Saturday, July 25, 2026</span></div>
-    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Time</span><span class="rsvp-svc-value">To be announced</span></div>
-    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Location</span><span class="rsvp-svc-value">Valley Presbyterian Church, Portola Valley</span></div>
-    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Reception</span><span class="rsvp-svc-value">To be announced</span></div>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Time</span><span class="rsvp-svc-value">10 AM PST</span></div>
   </div>
   <rsvp-form id="rsvp-form" endpoint="/api/rsvp"></rsvp-form>
   <div class="rsvp-turnstile">

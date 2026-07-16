@@ -68,7 +68,7 @@
   .svc-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--navy-line); align-items: baseline; }
   .svc-row:first-child { border-top: 1px solid var(--navy-line); }
   .svc-label { color: var(--brass); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; }
-  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); }
+  .svc-value { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
   @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 6px; } }
 
   .svc-cta { text-align: center; margin-top: 48px; }
@@ -117,10 +117,9 @@
 
 <section class="svc-wrap">
   <div class="svc-details">
+      <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
     <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">Saturday, July 25, 2026</span></div>
-    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
-    <div class="svc-row"><span class="svc-label">Reception</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">10 AM PST</span></div>
   </div>
   <div class="svc-cta"><a href="index.html#rsvp">RSVP for the Memorial &rarr;</a></div>
   <p class="svc-note">Please let us know if you plan to attend so we can prepare a place for you.</p>

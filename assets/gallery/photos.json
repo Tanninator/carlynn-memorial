@@ -1,20 +1,473 @@
 [
-  { "src": "assets/carlynn-portrait.webp", "category": "photo", "alt": "Carlynn laughing, seated on a redwood stump" },
-  { "src": "assets/carlynn-easel-teal.webp", "category": "photo", "alt": "Carlynn in a teal dress beside her easel" },
-  { "src": "assets/carlynn-painting.webp", "category": "photo", "alt": "Carlynn painting at her easel" },
-  { "src": "assets/carlynn-cindy-painting.webp", "category": "photo", "alt": "Carlynn and her mother Cindy painting together" },
-  { "src": "assets/carlynn-poppies.webp", "category": "photo", "alt": "Carlynn walking a garden path lined with poppies" },
-  { "src": "assets/carlynn-park.webp", "category": "photo", "alt": "Carlynn at the park on a sunny day" },
-  { "src": "assets/carlynn-bunkbed.webp", "category": "photo", "alt": "Carlynn waving from her bunk bed in pajamas" },
-  { "src": "assets/cindy-carlynn-goldengate.webp", "category": "photo", "alt": "Carlynn and her mother at dusk near the Golden Gate" },
-  { "src": "assets/carlynn-vista.webp", "category": "photo", "alt": "Carlynn in her mother's arms above a mountain vista" },
-  { "src": "assets/cindy-carlynn-sunset.webp", "category": "photo", "alt": "Cindy holding Carlynn close at sunset" },
-  { "src": "assets/family-beach.webp", "category": "photo", "alt": "Carlynn's family on the beach at sunset" },
-  { "src": "assets/cindy-baby.webp", "category": "photo", "alt": "Cindy cradling her baby in an armchair" },
-  { "src": "assets/family-hospital.webp", "category": "photo", "alt": "The family welcoming baby Leonardo in the hospital" },
-  { "src": "assets/family-autumn.webp", "category": "photo", "alt": "Cindy and Peter kissing their baby beneath autumn leaves" },
-  { "src": "assets/calming-corner.webp", "category": "photo", "alt": "Carlynn's cozy reading and calming corner at home" },
-  { "src": "assets/art-1.webp", "category": "art", "alt": "An abstract painting by Carlynn in pinks, greens, and blues" },
-  { "src": "assets/art-2.webp", "category": "art", "alt": "An abstract painting by Carlynn in pink and green" },
-  { "src": "assets/art-3.webp", "category": "art", "alt": "An abstract painting by Carlynn in blue with golden dots" }
+  {
+    "src": "assets/carlynn-portrait.webp",
+    "category": "photo",
+    "alt": "Carlynn laughing, seated on a redwood stump"
+  },
+  {
+    "src": "assets/carlynn-easel-teal.webp",
+    "category": "photo",
+    "alt": "Carlynn in a teal dress beside her easel"
+  },
+  {
+    "src": "assets/carlynn-painting.webp",
+    "category": "photo",
+    "alt": "Carlynn painting at her easel"
+  },
+  {
+    "src": "assets/carlynn-cindy-painting.webp",
+    "category": "photo",
+    "alt": "Carlynn and her mother Cindy painting together"
+  },
+  {
+    "src": "assets/carlynn-poppies.webp",
+    "category": "photo",
+    "alt": "Carlynn walking a garden path lined with poppies"
+  },
+  {
+    "src": "assets/carlynn-park.webp",
+    "category": "photo",
+    "alt": "Carlynn at the park on a sunny day"
+  },
+  {
+    "src": "assets/carlynn-bunkbed.webp",
+    "category": "photo",
+    "alt": "Carlynn waving from her bunk bed in pajamas"
+  },
+  {
+    "src": "assets/cindy-carlynn-goldengate.webp",
+    "category": "photo",
+    "alt": "Carlynn and her mother at dusk near the Golden Gate"
+  },
+  {
+    "src": "assets/carlynn-vista.webp",
+    "category": "photo",
+    "alt": "Carlynn in her mother's arms above a mountain vista"
+  },
+  {
+    "src": "assets/cindy-carlynn-sunset.webp",
+    "category": "photo",
+    "alt": "Cindy holding Carlynn close at sunset"
+  },
+  {
+    "src": "assets/family-beach.webp",
+    "category": "photo",
+    "alt": "Carlynn's family on the beach at sunset"
+  },
+  {
+    "src": "assets/cindy-baby.webp",
+    "category": "photo",
+    "alt": "Cindy cradling her baby in an armchair"
+  },
+  {
+    "src": "assets/family-hospital.webp",
+    "category": "photo",
+    "alt": "The family welcoming baby Leonardo in the hospital"
+  },
+  {
+    "src": "assets/family-autumn.webp",
+    "category": "photo",
+    "alt": "Cindy and Peter kissing their baby beneath autumn leaves"
+  },
+  {
+    "src": "assets/calming-corner.webp",
+    "category": "photo",
+    "alt": "Carlynn's cozy reading and calming corner at home"
+  },
+  {
+    "src": "assets/art/web/0162004D-34B8-455C-91B2-A231C789FBA5.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/0162004D-34B8-455C-91B2-A231C789FBA5.jpg"
+  },
+  {
+    "src": "assets/art/web/03DE0D78-88B6-4243-8F15-976D7C10F795.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/03DE0D78-88B6-4243-8F15-976D7C10F795.jpg"
+  },
+  {
+    "src": "assets/art/web/0E136B6F-052D-47FA-A5B7-93F53A561FCD.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/0E136B6F-052D-47FA-A5B7-93F53A561FCD.jpg"
+  },
+  {
+    "src": "assets/art/web/105B2829-DF35-42BC-97D6-E5ED86EA20A5.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/105B2829-DF35-42BC-97D6-E5ED86EA20A5.jpg"
+  },
+  {
+    "src": "assets/art/web/13E1BDF8-F066-42E7-BB11-5D6BCA42044D.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/13E1BDF8-F066-42E7-BB11-5D6BCA42044D.jpg"
+  },
+  {
+    "src": "assets/art/web/1599D091-7156-4D55-9E57-38A263AF50AF.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/1599D091-7156-4D55-9E57-38A263AF50AF.jpg"
+  },
+  {
+    "src": "assets/art/web/17CED547-F9EE-487D-9B19-1A4884AE3DC6.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/17CED547-F9EE-487D-9B19-1A4884AE3DC6.jpg"
+  },
+  {
+    "src": "assets/art/web/18DBD4AB-2E7B-4EF2-8AAC-AF9B431810D5.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/18DBD4AB-2E7B-4EF2-8AAC-AF9B431810D5.jpg"
+  },
+  {
+    "src": "assets/art/web/2002885A-0BDE-4D9C-A897-7CD20B4066F2.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/2002885A-0BDE-4D9C-A897-7CD20B4066F2.jpg"
+  },
+  {
+    "src": "assets/art/web/2D80ED65-6757-4DA8-A51A-2B74FEF38F8F.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/2D80ED65-6757-4DA8-A51A-2B74FEF38F8F.jpg"
+  },
+  {
+    "src": "assets/art/web/2E360E74-3DF9-4C98-86E8-71B946B6F888.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/2E360E74-3DF9-4C98-86E8-71B946B6F888.jpg"
+  },
+  {
+    "src": "assets/art/web/34E1DD77-3E0D-470F-8424-648145D7CDCC.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/34E1DD77-3E0D-470F-8424-648145D7CDCC.jpg"
+  },
+  {
+    "src": "assets/art/web/39F56498-5402-48C6-8F4C-9A8C40610F1D.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/39F56498-5402-48C6-8F4C-9A8C40610F1D.jpg"
+  },
+  {
+    "src": "assets/art/web/3D928384-2BF6-4DF2-9961-41361844951C.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/3D928384-2BF6-4DF2-9961-41361844951C.jpg"
+  },
+  {
+    "src": "assets/art/web/413A3312-FA1A-4F3E-BC59-17E0FCD7058E.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/413A3312-FA1A-4F3E-BC59-17E0FCD7058E.jpg"
+  },
+  {
+    "src": "assets/art/web/44454566-504F-43E5-BAEE-CDC9D21403C9.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/44454566-504F-43E5-BAEE-CDC9D21403C9.jpg"
+  },
+  {
+    "src": "assets/art/web/447B98B8-B9C3-4053-9E66-E822D0579C25.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/447B98B8-B9C3-4053-9E66-E822D0579C25.jpg"
+  },
+  {
+    "src": "assets/art/web/4791F6CC-A14C-4135-BD9D-70D13E446CD4.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/4791F6CC-A14C-4135-BD9D-70D13E446CD4.jpg"
+  },
+  {
+    "src": "assets/art/web/50F2783E-235E-4638-B6B4-02C01E563629.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/50F2783E-235E-4638-B6B4-02C01E563629.jpg"
+  },
+  {
+    "src": "assets/art/web/54740060-8D23-4889-8744-2EA02C1FD039.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/54740060-8D23-4889-8744-2EA02C1FD039.jpg"
+  },
+  {
+    "src": "assets/art/web/586B19ED-D5AA-4C08-B57D-A7FD2BE947A9.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/586B19ED-D5AA-4C08-B57D-A7FD2BE947A9.jpg"
+  },
+  {
+    "src": "assets/art/web/6177EB27-DC52-430B-B218-F0B7C2225F86.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/6177EB27-DC52-430B-B218-F0B7C2225F86.jpg"
+  },
+  {
+    "src": "assets/art/web/65A661E1-01C0-4D80-964F-1AE1BF4EF128.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/65A661E1-01C0-4D80-964F-1AE1BF4EF128.jpg"
+  },
+  {
+    "src": "assets/art/web/66BD81C7-B3F0-4C46-BB56-2A4FDBC1F7FC.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/66BD81C7-B3F0-4C46-BB56-2A4FDBC1F7FC.jpg"
+  },
+  {
+    "src": "assets/art/web/6EF9D842-991E-4E69-9E8A-0F7EFB5539F8.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/6EF9D842-991E-4E69-9E8A-0F7EFB5539F8.jpg"
+  },
+  {
+    "src": "assets/art/web/6FD4A087-8F30-48FA-81BA-3FD0222EFFEB.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/6FD4A087-8F30-48FA-81BA-3FD0222EFFEB.jpg"
+  },
+  {
+    "src": "assets/art/web/73A0DE31-19A9-40B3-99B9-9AA05DFB78EE.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/73A0DE31-19A9-40B3-99B9-9AA05DFB78EE.jpg"
+  },
+  {
+    "src": "assets/art/web/76678D02-D73A-4D13-B893-9316D6E416E5.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/76678D02-D73A-4D13-B893-9316D6E416E5.jpg"
+  },
+  {
+    "src": "assets/art/web/768D882D-7431-406A-8934-5BBA7593D502.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/768D882D-7431-406A-8934-5BBA7593D502.jpg"
+  },
+  {
+    "src": "assets/art/web/7763A2F4-15D5-484F-AE67-3007F8E83753.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/7763A2F4-15D5-484F-AE67-3007F8E83753.jpg"
+  },
+  {
+    "src": "assets/art/web/78158899-A330-4816-A286-09604B9C74F5.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/78158899-A330-4816-A286-09604B9C74F5.jpg"
+  },
+  {
+    "src": "assets/art/web/7A3C4294-92AF-4D81-AFF9-B5DAFBF8A6EF.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/7A3C4294-92AF-4D81-AFF9-B5DAFBF8A6EF.jpg"
+  },
+  {
+    "src": "assets/art/web/8534AFC1-37B4-47BA-B831-DA2449F56F1F.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/8534AFC1-37B4-47BA-B831-DA2449F56F1F.jpg"
+  },
+  {
+    "src": "assets/art/web/879C8488-1CA6-4D37-8B61-7469B998D308.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/879C8488-1CA6-4D37-8B61-7469B998D308.jpg"
+  },
+  {
+    "src": "assets/art/web/8E7BA1DD-C4DD-468D-B79F-BC78DEC6B313.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/8E7BA1DD-C4DD-468D-B79F-BC78DEC6B313.jpg"
+  },
+  {
+    "src": "assets/art/web/8FA729F9-33C6-49E2-A4FB-10F612DBDEA7.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/8FA729F9-33C6-49E2-A4FB-10F612DBDEA7.jpg"
+  },
+  {
+    "src": "assets/art/web/95D2073D-BFFC-43F9-B3BC-513B01971E27.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/95D2073D-BFFC-43F9-B3BC-513B01971E27.jpg"
+  },
+  {
+    "src": "assets/art/web/9C56D08A-AAEF-4D7A-94CD-6A25CF63A6A5.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/9C56D08A-AAEF-4D7A-94CD-6A25CF63A6A5.jpg"
+  },
+  {
+    "src": "assets/art/web/A0C83803-2B8F-4ABF-9709-D226A55CDBE8.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/A0C83803-2B8F-4ABF-9709-D226A55CDBE8.jpg"
+  },
+  {
+    "src": "assets/art/web/A7AAD0A9-C314-4D08-93B5-60AAE62CA97D.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/A7AAD0A9-C314-4D08-93B5-60AAE62CA97D.jpg"
+  },
+  {
+    "src": "assets/art/web/AB831C1A-186F-42BD-9FA9-2951759EDEE0.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/AB831C1A-186F-42BD-9FA9-2951759EDEE0.jpg"
+  },
+  {
+    "src": "assets/art/web/AB92F94E-9388-4251-AEEB-5838E632906E.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/AB92F94E-9388-4251-AEEB-5838E632906E.jpg"
+  },
+  {
+    "src": "assets/art/web/AC148F13-7AE2-4D4D-955D-E2209EB32247.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/AC148F13-7AE2-4D4D-955D-E2209EB32247.jpg"
+  },
+  {
+    "src": "assets/art/web/AD9B9FC1-1E8C-4FEE-A112-D27D6D8D2940.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/AD9B9FC1-1E8C-4FEE-A112-D27D6D8D2940.jpg"
+  },
+  {
+    "src": "assets/art/web/B31BB34D-8D89-4634-AE00-6C49A47FA594.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/B31BB34D-8D89-4634-AE00-6C49A47FA594.jpg"
+  },
+  {
+    "src": "assets/art/web/B49BBD61-8C20-4CE4-9FCB-C10C1F434144.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/B49BBD61-8C20-4CE4-9FCB-C10C1F434144.jpg"
+  },
+  {
+    "src": "assets/art/web/B67771FA-F54D-4904-9566-EAA2DF91877C.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/B67771FA-F54D-4904-9566-EAA2DF91877C.jpg"
+  },
+  {
+    "src": "assets/art/web/BF45FA51-42A3-460C-9A0E-3ED1E468AFF8.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/BF45FA51-42A3-460C-9A0E-3ED1E468AFF8.jpg"
+  },
+  {
+    "src": "assets/art/web/CEA6854F-DEDE-42DA-81F9-0DCA1BFA39EE.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/CEA6854F-DEDE-42DA-81F9-0DCA1BFA39EE.jpg"
+  },
+  {
+    "src": "assets/art/web/D36F7CBC-E4C5-4AD8-B4CF-A3C1754A2A21.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/D36F7CBC-E4C5-4AD8-B4CF-A3C1754A2A21.jpg"
+  },
+  {
+    "src": "assets/art/web/D59B58CA-9B51-4CE8-819A-C52A507BB77B.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/D59B58CA-9B51-4CE8-819A-C52A507BB77B.jpg"
+  },
+  {
+    "src": "assets/art/web/D6C2632D-F01D-4A49-83C0-884FF425FE3D.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/D6C2632D-F01D-4A49-83C0-884FF425FE3D.jpg"
+  },
+  {
+    "src": "assets/art/web/D9DFC772-4E36-4ABE-B240-74D8426C2395.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/D9DFC772-4E36-4ABE-B240-74D8426C2395.jpg"
+  },
+  {
+    "src": "assets/art/web/DDDCDE8B-E0C0-44EE-BE37-48368CB0B468.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/DDDCDE8B-E0C0-44EE-BE37-48368CB0B468.jpg"
+  },
+  {
+    "src": "assets/art/web/DF3EA91D-9545-453E-89DC-C424280762CB.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/DF3EA91D-9545-453E-89DC-C424280762CB.jpg"
+  },
+  {
+    "src": "assets/art/web/E3AA2241-FCDF-4A7D-AAE4-F317A21D751A.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/E3AA2241-FCDF-4A7D-AAE4-F317A21D751A.jpg"
+  },
+  {
+    "src": "assets/art/web/E52131AB-B44A-4D43-831A-CBF66A129DA1.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/E52131AB-B44A-4D43-831A-CBF66A129DA1.jpg"
+  },
+  {
+    "src": "assets/art/web/E8DB7B9C-E06B-49D2-A297-192A34DB2BAE.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/E8DB7B9C-E06B-49D2-A297-192A34DB2BAE.jpg"
+  },
+  {
+    "src": "assets/art/web/ED7C1555-B569-49AF-92D5-175B8BC65E7D.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/ED7C1555-B569-49AF-92D5-175B8BC65E7D.jpg"
+  },
+  {
+    "src": "assets/art/web/EE5E4931-1AF6-4FA4-92AC-777324A39980.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/EE5E4931-1AF6-4FA4-92AC-777324A39980.jpg"
+  },
+  {
+    "src": "assets/art/web/EFACF104-4F86-4AD7-BA99-C8716E66D6BA.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/EFACF104-4F86-4AD7-BA99-C8716E66D6BA.jpg"
+  },
+  {
+    "src": "assets/art/web/F17DE314-03BB-4AB3-AB25-1BEA446CF9FF.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/F17DE314-03BB-4AB3-AB25-1BEA446CF9FF.jpg"
+  },
+  {
+    "src": "assets/art/web/F4062EB6-8707-4032-9A26-40FEB86AF03D.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/F4062EB6-8707-4032-9A26-40FEB86AF03D.jpg"
+  },
+  {
+    "src": "assets/art/web/F7F6F99A-06A3-45C1-A8C2-619642F1B18A.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/F7F6F99A-06A3-45C1-A8C2-619642F1B18A.jpg"
+  },
+  {
+    "src": "assets/art/web/F9B9B3A7-233F-4296-8F61-84DDAAD7852F.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/F9B9B3A7-233F-4296-8F61-84DDAAD7852F.jpg"
+  },
+  {
+    "src": "assets/art/web/FFD9F37B-A075-474F-B5D3-9B71CEDEF67C.jpg",
+    "category": "art",
+    "alt": "A painting by Carli",
+    "thumb": "assets/art/thumb/FFD9F37B-A075-474F-B5D3-9B71CEDEF67C.jpg"
+  }
 ]
