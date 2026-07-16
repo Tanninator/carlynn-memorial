@@ -439,7 +439,7 @@
       tr.appendChild(td("", r.name));
       tr.appendChild(td("email", r.email));
       tr.appendChild(td("attendance", attLabel));
-      tr.appendChild(td("guests", (r.guest_names || []).join(", ")));
+      tr.appendChild(td("guests", (r.guest_names || []).map(guestLabel).join(", ")));
       tr.appendChild(td("size", String(r.party_size)));
 
       const tdActions = document.createElement("td");
@@ -541,10 +541,16 @@
     editingId = id;
     editName.value = r.name;
     editEmail.value = r.email;
-    editGuests.value = (r.guest_names || []).join("\n");
+    editGuests.value = (r.guest_names || []).map((g) => (typeof g === "string" ? g : g.name)).join("\n");
     editErr.textContent = "";
     editDlg.showModal();
     editName.focus();
+  }
+
+  function guestLabel(g) {
+    if (!g) return "";
+    if (typeof g === "string") return g;
+    return g.name + (g.child ? " (child" + (g.age != null && g.age !== "" ? ", " + g.age : "") + ")" : "");
   }
 
   function parseGuestsTextarea() {
@@ -562,10 +568,18 @@
       editDlg.close();
       return;
     }
+    // Preserve each guest's child/age by position; edits here only change names.
+    const origGuests = (rsvpData.rsvps[idx] && rsvpData.rsvps[idx].guest_names) || [];
+    const guests = parseGuestsTextarea().map((name, i) => {
+      const o = origGuests[i];
+      return o && o.child
+        ? { name, child: true, age: o.age }
+        : { name, child: false, age: null };
+    });
     const payload = {
       name: editName.value.trim(),
       email: editEmail.value.trim(),
-      guests: parseGuestsTextarea(),
+      guests,
     };
     editErr.textContent = "";
     let res;
@@ -720,7 +734,7 @@
       const attLabel = r.attendance === "in_person" ? "In person"
         : r.attendance === "virtual" ? "Virtual" : "";
       const row = [r.created_at, r.name, r.email, attLabel, String(r.party_size)];
-      for (let i = 0; i < maxGuests; i++) row.push((r.guest_names || [])[i] ?? "");
+      for (let i = 0; i < maxGuests; i++) row.push(guestLabel((r.guest_names || [])[i]));
       rows.push(row);
     }
     const csv = rows.map((row) => row.map(csvEscape).join(",")).join("\r\n");

@@ -1,7 +1,8 @@
-const NAME_MAX = 80;
+const NAME_MAX = 120;
 const EMAIL_MAX = 120;
 const GUEST_MAX = 80;
 const GUESTS_MAX = 10;
+const CHILD_AGE_MAX = 17;
 const EMAIL_RE = /^\S+@\S+\.\S+$/;
 
 const LANTERN_NAME_MAX = 60;
@@ -145,7 +146,9 @@ async function sendRsvpNotification(env, rsvp) {
   const contentB64 = btoa(unescape(encodeURIComponent(json)));
 
   const guestList = rsvp.guests.length
-    ? rsvp.guests.map((g) => `  - ${g}`).join("\n")
+    ? rsvp.guests
+        .map((g) => `  - ${g.name}${g.child ? ` (child, age ${g.age})` : ""}`)
+        .join("\n")
     : "  (none)";
   const attendanceLabel = rsvp.attendance === "virtual" ? "Virtually" : "In person";
   const text =
@@ -186,7 +189,7 @@ async function sendRsvpNotification(env, rsvp) {
   }
 }
 
-function validateRsvp(body, { requireTurnstile = true } = {}) {
+function validateRsvp(body, { requireTurnstile = true, requireAttendance = true } = {}) {
   if (!body || typeof body !== "object" || Array.isArray(body)) {
     return { error: "Body must be a JSON object" };
   }
@@ -201,20 +204,38 @@ function validateRsvp(body, { requireTurnstile = true } = {}) {
   if (!EMAIL_RE.test(email)) return { error: "That email address doesn't look right." };
 
   const attendance = typeof body.attendance === "string" ? body.attendance.trim() : "";
-  if (attendance !== "in_person" && attendance !== "virtual") {
+  if (requireAttendance && attendance !== "in_person" && attendance !== "virtual") {
     return { error: "Please choose whether you'll attend in person or virtually." };
   }
 
+  // Guests are structured objects { name, child, age }. Legacy string entries
+  // (name only) are still accepted for backward compatibility.
   const rawGuests = Array.isArray(body.guests) ? body.guests : [];
   const guests = [];
   for (const g of rawGuests) {
-    if (typeof g !== "string") continue;
-    const t = g.trim();
-    if (!t) continue;
-    if (t.length > GUEST_MAX) {
+    let gName = "";
+    let gChild = false;
+    let gAge = null;
+    if (typeof g === "string") {
+      gName = g.trim();
+    } else if (g && typeof g === "object" && !Array.isArray(g)) {
+      gName = typeof g.name === "string" ? g.name.trim() : "";
+      gChild = g.child === true || g.child === "true";
+      if (gChild) {
+        const n = Number(g.age);
+        if (!Number.isInteger(n) || n < 0 || n > CHILD_AGE_MAX) {
+          return { error: `Please enter a valid age (0–${CHILD_AGE_MAX}) for each child guest.` };
+        }
+        gAge = n;
+      }
+    } else {
+      continue;
+    }
+    if (!gName) continue;
+    if (gName.length > GUEST_MAX) {
       return { error: `Each guest name must be under ${GUEST_MAX} characters.` };
     }
-    guests.push(t);
+    guests.push({ name: gName, child: gChild, age: gAge });
   }
   if (guests.length > GUESTS_MAX) {
     return { error: `Please list at most ${GUESTS_MAX} additional guests.` };
@@ -292,10 +313,18 @@ async function handleListRsvps(request, env) {
   const rsvps = rows.map((r) => {
     const partySize = Number(r.party_size) || 0;
     totalAttendees += partySize;
-    let guestNames = [];
+    let guests = [];
     try {
       const parsed = JSON.parse(r.guest_names ?? "[]");
-      if (Array.isArray(parsed)) guestNames = parsed.filter((s) => typeof s === "string");
+      if (Array.isArray(parsed)) {
+        guests = parsed
+          .map((g) =>
+            typeof g === "string"
+              ? { name: g, child: false, age: null }
+              : { name: String(g?.name ?? ""), child: !!g?.child, age: g?.age ?? null }
+          )
+          .filter((g) => g.name);
+      }
     } catch {}
     return {
       id: r.id,
@@ -304,7 +333,7 @@ async function handleListRsvps(request, env) {
       email: r.email,
       attendance: r.attendance || "",
       party_size: partySize,
-      guest_names: guestNames,
+      guest_names: guests,
     };
   });
 
@@ -331,7 +360,7 @@ async function handleUpdateRsvp(request, env, id) {
     return jsonResponse({ error: "Invalid JSON" }, 400);
   }
 
-  const validated = validateRsvp(body, { requireTurnstile: false });
+  const validated = validateRsvp(body, { requireTurnstile: false, requireAttendance: false });
   if (validated.error) {
     return jsonResponse({ error: validated.error }, 400);
   }
