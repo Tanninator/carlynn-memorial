@@ -140,6 +140,7 @@
   }
   .livestream-btn:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
   .livestream-btn:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
+  .livestream-btn.is-disabled { background: transparent; color: var(--muted); border-color: var(--navy-line); cursor: default; pointer-events: none; }
   .hero-cta .livestream-btn { margin-top: 6px; }
   .rsvp-livestream { display: flex; justify-content: center; padding: 4px 28px 18px; }
   .rsvp-livestream .livestream-btn { width: 100%; justify-content: center; padding: 13px 24px; font-size: 11px; letter-spacing: 0.28em; }
@@ -364,7 +365,7 @@
     </div>
     <div class="dates">September 10, 2021 <span class="dash">·</span> July 12, 2026</div>
     <!-- TODO: replace href="#" with the memorial live stream URL -->
-    <div class="hero-cta"><a class="livestream-btn" href="#" target="_blank" rel="noopener noreferrer">Memorial Live Stream</a></div>
+    <div class="hero-cta"><a class="livestream-btn is-disabled" aria-disabled="true" tabindex="-1">Memorial Live Stream &middot; Coming Soon</a></div>
   </div>
 </section>
 
@@ -493,7 +494,7 @@
     <div class="rsvp-svc-row"><span class="rsvp-svc-label">Reception</span><span class="rsvp-svc-value">To be announced</span></div>
   </div>
   <!-- TODO: replace href="#" with the memorial live stream URL -->
-  <div class="rsvp-livestream"><a class="livestream-btn" href="#" target="_blank" rel="noopener noreferrer">Memorial Live Stream</a></div>
+  <div class="rsvp-livestream"><a class="livestream-btn is-disabled" aria-disabled="true" tabindex="-1">Memorial Live Stream &middot; Coming Soon</a></div>
   <rsvp-form id="rsvp-form" endpoint="/api/rsvp"></rsvp-form>
   <div class="rsvp-turnstile">
     <div id="rsvp-turnstile-widget"></div>
