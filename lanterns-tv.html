@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern Wall — Carli Wu</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #0a1422; --navy: #0f1d31; --navy-2: #16263e; --navy-line: #1f3251;
+    --brass: #c89968; --brass-deep: #a87a4a; --brass-light: #e2c089;
+    --ivory: #f3ead7; --ivory-soft: #d8cdb4; --muted: #8a8068;
+  }
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background:
+      radial-gradient(ellipse at 50% 22%, rgba(200,153,104,0.16), transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    background-attachment: fixed;
+    color: var(--ivory);
+    height: 100vh; height: 100dvh; overflow: hidden;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    cursor: none;
+  }
+
+  .frame { position: fixed; inset: 0; display: flex; flex-direction: column; }
+
+  /* Header band */
+  .tv-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 3.2vh 4vw 0; flex: 0 0 auto;
+  }
+  .tv-crest { display: flex; align-items: center; gap: 16px; }
+  .tv-mark {
+    width: clamp(40px, 3vw, 56px); height: clamp(40px, 3vw, 56px);
+    border: 1px solid var(--brass); display: grid; place-items: center;
+    color: var(--brass-light); font-family: "Cormorant Garamond", serif;
+    font-size: clamp(16px, 1.4vw, 24px);
+  }
+  .tv-crest small { display: block; color: var(--brass); font-size: clamp(9px, 0.72vw, 12px); letter-spacing: 0.34em; text-transform: uppercase; }
+  .tv-crest strong { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(17px, 1.5vw, 26px); letter-spacing: 0.04em; }
+  .tv-count { color: var(--brass); font-size: clamp(10px, 0.85vw, 14px); letter-spacing: 0.32em; text-transform: uppercase; }
+  .tv-count .flame { color: var(--brass-light); }
+
+  /* Stage */
+  .stage {
+    flex: 1 1 auto; min-height: 0;
+    display: grid; grid-template-columns: 1fr; align-content: center; justify-items: center;
+    gap: clamp(20px, 3vh, 44px);
+    padding: 2vh 8vw;
+    text-align: center;
+    transition: opacity 0.8s ease;
+  }
+  .stage.out { opacity: 0; }
+
+  .photo-wrap {
+    max-width: min(58vw, 900px); max-height: 46vh;
+    border: 1px solid var(--brass); padding: 8px; background: var(--navy);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.55);
+    overflow: hidden;
+  }
+  .photo-wrap.hidden { display: none; }
+  .photo-wrap img {
+    display: block; max-width: 100%; max-height: calc(46vh - 18px);
+    object-fit: contain; animation: kb 12s ease-out both;
+  }
+  @keyframes kb { from { transform: scale(1.03); } to { transform: scale(1); } }
+
+  .quote {
+    font-family: "Cormorant Garamond", serif; font-weight: 500;
+    font-style: italic;
+    color: var(--ivory);
+    line-height: 1.32;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  /* message size scales down as text grows (set via data-len on stage) */
+  .quote { font-size: clamp(30px, 4.6vw, 76px); }
+  .stage[data-len="med"] .quote { font-size: clamp(28px, 3.7vw, 60px); max-width: 30ch; }
+  .stage[data-len="long"] .quote { font-size: clamp(24px, 2.7vw, 44px); max-width: 42ch; }
+  .stage[data-len="xl"] .quote  { font-size: clamp(20px, 2.1vw, 34px); max-width: 54ch; }
+  .stage.has-photo .quote { font-size: clamp(24px, 3vw, 50px); }
+  .stage.has-photo[data-len="long"] .quote,
+  .stage.has-photo[data-len="xl"] .quote { font-size: clamp(20px, 2.1vw, 36px); max-width: 46ch; }
+
+  .byline {
+    color: var(--brass-light); font-family: "Inter", system-ui, sans-serif;
+    font-size: clamp(13px, 1.15vw, 20px); letter-spacing: 0.28em; text-transform: uppercase; font-weight: 500;
+  }
+  .byline .role { display: block; margin-top: 8px; color: var(--muted); font-size: 0.72em; letter-spacing: 0.24em; }
+
+  /* Footer progress */
+  .tv-foot { flex: 0 0 auto; padding: 0 4vw 3.4vh; display: flex; justify-content: center; }
+  .bar { width: min(360px, 40vw); height: 2px; background: var(--navy-line); position: relative; overflow: hidden; }
+  .bar i { position: absolute; inset: 0; transform-origin: left; background: var(--brass); transform: scaleX(0); }
+  .bar i.run { transition: transform linear; transform: scaleX(1); }
+
+  .msg-center {
+    position: fixed; inset: 0; display: grid; place-items: center; text-align: center;
+    color: var(--ivory-soft); font-family: "Cormorant Garamond", serif; font-style: italic;
+    font-size: clamp(22px, 3vw, 40px); padding: 8vw;
+  }
+  .msg-center.hidden { display: none; }
+
+  @media (max-width: 820px) {
+    .quote, .stage.has-photo .quote { font-size: clamp(26px, 6vw, 40px); max-width: 24ch; }
+    .photo-wrap { max-width: 84vw; max-height: 40vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="frame" aria-hidden="true">
+  <div class="tv-head">
+    <div class="tv-crest">
+      <div class="tv-mark">CW</div>
+      <div><small>In Loving Memory</small><strong>Carli Wu</strong></div>
+    </div>
+    <div class="tv-count"><span class="flame">&#9733;</span> <span id="count">0</span> lanterns lit</div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="photo-wrap hidden" id="photoWrap"><img id="photo" alt=""></div>
+    <blockquote class="quote" id="quote"></blockquote>
+    <div class="byline" id="byline"></div>
+  </div>
+
+  <div class="tv-foot"><div class="bar"><i id="bar"></i></div></div>
+</div>
+
+<div class="msg-center" id="msgCenter">Lighting the lanterns&hellip;</div>
+
+<script>
+(function () {
+  var ENDPOINT = "/api/lanterns";
+  var REFRESH_MS = 60000;       // re-pull the wall to pick up new lanterns
+  var BASE_MS = 8000;           // minimum time on screen
+  var PER_WORD_MS = 320;        // extra reading time per word
+  var MAX_MS = 22000;           // cap
+  var PHOTO_BONUS_MS = 3500;    // extra when a photo is shown
+  var FADE_MS = 800;            // must match .stage transition
+
+  var stage = document.getElementById("stage");
+  var quoteEl = document.getElementById("quote");
+  var bylineEl = document.getElementById("byline");
+  var photoWrap = document.getElementById("photoWrap");
+  var photoEl = document.getElementById("photo");
+  var countEl = document.getElementById("count");
+  var barEl = document.getElementById("bar");
+  var msgCenter = document.getElementById("msgCenter");
+
+  var entries = [];
+  var order = [];        // indices into entries, oldest-first
+  var pos = -1;
+  var timer = null;
+  var paused = false;
+
+  function esc(s) { return (s == null ? "" : String(s)); }
+
+  function normalize(row) {
+    var media = Array.isArray(row.media)
+      ? row.media.filter(function (m) { return m && m.key; })
+                 .map(function (m) { return "/media/" + m.key; })
+      : [];
+    return {
+      id: row.id,
+      name: row.name || "",
+      role: row.role || "",
+      msg: row.msg || "",
+      ts: Date.parse((row.created_at || "").replace(" ", "T") + "Z") || 0,
+      media: media
+    };
+  }
+
+  function lenClass(text) {
+    var n = (text || "").length;
+    if (n <= 60) return "";
+    if (n <= 140) return "med";
+    if (n <= 300) return "long";
+    return "xl";
+  }
+
+  function durationFor(e) {
+    var words = (e.msg || "").split(/\s+/).filter(Boolean).length;
+    var ms = BASE_MS + words * PER_WORD_MS;
+    if (e.media.length) ms += PHOTO_BONUS_MS;
+    return Math.min(ms, MAX_MS);
+  }
+
+  function render(e) {
+    // photo
+    if (e.media.length) {
+      photoEl.src = e.media[0];
+      photoWrap.classList.remove("hidden");
+      stage.classList.add("has-photo");
+      // restart Ken Burns
+      photoEl.style.animation = "none";
+      void photoEl.offsetWidth;
+      photoEl.style.animation = "";
+    } else {
+      photoEl.removeAttribute("src");
+      photoWrap.classList.add("hidden");
+      stage.classList.remove("has-photo");
+    }
+    // message
+    quoteEl.textContent = "“" + esc(e.msg) + "”";
+    stage.setAttribute("data-len", lenClass(e.msg));
+    // byline
+    var by = e.name ? "— " + esc(e.name) : "— A friend";
+    bylineEl.innerHTML = esc(by) + (e.role ? '<span class="role">' + esc(e.role) + "</span>" : "");
+  }
+
+  function preload(e) {
+    if (e && e.media.length) { var i = new Image(); i.src = e.media[0]; }
+  }
+
+  function runBar(ms) {
+    barEl.classList.remove("run");
+    barEl.style.transition = "none";
+    barEl.style.transform = "scaleX(0)";
+    void barEl.offsetWidth;
+    barEl.style.transition = "transform " + ms + "ms linear";
+    barEl.style.transform = "scaleX(1)";
+  }
+
+  function advance() {
+    if (!order.length) return;
+    pos = (pos + 1) % order.length;
+    var e = entries[order[pos]];
+    render(e);
+    preload(entries[order[(pos + 1) % order.length]]);
+    stage.classList.remove("out");
+    var ms = durationFor(e);
+    runBar(ms);
+    schedule(ms);
+  }
+
+  function schedule(ms) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      if (paused) { schedule(600); return; }
+      stage.classList.add("out");
+      setTimeout(advance, FADE_MS);
+    }, ms);
+  }
+
+  function rebuildOrder() {
+    // oldest-first so the wall reads chronologically; new lanterns join the loop
+    order = entries
+      .map(function (_, i) { return i; })
+      .sort(function (a, b) { return entries[a].ts - entries[b].ts; });
+    countEl.textContent = entries.length;
+  }
+
+  async function load(first) {
+    try {
+      var res = await fetch(ENDPOINT, { headers: { Accept: "application/json" } });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      var data = await res.json();
+      var list = Array.isArray(data) ? data : (data.lanterns || data.items || []);
+      entries = list.map(normalize).filter(function (e) { return e.msg || e.media.length; });
+      rebuildOrder();
+      if (!entries.length) {
+        msgCenter.textContent = "Lanterns will appear here as they are lit.";
+        msgCenter.classList.remove("hidden");
+        return;
+      }
+      msgCenter.classList.add("hidden");
+      if (first) advance();
+    } catch (err) {
+      if (first) {
+        msgCenter.textContent = "Unable to load the lantern wall.";
+        msgCenter.classList.remove("hidden");
+        setTimeout(function () { load(true); }, 5000);
+      }
+    }
+  }
+
+  // Keep the display awake on supporting browsers.
+  var wakeLock = null;
+  async function keepAwake() {
+    try {
+      if ("wakeLock" in navigator) {
+        wakeLock = await navigator.wakeLock.request("screen");
+        wakeLock.addEventListener("release", function () { wakeLock = null; });
+      }
+    } catch (e) { /* ignore */ }
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && !wakeLock) keepAwake();
+  });
+
+  // Operator controls (optional): space = pause/resume, arrows = step.
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === " ") { ev.preventDefault(); paused = !paused; }
+    else if (ev.key === "ArrowRight") { clearTimeout(timer); stage.classList.add("out"); setTimeout(advance, FADE_MS); }
+    else if (ev.key === "f" || ev.key === "F") {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    }
+  });
+
+  keepAwake();
+  load(true);
+  setInterval(function () { load(false); }, REFRESH_MS);
+})();
+</script>
+</body>
+</html>

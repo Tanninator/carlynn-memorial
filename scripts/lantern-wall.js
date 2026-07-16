@@ -516,7 +516,6 @@
             <div class="sort">
               <button type="button" data-sort="newest" class="active">Newest</button>
               <button type="button" data-sort="oldest">Oldest</button>
-              <button type="button" data-sort="random">Drift</button>
             </div>
           </div>
           <div class="grid" id="grid"></div>
@@ -807,14 +806,8 @@
 
     sortedEntries() {
       const arr = [...this.entries];
-      if (this.sort === "newest") arr.sort((a, b) => b.ts - a.ts);
-      else if (this.sort === "oldest") arr.sort((a, b) => a.ts - b.ts);
-      else if (this.sort === "random") {
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-      }
+      if (this.sort === "oldest") arr.sort((a, b) => a.ts - b.ts);
+      else arr.sort((a, b) => b.ts - a.ts);
       return arr;
     }
 

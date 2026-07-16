@@ -74,6 +74,11 @@
   .res-title { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); margin: 8px 0 6px; }
   a.res-item:hover .res-title { color: var(--brass-light); }
   .res-desc { color: var(--ivory-soft); font-size: 14px; line-height: 1.55; margin: 8px 0 0; }
+  .res-item.has-thumb { display: flex; gap: 22px; align-items: flex-start; }
+  .res-thumb { flex: 0 0 auto; width: 78px; border: 1px solid var(--navy-line); align-self: center; }
+  .res-thumb img { display: block; width: 100%; height: auto; }
+  .res-body { flex: 1 1 auto; min-width: 0; }
+  @media (max-width: 460px) { .res-thumb { width: 60px; } }
   .res-tbd { color: var(--muted); font-style: italic; text-align: center; font-family: "Cormorant Garamond", serif; font-size: 18px; padding: 24px 0 0; }
 
   footer.foot { background: var(--navy-deep); border-top: 1px solid var(--navy-line); padding: 80px 32px 40px; text-align: center; }
@@ -95,7 +100,7 @@
     <div class="topbar-right">
     <nav class="links" id="nav-links">
       <a href="index.html">Home</a>
-      <a href="story.html">Her Story</a>
+      <a href="story.html">Carli&rsquo;s Story</a>
       <a href="service.html">Service</a>
       <a href="gallery.html">Gallery</a>
       <a href="grief-resources.html" aria-current="page">Grief Resources</a>
@@ -146,6 +151,15 @@
     <p class="res-desc">Talking with children about death, and making room for grief at any age.</p>
   </a>
 
+  <a class="res-item has-thumb" href="https://www.amazon.com/dp/1524732680" target="_blank" rel="noopener noreferrer">
+    <img class="res-thumb" src="assets/grief-resources/option-b-cover.jpg" alt="Cover of Option B by Sheryl Sandberg and Adam Grant" loading="lazy" onerror="this.style.display='none'">
+    <span class="res-body">
+      <span class="res-kind" style="display:block;">Book &middot; Sheryl Sandberg &amp; Adam Grant</span>
+      <span class="res-title" style="display:block;">Option B: Facing Adversity, Building Resilience, and Finding Joy</span>
+      <span class="res-desc" style="display:block;">On facing loss, building resilience, and finding meaning and joy again.</span>
+    </span>
+  </a>
+
   <a class="res-item" href="https://kara-grief.org/" target="_blank" rel="noopener noreferrer">
     <div class="res-kind">Organization &middot; Grief Support</div>
     <div class="res-title">Kara</div>
@@ -160,7 +174,7 @@
   <div class="foot-rule"></div>
   <div class="foot-links">
     <a href="index.html">Memorial</a>
-    <a href="story.html">Her Story</a>
+    <a href="story.html">Carli&rsquo;s Story</a>
     <a href="service.html">Service</a>
     <a href="gallery.html">Gallery</a>
     <a href="grief-resources.html">Grief Resources</a>

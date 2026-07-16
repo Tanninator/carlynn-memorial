@@ -129,6 +129,21 @@
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); }
   .rsvp-open:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
 
+  .livestream-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 15px 42px; cursor: pointer;
+    background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+    text-decoration: none;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+  .livestream-btn:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
+  .livestream-btn:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
+  .hero-cta .livestream-btn { margin-top: 6px; }
+  .rsvp-livestream { display: flex; justify-content: center; padding: 4px 28px 18px; }
+  .rsvp-livestream .livestream-btn { width: 100%; justify-content: center; padding: 13px 24px; font-size: 11px; letter-spacing: 0.28em; }
+
   .rsvp-dialog {
     border: 1px solid var(--brass); background: var(--navy); color: var(--ivory);
     padding: 0; max-width: 480px; width: calc(100% - 40px);
@@ -325,7 +340,7 @@
     <div class="topbar-right">
       <nav class="links" id="nav-links">
         <a href="index.html" aria-current="page">Home</a>
-        <a href="story.html">Her Story</a>
+        <a href="story.html">Carli&rsquo;s Story</a>
         <a href="service.html">Service</a>
         <a href="gallery.html">Gallery</a>
         <a href="grief-resources.html">Grief Resources</a>
@@ -348,13 +363,15 @@
       <div class="rule"></div>
     </div>
     <div class="dates">September 10, 2021 <span class="dash">·</span> July 12, 2026</div>
+    <!-- TODO: replace href="#" with the memorial live stream URL -->
+    <div class="hero-cta"><a class="livestream-btn" href="#" target="_blank" rel="noopener noreferrer">Memorial Live Stream</a></div>
   </div>
 </section>
 
 <section class="block bio" id="story">
   <div class="section-head">
     <div class="section-num">01</div>
-    <div class="section-meta"><small>Who She Was</small><h2>A little life, <em>full of color</em></h2></div>
+    <div class="section-meta"><small>Our Sweet Carli</small><h2>A little life, <em>full of color</em></h2></div>
   </div>
   <div class="bio-grid">
     <div class="bio-photo"><img src="assets/carlynn-easel-teal.webp" alt="Carli in a teal dress, smiling beside her easel" onerror="this.style.display='none'"></div>
@@ -370,13 +387,13 @@
 <section class="block service-block" id="service">
   <div class="section-head">
     <div class="section-num">02</div>
-    <div class="section-meta"><small>The Service</small><h2>Celebrating <em>her life</em></h2></div>
+    <div class="section-meta"><small>Memorial Service</small><h2>Celebrating <em>her life</em></h2></div>
   </div>
   <p class="recording-intro">We warmly invite you to gather with us in remembrance of Carli. The details below are being finalized &mdash; please check back soon, and let us know you&rsquo;re coming.</p>
   <div class="svc-details">
-    <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">Saturday, July 25, 2026</span></div>
     <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">To be announced</span></div>
-    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">To be announced</span></div>
+    <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
     <div class="svc-row"><span class="svc-label">Reception</span><span class="svc-value">To be announced</span></div>
   </div>
   <div class="svc-cta">
@@ -414,23 +431,37 @@
 <section class="block tribute" id="tribute">
   <div class="section-head">
     <div class="section-num">03</div>
-    <div class="section-meta"><small>Gallery</small><h2>Her life <em>in pictures</em></h2></div>
+    <div class="section-meta"><small>Photos</small><h2>Carli&rsquo;s life <em>in pictures</em></h2></div>
   </div>
   <p class="recording-intro">A collection of moments with Carli &mdash; at play, on family adventures, and lost in her painting.</p>
   <div class="gal-strip">
     <div class="gal-item"><img src="assets/carlynn-portrait.webp" alt="Portrait of Carli, laughing" loading="lazy" onerror="this.style.display='none'"></div>
     <div class="gal-item"><img src="assets/cindy-carlynn-sunset.webp" alt="Cindy holding Carli close at sunset" loading="lazy" onerror="this.style.display='none'"></div>
     <div class="gal-item"><img src="assets/carlynn-cindy-painting.webp" alt="Carli and her mother painting together at an easel" loading="lazy" onerror="this.style.display='none'"></div>
-    <div class="gal-item"><img src="assets/art-1.webp" alt="An abstract painting by Carli" loading="lazy" onerror="this.style.display='none'"></div>
     <div class="gal-item"><img src="assets/carlynn-poppies.webp" alt="Carli walking a path lined with poppies" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/carlynn-park.webp" alt="Carli at the park on a sunny day" loading="lazy" onerror="this.style.display='none'"></div>
     <div class="gal-item"><img src="assets/family-hospital.webp" alt="The family welcoming baby Leonardo" loading="lazy" onerror="this.style.display='none'"></div>
   </div>
   <div class="story-cta" style="text-align:center; margin-top:36px;"><a href="gallery.html">See more photographs &rarr;</a></div>
 </section>
 
-<section class="block lanterns" id="lanterns">
+<section class="block tribute" id="artwork">
   <div class="section-head">
     <div class="section-num">04</div>
+    <div class="section-meta"><small>Art Gallery</small><h2>Carli&rsquo;s <em>artwork</em></h2></div>
+  </div>
+  <p class="recording-intro">Carli was happiest with a paintbrush in her hand. A few of her paintings &mdash; full of color and joy.</p>
+  <div class="gal-strip">
+    <div class="gal-item"><img src="assets/art-1.webp" alt="An abstract painting by Carli in pinks, greens, and blues" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art-2.webp" alt="An abstract painting by Carli in pink and green" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="gal-item"><img src="assets/art-3.webp" alt="An abstract painting by Carli in blue with golden dots" loading="lazy" onerror="this.style.display='none'"></div>
+  </div>
+  <div class="story-cta" style="text-align:center; margin-top:36px;"><a href="gallery.html#sec-art">See all of her artwork &rarr;</a></div>
+</section>
+
+<section class="block lanterns" id="lanterns">
+  <div class="section-head">
+    <div class="section-num">05</div>
     <div class="section-meta"><small>Lantern Wall</small><h2>Light a lantern <em>in her memory</em></h2></div>
   </div>
   <lantern-wall id="hg" endpoint="/api/lanterns" style="--lw-bg: rgba(10,20,34,0.6); --lw-glow: rgba(200,153,104,0.35); --lw-ink: #f3ead7; --lw-ink-soft: #d8cdb4; --lw-line: rgba(200,153,104,0.3); --lw-accent: #c89968; --lw-serif: 'Cormorant Garamond', serif;"></lantern-wall>
@@ -440,7 +471,7 @@
   <div class="foot-mark">CW</div>
   <div class="foot-rule"></div>
   <div class="foot-links">
-    <a href="#story">Her Story</a>
+    <a href="#story">Carli&rsquo;s Story</a>
     <a href="service.html">Service</a>
     <a href="gallery.html">Gallery</a>
     <a href="grief-resources.html">Grief Resources</a>
@@ -456,11 +487,13 @@
   </div>
   <div class="rsvp-svc">
     <h3 class="rsvp-svc-title">The Service</h3>
-    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Date</span><span class="rsvp-svc-value">To be announced</span></div>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Date</span><span class="rsvp-svc-value">Saturday, July 25, 2026</span></div>
     <div class="rsvp-svc-row"><span class="rsvp-svc-label">Time</span><span class="rsvp-svc-value">To be announced</span></div>
-    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Location</span><span class="rsvp-svc-value">To be announced</span></div>
+    <div class="rsvp-svc-row"><span class="rsvp-svc-label">Location</span><span class="rsvp-svc-value">Valley Presbyterian Church, Portola Valley</span></div>
     <div class="rsvp-svc-row"><span class="rsvp-svc-label">Reception</span><span class="rsvp-svc-value">To be announced</span></div>
   </div>
+  <!-- TODO: replace href="#" with the memorial live stream URL -->
+  <div class="rsvp-livestream"><a class="livestream-btn" href="#" target="_blank" rel="noopener noreferrer">Memorial Live Stream</a></div>
   <rsvp-form id="rsvp-form" endpoint="/api/rsvp"></rsvp-form>
   <div class="rsvp-turnstile">
     <div id="rsvp-turnstile-widget"></div>
