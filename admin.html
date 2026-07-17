@@ -89,6 +89,7 @@
   td { font-size: 14px; color: var(--ivory); }
   td.email { color: var(--ivory-soft); font-size: 13px; }
   td.guests { color: var(--ivory-soft); font-size: 13px; }
+  td.notes { color: var(--ivory-soft); font-size: 13px; max-width: 260px; white-space: normal; }
   td.size { color: var(--brass-light); font-variant-numeric: tabular-nums; }
   td.when { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
   td.role { color: var(--ivory-soft); font-size: 13px; }
@@ -411,7 +412,7 @@
     thSelect.appendChild(masterCb);
     headRow.appendChild(thSelect);
 
-    for (const label of ["When", "Name", "Email", "Attendance", "Guests", "Party", ""]) {
+    for (const label of ["When", "Name", "Email", "Attendance", "Guests", "Party", "Notes", ""]) {
       const th = document.createElement("th");
       th.textContent = label;
       headRow.appendChild(th);
@@ -441,6 +442,7 @@
       tr.appendChild(td("attendance", attLabel));
       tr.appendChild(td("guests", (r.guest_names || []).map(guestLabel).join(", ")));
       tr.appendChild(td("size", String(r.party_size)));
+      tr.appendChild(td("notes", r.notes || ""));
 
       const tdActions = document.createElement("td");
       tdActions.className = "row-actions";
@@ -727,13 +729,13 @@
       (m, r) => Math.max(m, (r.guest_names || []).length),
       0
     );
-    const headers = ["created_at", "name", "email", "attendance", "party_size"];
+    const headers = ["created_at", "name", "email", "attendance", "party_size", "notes"];
     for (let i = 1; i <= maxGuests; i++) headers.push("guest_" + i);
     const rows = [headers];
     for (const r of subset) {
       const attLabel = r.attendance === "in_person" ? "In person"
         : r.attendance === "virtual" ? "Virtual" : "";
-      const row = [r.created_at, r.name, r.email, attLabel, String(r.party_size)];
+      const row = [r.created_at, r.name, r.email, attLabel, String(r.party_size), r.notes || ""];
       for (let i = 0; i < maxGuests; i++) row.push(guestLabel((r.guest_names || [])[i]));
       rows.push(row);
     }

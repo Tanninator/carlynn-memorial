@@ -3,6 +3,7 @@ const EMAIL_MAX = 120;
 const GUEST_MAX = 80;
 const GUESTS_MAX = 10;
 const CHILD_AGE_MAX = 17;
+const NOTES_MAX = 1000;
 const EMAIL_RE = /^\S+@\S+\.\S+$/;
 
 const LANTERN_NAME_MAX = 60;
@@ -96,7 +97,7 @@ async function handleCreateRsvp(request, env, ctx) {
     return jsonResponse({ error: "Bot check failed. Please try again." }, 400);
   }
 
-  const { name, email, attendance, guests } = validated.value;
+  const { name, email, attendance, notes, guests } = validated.value;
   const partySize = 1 + guests.length;
   const userAgent = (request.headers.get("user-agent") ?? "").slice(0, 200) || null;
   const ipCountry = request.headers.get("cf-ipcountry") ?? null;
@@ -104,10 +105,10 @@ async function handleCreateRsvp(request, env, ctx) {
   let inserted;
   try {
     inserted = await env.DB.prepare(
-      "INSERT INTO rsvps (name, email, attendance, guest_names, party_size, user_agent, ip_country) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at"
+      "INSERT INTO rsvps (name, email, attendance, notes, guest_names, party_size, user_agent, ip_country) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at"
     )
-      .bind(name, email, attendance, JSON.stringify(guests), partySize, userAgent, ipCountry)
+      .bind(name, email, attendance, notes, JSON.stringify(guests), partySize, userAgent, ipCountry)
       .first();
   } catch (err) {
     console.error("rsvp_insert_failed", err?.message ?? String(err));
@@ -122,6 +123,7 @@ async function handleCreateRsvp(request, env, ctx) {
         name,
         email,
         attendance,
+        notes,
         guests,
         party_size: partySize,
         ip_country: ipCountry,
@@ -156,6 +158,7 @@ async function sendRsvpNotification(env, rsvp) {
     `Attendance: ${attendanceLabel}\n` +
     `Party size: ${rsvp.party_size}\n` +
     `Guests:\n${guestList}\n` +
+    `Notes: ${rsvp.notes ? rsvp.notes : "(none)"}\n` +
     `Submitted: ${rsvp.created_at}\n`;
 
   const controller = new AbortController();
@@ -208,6 +211,8 @@ function validateRsvp(body, { requireTurnstile = true, requireAttendance = true 
     return { error: "Please choose whether you'll attend in person or virtually." };
   }
 
+  const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, NOTES_MAX) : "";
+
   // Guests are structured objects { name, child, age }. Legacy string entries
   // (name only) are still accepted for backward compatibility.
   const rawGuests = Array.isArray(body.guests) ? body.guests : [];
@@ -242,7 +247,7 @@ function validateRsvp(body, { requireTurnstile = true, requireAttendance = true 
   }
 
   if (!requireTurnstile) {
-    return { value: { name, email, attendance, guests } };
+    return { value: { name, email, attendance, notes, guests } };
   }
 
   const turnstileToken =
@@ -251,7 +256,7 @@ function validateRsvp(body, { requireTurnstile = true, requireAttendance = true 
     return { error: "Bot check failed. Please try again." };
   }
 
-  return { value: { name, email, attendance, guests, turnstileToken } };
+  return { value: { name, email, attendance, notes, guests, turnstileToken } };
 }
 
 async function verifyTurnstile(token, env, ip) {
@@ -301,7 +306,7 @@ async function handleListRsvps(request, env) {
   let rows;
   try {
     const result = await env.DB.prepare(
-      "SELECT id, name, email, attendance, guest_names, party_size, created_at FROM rsvps ORDER BY created_at DESC"
+      "SELECT id, name, email, attendance, notes, guest_names, party_size, created_at FROM rsvps ORDER BY created_at DESC"
     ).all();
     rows = result.results ?? [];
   } catch (err) {
@@ -332,6 +337,7 @@ async function handleListRsvps(request, env) {
       name: r.name,
       email: r.email,
       attendance: r.attendance || "",
+      notes: r.notes || "",
       party_size: partySize,
       guest_names: guests,
     };

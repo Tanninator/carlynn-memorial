@@ -49,6 +49,16 @@ input.txt {
 input.txt:focus { border-bottom-color: var(--rsvp-accent); }
 input.txt:disabled { opacity: 0.6; }
 
+textarea.notes {
+  width: 100%; background: transparent; border: 1px solid var(--rsvp-line);
+  color: var(--rsvp-ink); font-family: var(--rsvp-serif); font-size: 16px;
+  padding: 10px 12px; outline: none; resize: vertical; line-height: 1.45;
+}
+textarea.notes:focus { border-color: var(--rsvp-accent); }
+textarea.notes:disabled { opacity: 0.6; }
+textarea.notes::placeholder { color: var(--rsvp-ink-soft); opacity: 0.55; }
+.fld > span .opt { color: var(--rsvp-ink-soft); letter-spacing: 0.18em; }
+
 .name-row { display: flex; gap: 16px; }
 .name-row > .fld { flex: 1; }
 @media (max-width: 430px) { .name-row { flex-wrap: wrap; gap: 0; } .name-row > .fld { flex: 1 1 100%; } }
@@ -139,6 +149,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       this._pendingLast = "";
       this._pendingEmail = "";
       this._attendance = "";
+      this._pendingNotes = "";
       this._root = this.attachShadow({ mode: "open" });
     }
 
@@ -155,6 +166,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       this._pendingLast = "";
       this._pendingEmail = "";
       this._attendance = "";
+      this._pendingNotes = "";
       this._render();
       this.dispatchEvent(new CustomEvent("rsvp-reset", { bubbles: true, composed: true }));
     }
@@ -273,6 +285,13 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
             </button>
           </div>
 
+          <label class="fld">
+            <span>Notes <span class="opt">(optional)</span></span>
+            <textarea class="notes" name="notes" rows="3" maxlength="1000"
+                      placeholder="I need help with childcare, if possible"
+                      ${isSubmitting ? "disabled" : ""}>${escapeHtml(this._pendingNotes ?? "")}</textarea>
+          </label>
+
           <button class="submit" type="submit"
                   ${isSubmitting ? "disabled" : ""}
                   ${isSubmitting ? 'aria-busy="true"' : ""}>${submitLabel}</button>
@@ -368,6 +387,8 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       if (lastEl) this._pendingLast = lastEl.value;
       if (emailEl) this._pendingEmail = emailEl.value;
       if (attEl) this._attendance = attEl.value;
+      const notesEl = this._root.querySelector('textarea[name="notes"]');
+      if (notesEl) this._pendingNotes = notesEl.value;
     }
 
     async _submit() {
@@ -383,6 +404,8 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       this._pendingEmail = email;
       const attendance = this._root.querySelector('input[name="attendance"]:checked')?.value || "";
       this._attendance = attendance;
+      const notes = (this._root.querySelector('textarea[name="notes"]')?.value ?? "").trim();
+      this._pendingNotes = notes;
       const guests = this._guests
         .map((g) => ({
           name: (g.name ?? "").trim(),
@@ -426,7 +449,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
         res = await fetch(this._endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, attendance, guests: guestsPayload, turnstileToken }),
+          body: JSON.stringify({ name, email, attendance, notes, guests: guestsPayload, turnstileToken }),
         });
       } catch {
         // Pending values are already stored; the re-render will re-fill the fields.
