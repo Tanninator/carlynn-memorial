@@ -138,6 +138,119 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
 .done a:hover { color: var(--rsvp-ink); }
 `;
 
+  // UI strings by language. English is the fallback for any missing key.
+  // Kept in sync with the site-wide switcher in scripts/i18n.js.
+  const LABELS = {
+    en: {
+      title: "Kindly Reply",
+      lede: "Let us know if you will be joining us.",
+      firstName: "First name",
+      lastName: "Last name",
+      email: "Email",
+      attendQ: "Will you attend:",
+      inPerson: "In person",
+      virtually: "Virtually",
+      guestsLabel: "Guests you'll bring (including children)",
+      child: "Child",
+      age: "Age",
+      guestName: "Guest name",
+      addGuest: "+ Add guest",
+      removeGuest: "Remove guest",
+      notes: "Notes",
+      optional: "(optional)",
+      notesPlaceholder: "Questions, childcare needs, or any other comments.",
+      send: "Send RSVP",
+      sending: "Sending…",
+      footNote: "No account needed. We'll only use your email if plans change.",
+      thanks: "Thank you",
+      thanksBody: "Thank you for letting us know. We'll be in touch with details.",
+      another: "Submit another RSVP",
+      errFirst: "Please enter your first name.",
+      errLast: "Please enter your last name.",
+      errEmail: "Please enter your email.",
+      errEmailBad: "That email address doesn't look right.",
+      errAttend: "Please let us know if you'll attend in person or virtually.",
+      errAge: function (name) { return "Please enter an age (0–17) for " + name + "."; },
+      errMaxGuests: function (max) { return "Please list at most " + max + " additional guests."; },
+      errBot: "Please complete the bot check.",
+      errNetwork: "Couldn't reach the server. Please try again.",
+      errServer: "Something went wrong on our end. Please try again in a moment.",
+      errClient: "Something looked off with that submission. Please check the fields.",
+    },
+    fr: {
+      title: "Merci de répondre",
+      lede: "Faites-nous savoir si vous serez des nôtres.",
+      firstName: "Prénom",
+      lastName: "Nom",
+      email: "E-mail",
+      attendQ: "Serez-vous présent :",
+      inPerson: "En personne",
+      virtually: "À distance",
+      guestsLabel: "Invités que vous amènerez (enfants compris)",
+      child: "Enfant",
+      age: "Âge",
+      guestName: "Nom de l'invité",
+      addGuest: "+ Ajouter un invité",
+      removeGuest: "Retirer l'invité",
+      notes: "Remarques",
+      optional: "(facultatif)",
+      notesPlaceholder: "Questions, besoins de garde d'enfants ou tout autre commentaire.",
+      send: "Envoyer la réponse",
+      sending: "Envoi…",
+      footNote: "Aucun compte requis. Nous n'utiliserons votre e-mail qu'en cas de changement.",
+      thanks: "Merci",
+      thanksBody: "Merci de nous avoir prévenus. Nous vous communiquerons les détails.",
+      another: "Envoyer une autre réponse",
+      errFirst: "Veuillez saisir votre prénom.",
+      errLast: "Veuillez saisir votre nom.",
+      errEmail: "Veuillez saisir votre e-mail.",
+      errEmailBad: "Cette adresse e-mail semble incorrecte.",
+      errAttend: "Veuillez indiquer si vous serez présent en personne ou à distance.",
+      errAge: function (name) { return "Veuillez indiquer un âge (0–17) pour " + name + "."; },
+      errMaxGuests: function (max) { return "Veuillez indiquer au maximum " + max + " invités supplémentaires."; },
+      errBot: "Veuillez compléter la vérification anti-robot.",
+      errNetwork: "Impossible de joindre le serveur. Veuillez réessayer.",
+      errServer: "Une erreur est survenue de notre côté. Veuillez réessayer dans un instant.",
+      errClient: "Un problème est survenu avec cet envoi. Veuillez vérifier les champs.",
+    },
+    zh: {
+      title: "敬请回复",
+      lede: "请告知我们您是否能出席。",
+      firstName: "名字",
+      lastName: "姓氏",
+      email: "电子邮箱",
+      attendQ: "您将如何出席：",
+      inPerson: "亲自到场",
+      virtually: "线上参加",
+      guestsLabel: "您将携带的宾客（含儿童）",
+      child: "儿童",
+      age: "年龄",
+      guestName: "宾客姓名",
+      addGuest: "+ 添加宾客",
+      removeGuest: "移除宾客",
+      notes: "留言",
+      optional: "（选填）",
+      notesPlaceholder: "疑问、儿童看护需求，或其他任何留言。",
+      send: "提交回复",
+      sending: "提交中…",
+      footNote: "无需注册账户。仅在安排有变时，我们才会使用您的邮箱。",
+      thanks: "谢谢您",
+      thanksBody: "感谢您的告知。我们会与您联系并告知详情。",
+      another: "再提交一份回复",
+      errFirst: "请填写您的名字。",
+      errLast: "请填写您的姓氏。",
+      errEmail: "请填写您的电子邮箱。",
+      errEmailBad: "该电子邮箱地址似乎有误。",
+      errAttend: "请告知您将亲自到场还是线上参加。",
+      errAge: function (name) { return "请为 " + name + " 填写年龄（0–17 岁）。"; },
+      errMaxGuests: function (max) { return "最多可添加 " + max + " 位额外宾客。"; },
+      errBot: "请完成人机验证。",
+      errNetwork: "无法连接服务器，请重试。",
+      errServer: "我们这边出了点问题，请稍后再试。",
+      errClient: "提交内容似乎有误，请检查各项填写。",
+    },
+  };
+
   class RsvpForm extends HTMLElement {
     constructor() {
       super();
@@ -155,6 +268,26 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
 
     connectedCallback() {
       this._render();
+      // Re-render labels when the site language changes (see scripts/i18n.js).
+      this._onLang = () => {
+        this._snapshotInputs();
+        this._render();
+      };
+      document.addEventListener("i18n:changed", this._onLang);
+    }
+
+    disconnectedCallback() {
+      if (this._onLang) document.removeEventListener("i18n:changed", this._onLang);
+    }
+
+    _lang() {
+      return (window.I18N && window.I18N.lang) || "en";
+    }
+
+    _t(key) {
+      const dict = LABELS[this._lang()] || LABELS.en;
+      const val = dict[key];
+      return val == null ? LABELS.en[key] : val;
     }
 
     reset() {
@@ -198,9 +331,9 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       if (this._state === "done") {
         return `
           <div class="done" role="status">
-            <h3>Thank you</h3>
-            <p>Thank you for letting us know. We'll be in touch with details.</p>
-            <a href="#" data-action="another">Submit another RSVP</a>
+            <h3>${escapeHtml(this._t("thanks"))}</h3>
+            <p>${escapeHtml(this._t("thanksBody"))}</p>
+            <a href="#" data-action="another">${escapeHtml(this._t("another"))}</a>
           </div>
         `;
       }
@@ -211,46 +344,46 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
           : "";
 
       const isSubmitting = this._state === "submitting";
-      const submitLabel = isSubmitting ? "Sending…" : "Send RSVP";
+      const submitLabel = isSubmitting ? this._t("sending") : this._t("send");
 
       const guestRows = this._guests
         .map((g, i) => {
           const dis = isSubmitting ? "disabled" : "";
           const ageField = g.child
             ? `<input class="txt guest-age" type="number" min="0" max="17" inputmode="numeric"
-                      data-guest-age="${i}" placeholder="Age" value="${escapeAttr(g.age ?? "")}" ${dis}>`
+                      data-guest-age="${i}" placeholder="${escapeAttr(this._t("age"))}" value="${escapeAttr(g.age ?? "")}" ${dis}>`
             : "";
           return `
         <div class="guest-row">
           <input class="txt guest-name" type="text" data-guest-name="${i}"
                  maxlength="${GUEST_MAX}" autocomplete="off"
-                 placeholder="Guest name"
+                 placeholder="${escapeAttr(this._t("guestName"))}"
                  value="${escapeAttr(g.name ?? "")}" ${dis}>
           <label class="guest-child"><input type="checkbox" data-guest-child="${i}"
-                 ${g.child ? "checked" : ""} ${dis}> Child</label>
+                 ${g.child ? "checked" : ""} ${dis}> ${escapeHtml(this._t("child"))}</label>
           ${ageField}
           <button type="button" class="remove" data-remove-idx="${i}"
-                  aria-label="Remove guest" ${dis}>×</button>
+                  aria-label="${escapeAttr(this._t("removeGuest"))}" ${dis}>×</button>
         </div>
       `;
         })
         .join("");
 
       return `
-        <h2 class="title">Kindly Reply</h2>
-        <p class="lede">Let us know if you will be joining us.</p>
+        <h2 class="title">${escapeHtml(this._t("title"))}</h2>
+        <p class="lede">${escapeHtml(this._t("lede"))}</p>
         ${errorBanner}
         <form data-form novalidate>
           <div class="name-row">
             <label class="fld">
-              <span>First name</span>
+              <span>${escapeHtml(this._t("firstName"))}</span>
               <input class="txt" type="text" name="firstName" required
                      maxlength="40" autocomplete="given-name"
                      value="${escapeAttr(this._pendingFirst ?? "")}"
                      ${isSubmitting ? "disabled" : ""}>
             </label>
             <label class="fld">
-              <span>Last name</span>
+              <span>${escapeHtml(this._t("lastName"))}</span>
               <input class="txt" type="text" name="lastName" required
                      maxlength="40" autocomplete="family-name"
                      value="${escapeAttr(this._pendingLast ?? "")}"
@@ -259,7 +392,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
           </div>
 
           <label class="fld">
-            <span>Email</span>
+            <span>${escapeHtml(this._t("email"))}</span>
             <input class="txt" type="email" name="email" required
                    maxlength="${EMAIL_MAX}" autocomplete="email"
                    value="${escapeAttr(this._pendingEmail ?? "")}"
@@ -267,35 +400,35 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
           </label>
 
           <div class="attend">
-            <span class="label">Will you attend:</span>
+            <span class="label">${escapeHtml(this._t("attendQ"))}</span>
             <div class="radios">
               <label class="radio"><input type="radio" name="attendance" value="in_person"
-                     ${this._attendance === "in_person" ? "checked" : ""} ${isSubmitting ? "disabled" : ""}> In person</label>
+                     ${this._attendance === "in_person" ? "checked" : ""} ${isSubmitting ? "disabled" : ""}> ${escapeHtml(this._t("inPerson"))}</label>
               <label class="radio"><input type="radio" name="attendance" value="virtual"
-                     ${this._attendance === "virtual" ? "checked" : ""} ${isSubmitting ? "disabled" : ""}> Virtually</label>
+                     ${this._attendance === "virtual" ? "checked" : ""} ${isSubmitting ? "disabled" : ""}> ${escapeHtml(this._t("virtually"))}</label>
             </div>
           </div>
 
           <div class="guests">
-            <span class="label">Guests you'll bring (including children)</span>
+            <span class="label">${escapeHtml(this._t("guestsLabel"))}</span>
             ${guestRows}
             <button type="button" class="add" data-add
                     ${this._guests.length >= GUESTS_MAX || isSubmitting ? "disabled" : ""}>
-              + Add guest
+              ${escapeHtml(this._t("addGuest"))}
             </button>
           </div>
 
           <label class="fld">
-            <span>Notes <span class="opt">(optional)</span></span>
+            <span>${escapeHtml(this._t("notes"))} <span class="opt">${escapeHtml(this._t("optional"))}</span></span>
             <textarea class="notes" name="notes" rows="3" maxlength="1000"
-                      placeholder="Questions, childcare needs, or any other comments."
+                      placeholder="${escapeAttr(this._t("notesPlaceholder"))}"
                       ${isSubmitting ? "disabled" : ""}>${escapeHtml(this._pendingNotes ?? "")}</textarea>
           </label>
 
           <button class="submit" type="submit"
                   ${isSubmitting ? "disabled" : ""}
-                  ${isSubmitting ? 'aria-busy="true"' : ""}>${submitLabel}</button>
-          <p class="note">No account needed. We'll only use your email if plans change.</p>
+                  ${isSubmitting ? 'aria-busy="true"' : ""}>${escapeHtml(submitLabel)}</button>
+          <p class="note">${escapeHtml(this._t("footNote"))}</p>
         </form>
       `;
     }
@@ -415,23 +548,23 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
         .filter((g) => g.name);
       const turnstileToken = this._turnstileToken;
 
-      if (!first) return this._fail("Please enter your first name.");
-      if (!last) return this._fail("Please enter your last name.");
-      if (!email) return this._fail("Please enter your email.");
-      if (!/^\S+@\S+\.\S+$/.test(email)) return this._fail("That email address doesn't look right.");
+      if (!first) return this._fail(this._t("errFirst"));
+      if (!last) return this._fail(this._t("errLast"));
+      if (!email) return this._fail(this._t("errEmail"));
+      if (!/^\S+@\S+\.\S+$/.test(email)) return this._fail(this._t("errEmailBad"));
       if (attendance !== "in_person" && attendance !== "virtual") {
-        return this._fail("Please let us know if you'll attend in person or virtually.");
+        return this._fail(this._t("errAttend"));
       }
       for (const g of guests) {
         if (g.child) {
           const n = Number(g.age);
           if (g.age === "" || !Number.isInteger(n) || n < 0 || n > 17) {
-            return this._fail(`Please enter an age (0–17) for ${g.name}.`);
+            return this._fail(this._t("errAge")(g.name));
           }
         }
       }
-      if (guests.length > GUESTS_MAX) return this._fail(`Please list at most ${GUESTS_MAX} additional guests.`);
-      if (!turnstileToken) return this._fail("Please complete the bot check.");
+      if (guests.length > GUESTS_MAX) return this._fail(this._t("errMaxGuests")(GUESTS_MAX));
+      if (!turnstileToken) return this._fail(this._t("errBot"));
 
       const name = `${first} ${last}`;
       const guestsPayload = guests.map((g) => ({
@@ -455,7 +588,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
         // Pending values are already stored; the re-render will re-fill the fields.
         // Turnstile tokens are single-use; force a fresh widget for retry.
         this._turnstileToken = "";
-        return this._fail("Couldn't reach the server. Please try again.");
+        return this._fail(this._t("errNetwork"));
       }
 
       if (res.ok) {
@@ -474,9 +607,9 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
       } catch {}
       this._turnstileToken = "";
       if (res.status >= 500) {
-        return this._fail(serverMsg || "Something went wrong on our end. Please try again in a moment.");
+        return this._fail(serverMsg || this._t("errServer"));
       }
-      return this._fail(serverMsg || "Something looked off with that submission. Please check the fields.");
+      return this._fail(serverMsg || this._t("errClient"));
     }
 
     _fail(message) {

@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Service — Carli Wu</title>
+<title data-i18n-fr="La cérémonie — Carli Wu" data-i18n-zh="追思会 — Carli Wu">The Service — Carli Wu</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/shared.css">
+<script src="scripts/i18n.js"></script>
 <style>
   :root {
     --navy-deep: #0a1422; --navy: #0f1d31; --navy-2: #16263e; --navy-line: #1f3251;
@@ -31,7 +32,7 @@
   .nav-toggle { display: none; }
   .topbar-inner { position: relative; z-index: 100; }
   .topbar-right { display: flex; align-items: center; gap: 28px; }
-  .rsvp-open { display: inline-flex; align-items: center; padding: 9px 24px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
+  .rsvp-open { display: inline-flex; align-items: center; padding: 9px 16px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
   @media (max-width: 760px) {
     nav.links { display: none; }
@@ -90,19 +91,19 @@
   <div class="topbar-inner">
     <div class="crest">
       <a class="crest-mark" href="index.html">CW</a>
-      <div class="crest-text"><small>In Loving Memory</small><strong>Carli Wu</strong></div>
+      <div class="crest-text"><small data-i18n-fr="En mémoire affectueuse" data-i18n-zh="深切缅怀">In Loving Memory</small><strong>Carli Wu</strong></div>
     </div>
     <div class="topbar-right">
     <nav class="links" id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="story.html">Carli&rsquo;s Story</a>
-      <a href="service.html" aria-current="page">Service</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="grief-resources.html">Grief Resources</a>
-      <a href="index.html#lanterns">Lanterns</a>
+      <a href="index.html" data-i18n-fr="Accueil" data-i18n-zh="首页">Home</a>
+      <a href="story.html" data-i18n-fr="L&rsquo;histoire de Carli" data-i18n-zh="卡莉的故事">Carli&rsquo;s Story</a>
+      <a href="service.html" aria-current="page" data-i18n-fr="Célébration de sa vie" data-i18n-zh="追思会">Celebration of Life</a>
+      <a href="gallery.html" data-i18n-fr="Galerie" data-i18n-zh="相册">Gallery</a>
+      <a href="grief-resources.html" data-i18n-fr="Ressources de deuil" data-i18n-zh="悲伤支持">Grief Resources</a>
+      <a href="index.html#lanterns" data-i18n-fr="Lanternes" data-i18n-zh="心灯">Lanterns</a>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a href="index.html#rsvp" class="rsvp-open rsvp-top">RSVP (回复)</a>
+    <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
     </div>
   </div>
 </header>
@@ -110,18 +111,18 @@
 <main>
 
 <section class="svc-title">
-  <div class="ribbon">In Loving Memory</div>
-  <h1>Celebrating Carli&rsquo;s <em>beautiful life</em></h1>
-  <p>We warmly welcome you to join our family for the Celebration of Life service as we remember Carli&rsquo;s beautiful life that impacted so many of us. Carli touched more people than some do in a lifetime, and we look forward to spending time together in remembrance of her.</p>
+  <div class="ribbon" data-i18n-fr="En mémoire affectueuse" data-i18n-zh="深切缅怀">In Loving Memory</div>
+  <h1 data-i18n-fr="Célébrer la <em>belle vie</em> de Carli" data-i18n-zh="缅怀卡莉<em>美好的一生</em>">Celebrating Carli&rsquo;s <em>beautiful life</em></h1>
+  <p data-i18n-fr="Nous vous accueillons chaleureusement pour vous joindre à notre famille lors de la cérémonie de célébration de sa vie, en souvenir de la belle vie de Carli qui a touché tant d&rsquo;entre nous. Carli a touché plus de personnes que certains n&rsquo;en touchent en toute une vie, et nous avons hâte de nous retrouver ensemble pour lui rendre hommage." data-i18n-zh="我们诚挚地邀请您与我们一家共同出席这场追思会，一同缅怀卡莉美好的一生——她曾深深打动我们许多人。卡莉打动过的人，比有些人一生所能打动的还要多。期待与您相聚，共同追念她。">We warmly welcome you to join our family for the Celebration of Life service as we remember Carli&rsquo;s beautiful life that impacted so many of us. Carli touched more people than some do in a lifetime, and we look forward to spending time together in remembrance of her.</p>
 </section>
 
 <section class="svc-wrap">
   <div class="svc-details">
-      <div class="svc-row"><span class="svc-label">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
-    <div class="svc-row"><span class="svc-label">Date</span><span class="svc-value">Saturday, July 25, 2026</span></div>
-    <div class="svc-row"><span class="svc-label">Time</span><span class="svc-value">10 AM PST</span></div>
+      <div class="svc-row"><span class="svc-label" data-i18n-fr="Lieu" data-i18n-zh="地点">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
+    <div class="svc-row"><span class="svc-label" data-i18n-fr="Date" data-i18n-zh="日期">Date</span><span class="svc-value" data-i18n-fr="Samedi 25 juillet 2026" data-i18n-zh="2026年7月25日 星期六">Saturday, July 25, 2026</span></div>
+    <div class="svc-row"><span class="svc-label" data-i18n-fr="Heure" data-i18n-zh="时间">Time</span><span class="svc-value" data-i18n-fr="10 h (heure du Pacifique)" data-i18n-zh="上午10点（太平洋时间）">10 AM PST</span></div>
   </div>
-  <div class="svc-cta"><a href="index.html#rsvp">RSVP (回复) &rarr;</a></div>
+  <div class="svc-cta"><a href="index.html#rsvp" data-i18n-fr="RSVP &rarr;" data-i18n-zh="出席 &rarr;">RSVP &rarr;</a></div>
 </section>
 
 </main>
@@ -130,14 +131,14 @@
   <div class="foot-mark">CW</div>
   <div class="foot-rule"></div>
   <div class="foot-links">
-    <a href="index.html">Celebration of Life</a>
-    <a href="story.html">Carli&rsquo;s Story</a>
-    <a href="service.html">Service</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="grief-resources.html">Grief Resources</a>
+    <a href="index.html" data-i18n-fr="Célébration de sa vie" data-i18n-zh="追思会">Celebration of Life</a>
+    <a href="story.html" data-i18n-fr="L&rsquo;histoire de Carli" data-i18n-zh="卡莉的故事">Carli&rsquo;s Story</a>
+    <a href="service.html" data-i18n-fr="Cérémonie" data-i18n-zh="追思仪式">Service</a>
+    <a href="gallery.html" data-i18n-fr="Galerie" data-i18n-zh="相册">Gallery</a>
+    <a href="grief-resources.html" data-i18n-fr="Ressources de deuil" data-i18n-zh="悲伤支持">Grief Resources</a>
   </div>
   <div class="foot-rule"></div>
-  <div class="foot-copy">In Loving Memory · Carli's Family · MMXXVI</div>
+  <div class="foot-copy" data-i18n-fr="En mémoire affectueuse · La famille de Carli · MMXXVI" data-i18n-zh="深切缅怀 · 卡莉的家人 · MMXXVI">In Loving Memory · Carli's Family · MMXXVI</div>
 </footer>
 
 <script>

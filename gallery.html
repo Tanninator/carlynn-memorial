@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gallery — Carli Wu</title>
+<title data-i18n-fr="Galerie — Carli Wu" data-i18n-zh="相册 — Carli Wu">Gallery — Carli Wu</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="scripts/i18n.js"></script>
 <style>
   :root {
     --navy-deep: #0a1422; --navy: #0f1d31; --navy-2: #16263e; --navy-line: #1f3251;
@@ -38,7 +39,7 @@
   .nav-toggle { display: none; }
   .topbar-inner { position: relative; z-index: 100; }
   .topbar-right { display: flex; align-items: center; gap: 28px; }
-  .rsvp-open { display: inline-flex; align-items: center; padding: 9px 24px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
+  .rsvp-open { display: inline-flex; align-items: center; padding: 9px 16px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
   @media (max-width: 760px) {
     nav.links { display: none; }
@@ -147,39 +148,39 @@
   <div class="topbar-inner">
     <div class="crest">
       <a class="crest-mark" href="index.html">CW</a>
-      <div class="crest-text"><small>In Loving Memory</small><strong>Carli Wu</strong></div>
+      <div class="crest-text"><small data-i18n-fr="En mémoire affectueuse" data-i18n-zh="深切缅怀">In Loving Memory</small><strong>Carli Wu</strong></div>
     </div>
     <div class="topbar-right">
     <nav class="links" id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="story.html">Carli&rsquo;s Story</a>
-      <a href="service.html">Service</a>
-      <a href="gallery.html" aria-current="page">Gallery</a>
-      <a href="grief-resources.html">Grief Resources</a>
-      <a href="index.html#lanterns">Lanterns</a>
+      <a href="index.html" data-i18n-fr="Accueil" data-i18n-zh="首页">Home</a>
+      <a href="story.html" data-i18n-fr="L&rsquo;histoire de Carli" data-i18n-zh="卡莉的故事">Carli&rsquo;s Story</a>
+      <a href="service.html" data-i18n-fr="Célébration de sa vie" data-i18n-zh="追思会">Celebration of Life</a>
+      <a href="gallery.html" aria-current="page" data-i18n-fr="Galerie" data-i18n-zh="相册">Gallery</a>
+      <a href="grief-resources.html" data-i18n-fr="Ressources de deuil" data-i18n-zh="悲伤支持">Grief Resources</a>
+      <a href="index.html#lanterns" data-i18n-fr="Lanternes" data-i18n-zh="心灯">Lanterns</a>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a href="index.html#rsvp" class="rsvp-open rsvp-top">RSVP (回复)</a>
+    <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
     </div>
   </div>
 </header>
 
 <section class="head">
-  <div class="ribbon">Gallery</div>
-  <h1>Carli&rsquo;s life, <em>in pictures</em></h1>
+  <div class="ribbon" data-i18n-fr="Galerie" data-i18n-zh="相册">Gallery</div>
+  <h1 data-i18n-fr="La vie de Carli, <em>en images</em>" data-i18n-zh="卡莉的<em>生活影像</em>">Carli&rsquo;s life, <em>in pictures</em></h1>
 </section>
 
 <section id="sec-photos" class="gal-section" hidden>
-  <div class="sec-head"><h2>Moments with <em>Carli</em></h2><span class="count" id="count-photos"></span></div>
+  <div class="sec-head"><h2 data-i18n-fr="Moments avec <em>Carli</em>" data-i18n-zh="与<em>卡莉</em>的时光">Moments with <em>Carli</em></h2><span class="count" id="count-photos"></span></div>
   <div id="grid-photos" class="grid"></div>
 </section>
 
 <section id="sec-art" class="gal-section" hidden>
-  <div class="sec-head"><h2>Her <em>artwork</em></h2><span class="count" id="count-art"></span></div>
+  <div class="sec-head"><h2 data-i18n-fr="Ses <em>œuvres</em>" data-i18n-zh="她的<em>画作</em>">Her <em>artwork</em></h2><span class="count" id="count-art"></span></div>
   <div id="grid-art" class="grid"></div>
 </section>
 
-<div id="empty" class="empty" hidden>Photos will appear here as the family adds them.</div>
+<div id="empty" class="empty" hidden data-i18n-fr="Les photos apparaîtront ici au fur et à mesure que la famille les ajoutera." data-i18n-zh="家人陆续添加后，照片将显示在此处。">Photos will appear here as the family adds them.</div>
 
 <div id="lb" class="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <button class="lb-close" type="button" aria-label="Close">✕</button>
@@ -200,6 +201,13 @@
   let lbIndex = -1;
 
   function srcFor(name) { return name.indexOf("/") >= 0 ? name : "assets/gallery/" + name; }
+
+  // Localized "N images" count. Chinese has no plural; French/English do.
+  function countLabel(n) {
+    const lang = (window.I18N && window.I18N.lang) || "en";
+    if (lang === "zh") return n + " 张图片";
+    return n + (n === 1 ? " image" : " images");
+  }
 
   function makeCell(photo, idx) {
     const cell = document.createElement("button");
@@ -225,10 +233,19 @@
     const frag = document.createDocumentFragment();
     items.forEach(item => frag.appendChild(makeCell(item, item._index)));
     grid.appendChild(frag);
-    document.getElementById(countId).textContent =
-      items.length + (items.length === 1 ? " image" : " images");
+    const countEl = document.getElementById(countId);
+    countEl.dataset.count = items.length;
+    countEl.textContent = countLabel(items.length);
     document.getElementById(sectionId).hidden = false;
   }
+
+  // Re-label the counts when the site language changes (see scripts/i18n.js).
+  document.addEventListener("i18n:changed", function () {
+    ["count-photos", "count-art"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el && el.dataset.count != null) el.textContent = countLabel(Number(el.dataset.count));
+    });
+  });
 
   function openLightbox(i) {
     lbIndex = i;
