@@ -129,6 +129,23 @@
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); }
   .rsvp-open:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
 
+  /* Secondary "Support" button — outline style that sits beside the RSVP button. */
+  .support-btn {
+    display: inline-flex; align-items: center; cursor: pointer;
+    padding: 15px 28px;
+    background: transparent; color: var(--brass-light); border: 1px solid var(--brass);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .support-btn:hover { background: var(--brass); color: var(--navy-deep); transform: translateY(-1px); }
+  .support-btn:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; }
+  .support-top { padding: 9px 16px; font-size: 11px; letter-spacing: 0.28em; }
+  .cta-group { display: flex; align-items: center; gap: 12px; }
+  .cta-row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  @media (max-width: 760px) { .cta-group { gap: 8px; } }
+
   .rsvp-dialog {
     border: 1px solid var(--brass); background: var(--navy); color: var(--ivory);
     padding: 0; max-width: 480px; width: calc(100% - 40px);
@@ -333,7 +350,10 @@
         <a href="index.html#lanterns" data-i18n-fr="Lanternes" data-i18n-zh="心灯">Lanterns</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
-      <button type="button" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</button>
+      <div class="cta-group">
+        <a href="#" class="support-btn support-top" data-i18n-fr="Soutien" data-i18n-zh="支持">Support</a>
+        <button type="button" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</button>
+      </div>
     </div>
   </div>
 </header>
@@ -381,7 +401,10 @@
     <div class="svc-row"><span class="svc-label" data-i18n-fr="Heure" data-i18n-zh="时间">Time</span><span class="svc-value" data-i18n-fr="10 h (heure du Pacifique)" data-i18n-zh="上午10点（太平洋时间）">10 AM PST</span></div>
   </div>
   <div class="svc-cta">
-    <button type="button" class="rsvp-open" id="rsvp-open" data-i18n-zh="出席">RSVP</button>
+    <div class="cta-row">
+      <a href="#" class="support-btn" data-i18n-fr="Soutien" data-i18n-zh="支持">Support</a>
+      <button type="button" class="rsvp-open" id="rsvp-open" data-i18n-zh="出席">RSVP</button>
+    </div>
     <p class="svc-detail-note"><a href="service.html" data-i18n-fr="Voir tous les détails de la cérémonie &rarr;" data-i18n-zh="查看完整仪式信息 &rarr;">See full service details &rarr;</a></p>
   </div>
 </section>

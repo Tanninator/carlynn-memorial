@@ -34,6 +34,20 @@
   .topbar-right { display: flex; align-items: center; gap: 28px; }
   .rsvp-open { display: inline-flex; align-items: center; padding: 9px 16px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
+  /* Secondary "Support" button — outline style that sits beside the RSVP button. */
+  .support-btn {
+    display: inline-flex; align-items: center; cursor: pointer;
+    padding: 15px 28px;
+    background: transparent; color: var(--brass-light); border: 1px solid var(--brass);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .support-btn:hover { background: var(--brass); color: var(--navy-deep); transform: translateY(-1px); }
+  .support-top { padding: 9px 16px; font-size: 11px; letter-spacing: 0.28em; }
+  .cta-group { display: flex; align-items: center; gap: 12px; }
+  @media (max-width: 760px) { .cta-group { gap: 8px; } }
   @media (max-width: 760px) {
     nav.links { display: none; }
     nav.links.open {
@@ -72,9 +86,17 @@
   .svc-value { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
   @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 6px; } }
 
-  .svc-cta { text-align: center; margin-top: 48px; }
+  .svc-subhead { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(28px, 4vw, 40px); color: var(--ivory); text-align: center; margin: 72px 0 8px; }
+  .svc-subhead em { font-style: italic; color: var(--brass-light); font-weight: 400; }
+  .svc-intro { text-align: center; color: var(--ivory-soft); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 19px; max-width: 560px; margin: 0 auto 32px; line-height: 1.5; }
+  .svc-itinerary .svc-value { font-size: 20px; line-height: 1.5; }
+  .svc-itinerary .svc-note { font-style: italic; color: var(--brass-light); }
+
+  .svc-cta { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 48px; }
   .svc-cta a { display: inline-block; padding: 15px 42px; background: var(--brass); color: var(--navy-deep); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; transition: filter 0.2s ease; }
   .svc-cta a:hover { filter: brightness(1.07); }
+  .svc-cta a.support-btn { background: transparent; color: var(--brass-light); transition: background 0.2s ease, color 0.2s ease; }
+  .svc-cta a.support-btn:hover { background: var(--brass); color: var(--navy-deep); }
   .svc-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 18px; line-height: 1.5; }
 
   footer.foot { background: var(--navy-deep); border-top: 1px solid var(--navy-line); padding: 80px 32px 40px; text-align: center; }
@@ -103,7 +125,10 @@
       <a href="index.html#lanterns" data-i18n-fr="Lanternes" data-i18n-zh="心灯">Lanterns</a>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
+    <div class="cta-group">
+      <a href="#" class="support-btn support-top" data-i18n-fr="Soutien" data-i18n-zh="支持">Support</a>
+      <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
+    </div>
     </div>
   </div>
 </header>
@@ -122,7 +147,18 @@
     <div class="svc-row"><span class="svc-label" data-i18n-fr="Date" data-i18n-zh="日期">Date</span><span class="svc-value" data-i18n-fr="Samedi 25 juillet 2026" data-i18n-zh="2026年7月25日 星期六">Saturday, July 25, 2026</span></div>
     <div class="svc-row"><span class="svc-label" data-i18n-fr="Heure" data-i18n-zh="时间">Time</span><span class="svc-value" data-i18n-fr="10 h (heure du Pacifique)" data-i18n-zh="上午10点（太平洋时间）">10 AM PST</span></div>
   </div>
-  <div class="svc-cta"><a href="index.html#rsvp" data-i18n-fr="RSVP &rarr;" data-i18n-zh="出席 &rarr;">RSVP &rarr;</a></div>
+  <h2 class="svc-subhead" data-i18n-fr="Déroulé de la <em>matinée</em>" data-i18n-zh="当天<em>流程</em>">The <em>itinerary</em></h2>
+  <p class="svc-intro" data-i18n-fr="Rejoignez-nous le matin du samedi 25 juillet pour célébrer la vie de Carli." data-i18n-zh="诚邀您于7月25日星期六上午与我们一同缅怀卡莉的一生。">Join us the morning of Saturday, July 25 to celebrate Carli&rsquo;s life.</p>
+  <div class="svc-details svc-itinerary">
+    <div class="svc-row"><span class="svc-label">10 AM</span><span class="svc-value" data-i18n-fr="Station artistique en hommage à Carli et viennoiseries, à l&rsquo;extérieur et dans le sanctuaire" data-i18n-zh="卡莉纪念艺术站及糕点，于圣所内外">Carli Celebration Art Station + pastries, outside and in the sanctuary</span></div>
+    <div class="svc-row"><span class="svc-label">11 AM</span><span class="svc-value" data-i18n-fr="Célébration de la vie de Carli, dans le sanctuaire" data-i18n-zh="卡莉追思会，于圣所内">Carli Celebration of Life, in the sanctuary</span></div>
+    <div class="svc-row"><span class="svc-label" data-i18n-fr="Déjeuner" data-i18n-zh="午餐">Lunch</span><span class="svc-value" data-i18n-fr="Restez pour le déjeuner — Carli adorait quand nous déjeunions après l&rsquo;église&nbsp;!" data-i18n-zh="请留步共进午餐——卡莉最喜欢我们在礼拜后一起吃午餐！">Stay for lunch &mdash; Carli loved when we had lunch after church!</span></div>
+  </div>
+
+  <div class="svc-cta">
+    <a href="index.html#rsvp" data-i18n-fr="RSVP &rarr;" data-i18n-zh="出席 &rarr;">RSVP &rarr;</a>
+    <a href="#" class="support-btn" data-i18n-fr="Soutien" data-i18n-zh="支持">Support</a>
+  </div>
 </section>
 
 </main>

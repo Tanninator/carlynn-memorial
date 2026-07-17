@@ -35,6 +35,20 @@
   .topbar-right { display: flex; align-items: center; gap: 28px; }
   .rsvp-open { display: inline-flex; align-items: center; padding: 9px 16px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
+  /* Secondary "Support" button — outline style that sits beside the RSVP button. */
+  .support-btn {
+    display: inline-flex; align-items: center; cursor: pointer;
+    padding: 15px 28px;
+    background: transparent; color: var(--brass-light); border: 1px solid var(--brass);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .support-btn:hover { background: var(--brass); color: var(--navy-deep); transform: translateY(-1px); }
+  .support-top { padding: 9px 16px; font-size: 11px; letter-spacing: 0.28em; }
+  .cta-group { display: flex; align-items: center; gap: 12px; }
+  @media (max-width: 760px) { .cta-group { gap: 8px; } }
   @media (max-width: 760px) {
     nav.links { display: none; }
     nav.links.open {
@@ -169,7 +183,10 @@
       <a href="index.html#lanterns" data-i18n-fr="Lanternes" data-i18n-zh="心灯">Lanterns</a>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
+    <div class="cta-group">
+      <a href="#" class="support-btn support-top" data-i18n-fr="Soutien" data-i18n-zh="支持">Support</a>
+      <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
+    </div>
     </div>
   </div>
 </header>
