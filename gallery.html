@@ -71,24 +71,26 @@
   h1 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
   .head p { color: var(--ivory-soft); max-width: 560px; line-height: 1.6; margin: 0; font-size: 15px; }
 
-  .gal-section { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
-  .gal-section:last-of-type { padding-bottom: 40px; }
-  .sec-head { display: flex; align-items: baseline; gap: 16px; padding: 44px 0 4px; border-bottom: 1px solid var(--navy-line); margin-bottom: 24px; }
+  .gal-section { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .gal-section:last-of-type { padding-bottom: 96px; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; padding: 72px 0 6px; border-bottom: 1px solid var(--navy-line); margin-bottom: 44px; }
   .sec-head h2 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -0.01em; margin: 0; color: var(--ivory); }
   .sec-head h2 em { font-style: italic; color: var(--brass-light); font-weight: 400; }
   .sec-head .count { color: var(--brass); font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; margin-left: auto; }
 
-  /* Mosaic (masonry) layout — images keep their natural proportions */
+  /* Mosaic (masonry) layout — images keep their natural proportions,
+     with generous spacing for a calm, gallery-like feel */
   .grid {
-    columns: 240px;
-    column-gap: 12px;
+    columns: 300px;
+    column-gap: 40px;
   }
-  @media (max-width: 600px) { .grid { columns: 160px; column-gap: 10px; } }
+  @media (max-width: 700px) { .grid { columns: 240px; column-gap: 26px; } .cell { margin: 0 0 26px; } }
+  @media (max-width: 480px) { .grid { columns: 100%; } }
   .cell {
     position: relative;
     display: block;
     width: 100%;
-    margin: 0 0 12px;
+    margin: 0 0 40px;
     padding: 0;
     break-inside: avoid;
     -webkit-column-break-inside: avoid;
