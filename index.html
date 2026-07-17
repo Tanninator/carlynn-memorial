@@ -174,7 +174,7 @@
   .rsvp-svc-row { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--navy-line); }
   .rsvp-svc-row:first-of-type { border-top: 1px solid var(--navy-line); }
   .rsvp-svc-label { color: var(--brass); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; align-self: center; }
-  .rsvp-svc-value { font-family: "Cormorant Garamond", serif; font-size: 16px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+  .rsvp-svc-value { font-family: "Cormorant Garamond", serif; font-size: 16px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; text-align: right; }
 
   .gal-strip {
     display: flex; gap: 14px; overflow-x: auto;
@@ -321,6 +321,28 @@
 
   .lanterns { background: linear-gradient(180deg, var(--navy-2) 0%, var(--navy) 100%); }
 
+  /* Golden-orange lanterns drifting up behind the Lantern Wall + footer.
+     Reuses the hero's .flutter machinery; see the .flutter block above. */
+  .lantern-field { position: relative; overflow: hidden; background: linear-gradient(180deg, var(--navy-2) 0%, var(--navy) 42%, var(--navy-deep) 100%); }
+  .lantern-field > .lanterns { background: transparent; }
+  .lantern-field > .lanterns, .lantern-field > footer.foot { position: relative; z-index: 1; }
+  .lantern-field > footer.foot { background: transparent; }
+  .lantern-flutter .fl { top: 108%; bottom: auto; will-change: top, opacity; animation-name: lantern-rise; }
+  .lantern-flutter .fl-in { animation-name: lantern-sway; }
+  .lantern-flutter .is-lantern svg { fill: #e79a45; filter: drop-shadow(0 0 6px rgba(240,160,80,0.65)); }
+  .lantern-flutter .is-lantern .lantern-glow { fill: #ffd79a; }
+  .lantern-flutter .is-lantern .lantern-cap { fill: var(--brass-deep); }
+  @keyframes lantern-rise {
+    0%   { top: 108%; opacity: 0; }
+    8%   { opacity: var(--fl-op, 0.75); }
+    90%  { opacity: var(--fl-op, 0.75); }
+    100% { top: -12%;  opacity: 0; }
+  }
+  @keyframes lantern-sway {
+    from { transform: translateX(-7px) rotate(-4deg); }
+    to   { transform: translateX(7px)  rotate(4deg); }
+  }
+
   footer.foot { background: var(--navy-deep); border-top: 1px solid var(--navy-line); padding: 80px 32px 40px; text-align: center; }
   .foot-mark { width: 56px; height: 56px; border: 1px solid var(--brass); margin: 0 auto 24px; display: grid; place-items: center; font-family: "Cormorant Garamond", serif; color: var(--brass-light); font-size: 24px; }
   footer.foot h4 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 24px; margin: 0 0 12px; }
@@ -444,6 +466,8 @@
   <div class="story-cta" style="text-align:center; margin-top:36px;"><a href="gallery.html#sec-art" data-i18n-fr="Voir toutes ses œuvres &rarr;" data-i18n-zh="查看她的全部画作 &rarr;">See all of her artwork &rarr;</a></div>
 </section>
 
+<div class="lantern-field">
+<div class="flutter lantern-flutter" aria-hidden="true"></div>
 <section class="block lanterns" id="lanterns">
   <div class="section-head">
     <div class="section-num">05</div>
@@ -466,6 +490,7 @@
   <div class="foot-rule"></div>
   <div class="foot-copy" data-i18n-fr="En mémoire affectueuse · La famille de Carli · MMXXVI" data-i18n-zh="深切缅怀 · 卡莉的家人 · MMXXVI">In Loving Memory · Carli's Family · MMXXVI</div>
 </footer>
+</div>
 
 <dialog class="rsvp-dialog" id="rsvp-dialog" aria-label="RSVP for the memorial">
   <div class="rsvp-dialog-head">
@@ -473,7 +498,7 @@
   </div>
   <div class="rsvp-svc">
     <h3 class="rsvp-svc-title" data-i18n-fr="Cérémonie de célébration de sa vie" data-i18n-zh="追思会">Celebration of Life Service</h3>
-      <div class="rsvp-svc-row"><span class="rsvp-svc-label" data-i18n-fr="Lieu" data-i18n-zh="地点">Location</span><span class="rsvp-svc-value">Valley Presbyterian Church, Portola Valley</span></div>
+      <div class="rsvp-svc-row"><span class="rsvp-svc-label" data-i18n-fr="Lieu" data-i18n-zh="地点">Location</span><span class="rsvp-svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
     <div class="rsvp-svc-row"><span class="rsvp-svc-label" data-i18n-fr="Date" data-i18n-zh="日期">Date</span><span class="rsvp-svc-value" data-i18n-fr="Samedi 25 juillet 2026" data-i18n-zh="2026年7月25日 星期六">Saturday, July 25, 2026</span></div>
     <div class="rsvp-svc-row"><span class="rsvp-svc-label" data-i18n-fr="Heure" data-i18n-zh="时间">Time</span><span class="rsvp-svc-value" data-i18n-fr="10 h (heure du Pacifique)" data-i18n-zh="上午10点（太平洋时间）">10 AM PST</span></div>
   </div>
@@ -625,6 +650,58 @@
       host.classList.toggle("is-idle", !entries[0].isIntersecting);
     }, { rootMargin: "120px" });
     io.observe(hero);
+  }
+})();
+
+(function () {
+  // Golden-orange lanterns drifting up behind the Lantern Wall + footer.
+  // Same approach as the hero drift above, tuned slower and upright.
+  var host = document.querySelector(".lantern-flutter");
+  if (!host) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var LANTERN =
+    '<svg viewBox="0 0 24 24"><g>' +
+    '<rect class="lantern-cap" x="9.5" y="1.6" width="5" height="2" rx="0.8"/>' +
+    '<rect x="11.6" y="0" width="0.8" height="2"/>' +
+    '<path d="M12 3.6 C6.6 3.6 5 7.6 5 12 C5 16.4 6.6 20 12 20 C17.4 20 19 16.4 19 12 C19 7.6 17.4 3.6 12 3.6 Z"/>' +
+    '<ellipse class="lantern-glow" cx="12" cy="12" rx="4.4" ry="6" fill-opacity="0.55"/>' +
+    '<rect class="lantern-cap" x="10.3" y="19.4" width="3.4" height="1.8" rx="0.6"/>' +
+    '<rect x="11.7" y="21" width="0.6" height="2.4" rx="0.3" fill-opacity="0.8"/>' +
+    '</g></svg>';
+
+  var N = 18;
+  for (var i = 0; i < N; i++) {
+    var size = 16 + Math.random() * 26;
+    var dur = 22 + Math.random() * 18;
+    var swayDur = 4 + Math.random() * 4;
+
+    var outer = document.createElement("span");
+    outer.className = "fl is-lantern";
+    outer.style.left = (Math.random() * 100).toFixed(2) + "%";
+    outer.style.width = size.toFixed(1) + "px";
+    outer.style.height = (size * 1.25).toFixed(1) + "px";
+    outer.style.animationDuration = dur.toFixed(2) + "s";
+    outer.style.animationDelay = (-Math.random() * dur).toFixed(2) + "s";
+    outer.style.setProperty("--fl-op", (0.45 + Math.random() * 0.4).toFixed(2));
+
+    var inner = document.createElement("span");
+    inner.className = "fl-in";
+    inner.style.animationDuration = swayDur.toFixed(2) + "s";
+    inner.style.animationDelay = (-Math.random() * swayDur).toFixed(2) + "s";
+    inner.innerHTML = LANTERN;
+
+    outer.appendChild(inner);
+    host.appendChild(outer);
+  }
+
+  // Pause once the lantern field scrolls out of view (keeps scrolling smooth).
+  var field = host.closest(".lantern-field");
+  if (field && "IntersectionObserver" in window) {
+    var lio = new IntersectionObserver(function (entries) {
+      host.classList.toggle("is-idle", !entries[0].isIntersecting);
+    }, { rootMargin: "120px" });
+    lio.observe(field);
   }
 })();
 </script>
