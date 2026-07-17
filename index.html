@@ -409,7 +409,8 @@
     <div class="section-meta"><small data-i18n-fr="Galerie d&rsquo;art" data-i18n-zh="画廊">Art Gallery</small><h2 data-i18n-fr="Les <em>œuvres</em> de Carli" data-i18n-zh="卡莉的<em>画作</em>">Carli&rsquo;s <em>artwork</em></h2></div>
   </div>
   <p class="recording-intro" data-i18n-fr="Carli était une artiste talentueuse, toujours rayonnante de joie un pinceau à la main. Voici une galerie présentant quelques-unes de ses peintures originales." data-i18n-zh="卡莉是一位天赋出众的小艺术家，每当手握画笔，她总是满心欢喜。这里汇集了她的部分原创画作。">Carli was a talented artist, and she was always full of joy when she had a paintbrush in her hand. Here is a gallery featuring some of her original paintings.</p>
-  <div class="gal-strip">
+  <!-- Populated with 6 random artworks on load (see script below); the markup here is a static fallback. -->
+  <div class="gal-strip" id="artwork-strip">
     <div class="gal-item"><img src="assets/art/thumb/EE5E4931-1AF6-4FA4-92AC-777324A39980.jpg" alt="A painting by Carli" loading="lazy"></div>
     <div class="gal-item"><img src="assets/art/thumb/EFACF104-4F86-4AD7-BA99-C8716E66D6BA.jpg" alt="A painting by Carli" loading="lazy"></div>
     <div class="gal-item"><img src="assets/art/thumb/F17DE314-03BB-4AB3-AB25-1BEA446CF9FF.jpg" alt="A painting by Carli" loading="lazy"></div>
@@ -629,38 +630,43 @@
 })();
 </script>
 <script>
-// Fill the "Carli's life in pictures" strip with 6 random photos from the gallery.
-// Falls back to the static markup in #tribute-strip if the fetch fails.
+// Fill the home-page photo and artwork strips with 6 random gallery items each.
+// Falls back to the static markup in each strip if the fetch fails.
 (function () {
-  var strip = document.getElementById("tribute-strip");
-  if (!strip) return;
+  var photoStrip = document.getElementById("tribute-strip");
+  var artStrip = document.getElementById("artwork-strip");
+  if (!photoStrip && !artStrip) return;
+
+  function fill(strip, items, fallbackAlt) {
+    if (!strip || items.length < 6) return; // keep the static fallback
+    // Fisher–Yates shuffle, then take 6.
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = items[i]; items[i] = items[j]; items[j] = t;
+    }
+    var frag = document.createDocumentFragment();
+    items.slice(0, 6).forEach(function (p) {
+      var item = document.createElement("div");
+      item.className = "gal-item";
+      var img = document.createElement("img");
+      img.src = p.thumb || p.src;
+      img.alt = p.alt || fallbackAlt;
+      img.loading = "lazy";
+      item.appendChild(img);
+      frag.appendChild(item);
+    });
+    strip.innerHTML = "";
+    strip.appendChild(frag);
+  }
+
   fetch("assets/gallery/photos.json")
     .then(function (r) { return r.ok ? r.json() : []; })
     .then(function (list) {
-      var photos = (list || [])
-        .map(function (item) { return typeof item === "string" ? { src: item } : item; })
-        .filter(function (p) { return p.category !== "art"; });
-      if (photos.length < 6) return; // keep the static fallback
-      // Fisher–Yates shuffle, then take 6.
-      for (var i = photos.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var t = photos[i]; photos[i] = photos[j]; photos[j] = t;
-      }
-      var frag = document.createDocumentFragment();
-      photos.slice(0, 6).forEach(function (p) {
-        var item = document.createElement("div");
-        item.className = "gal-item";
-        var img = document.createElement("img");
-        img.src = p.thumb || p.src;
-        img.alt = p.alt || "A photo of Carli";
-        img.loading = "lazy";
-        item.appendChild(img);
-        frag.appendChild(item);
-      });
-      strip.innerHTML = "";
-      strip.appendChild(frag);
+      var items = (list || []).map(function (item) { return typeof item === "string" ? { src: item } : item; });
+      fill(photoStrip, items.filter(function (p) { return p.category !== "art"; }), "A photo of Carli");
+      fill(artStrip, items.filter(function (p) { return p.category === "art"; }), "A painting by Carli");
     })
-    .catch(function () { /* keep static fallback */ });
+    .catch(function () { /* keep static fallbacks */ });
 })();
 </script>
 </body>
