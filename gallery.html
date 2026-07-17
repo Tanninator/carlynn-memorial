@@ -108,6 +108,17 @@
   }
   .cell img.loaded { opacity: 1; }
 
+  .grid.is-collapsed .cell--extra { display: none; }
+  .sec-more { text-align: center; margin: 4px 0 8px; }
+  .more-btn {
+    display: inline-block; padding: 13px 34px; cursor: pointer;
+    background: transparent; color: var(--brass-light); border: 1px solid var(--brass);
+    font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .more-btn:hover { background: var(--brass); color: var(--navy-deep); }
+
   .empty { max-width: 1280px; margin: 0 auto; padding: 40px 32px 120px; color: var(--muted); font-style: italic; text-align: center; font-family: "Cormorant Garamond", serif; font-size: 18px; }
 
   /* lightbox */
@@ -200,6 +211,10 @@
   let photos = [];
   let lbIndex = -1;
 
+  // Each section shows this many images by default; the rest expand on demand.
+  const DEFAULT_VISIBLE = 5;
+  const relabelers = [];
+
   function srcFor(name) { return name.indexOf("/") >= 0 ? name : "assets/gallery/" + name; }
 
   // Localized "N images" count. Chinese has no plural; French/English do.
@@ -207,6 +222,20 @@
     const lang = (window.I18N && window.I18N.lang) || "en";
     if (lang === "zh") return n + " 张图片";
     return n + (n === 1 ? " image" : " images");
+  }
+
+  // Localized label for the expand/collapse toggle.
+  function moreLabel(total) {
+    const lang = (window.I18N && window.I18N.lang) || "en";
+    if (lang === "zh") return "查看全部 " + total + " 张";
+    if (lang === "fr") return "Voir les " + total;
+    return "View all " + total;
+  }
+  function lessLabel() {
+    const lang = (window.I18N && window.I18N.lang) || "en";
+    if (lang === "zh") return "收起";
+    if (lang === "fr") return "Réduire";
+    return "Show less";
   }
 
   function makeCell(photo, idx) {
@@ -227,24 +256,54 @@
   }
 
   // Renders one category's photos into its grid; reveals the section only if it has any.
+  // Sections with more than DEFAULT_VISIBLE images start collapsed with a toggle button.
   function renderSection(sectionId, gridId, countId, items) {
     if (!items.length) return;
     const grid = document.getElementById(gridId);
     const frag = document.createDocumentFragment();
-    items.forEach(item => frag.appendChild(makeCell(item, item._index)));
+    items.forEach((item, i) => {
+      const cell = makeCell(item, item._index);
+      if (i >= DEFAULT_VISIBLE) cell.classList.add("cell--extra");
+      frag.appendChild(cell);
+    });
     grid.appendChild(frag);
     const countEl = document.getElementById(countId);
     countEl.dataset.count = items.length;
     countEl.textContent = countLabel(items.length);
     document.getElementById(sectionId).hidden = false;
+
+    if (items.length > DEFAULT_VISIBLE) {
+      grid.classList.add("is-collapsed");
+      const wrap = document.createElement("div");
+      wrap.className = "sec-more";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "more-btn";
+      const setLabel = () => {
+        const collapsed = grid.classList.contains("is-collapsed");
+        btn.textContent = collapsed ? moreLabel(items.length) : lessLabel();
+        btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      };
+      setLabel();
+      relabelers.push(setLabel);
+      btn.addEventListener("click", () => {
+        const collapsing = !grid.classList.contains("is-collapsed");
+        grid.classList.toggle("is-collapsed");
+        setLabel();
+        if (collapsing) document.getElementById(sectionId).scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      wrap.appendChild(btn);
+      grid.parentNode.appendChild(wrap);
+    }
   }
 
-  // Re-label the counts when the site language changes (see scripts/i18n.js).
+  // Re-label the counts and toggle buttons when the site language changes (see scripts/i18n.js).
   document.addEventListener("i18n:changed", function () {
     ["count-photos", "count-art"].forEach(function (id) {
       const el = document.getElementById(id);
       if (el && el.dataset.count != null) el.textContent = countLabel(Number(el.dataset.count));
     });
+    relabelers.forEach(function (fn) { fn(); });
   });
 
   function openLightbox(i) {
