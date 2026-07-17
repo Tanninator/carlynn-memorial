@@ -8,8 +8,8 @@
 // On load we cache each element's original (English) innerHTML, then swap in the
 // requested language's attribute value. `en` restores the cached original.
 //
-// This script also self-injects the language dropdown into `.topbar-right` and
-// its styles, so pages only need to (1) include this script and (2) tag their
+// This script also self-injects a fixed language dropdown pinned to the bottom
+// -right of the viewport and its styles, so pages only need to (1) include this script and (2) tag their
 // translatable elements. It dispatches `i18n:changed` on `document` so custom
 // elements (e.g. <rsvp-form>) can re-render their own labels.
 //
@@ -93,16 +93,17 @@
   var switchEl = null;
 
   var STYLE = [
-    ".lang-switch{position:relative;font-family:'Inter',system-ui,sans-serif;}",
-    ".lang-btn{display:inline-flex;align-items:center;gap:7px;background:transparent;",
+    ".lang-switch{position:fixed;right:24px;bottom:24px;z-index:300;font-family:'Inter',system-ui,sans-serif;}",
+    ".lang-btn{display:inline-flex;align-items:center;gap:7px;background:var(--navy,#0f1d31);",
     "border:1px solid var(--brass,#c89968);color:var(--ivory-soft,#d8cdb4);cursor:pointer;",
-    "padding:7px 11px;font:inherit;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;",
-    "transition:color .2s ease,border-color .2s ease;}",
-    ".lang-btn:hover{color:var(--brass-light,#e2c089);border-color:var(--brass-light,#e2c089);}",
+    "padding:10px 14px;font:inherit;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;",
+    "box-shadow:0 10px 30px rgba(0,0,0,0.45);",
+    "transition:color .2s ease,border-color .2s ease,transform .2s ease;}",
+    ".lang-btn:hover{color:var(--brass-light,#e2c089);border-color:var(--brass-light,#e2c089);transform:translateY(-1px);}",
     ".lang-btn .globe{width:14px;height:14px;display:block;flex:0 0 auto;}",
     ".lang-btn .caret{width:8px;height:8px;display:block;flex:0 0 auto;transition:transform .2s ease;}",
     ".lang-switch.open .lang-btn .caret{transform:rotate(180deg);}",
-    ".lang-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:158px;margin:0;padding:6px 0;",
+    ".lang-menu{position:absolute;bottom:calc(100% + 8px);right:0;min-width:158px;margin:0;padding:6px 0;",
     "list-style:none;background:var(--navy,#0f1d31);border:1px solid var(--navy-line,#1f3251);",
     "box-shadow:0 24px 60px rgba(0,0,0,0.55);z-index:200;display:none;}",
     ".lang-switch.open .lang-menu{display:block;}",
@@ -111,15 +112,14 @@
     ".lang-menu li:hover{background:rgba(200,153,104,0.10);color:var(--brass-light,#e2c089);}",
     ".lang-menu li[aria-selected='true']{color:var(--brass-light,#e2c089);}",
     ".lang-menu li[aria-selected='true']::after{content:'\\2713';margin-left:10px;color:var(--brass,#c89968);}",
-    "@media (max-width:760px){.lang-btn{padding:8px 10px;}}",
+    "@media (max-width:760px){.lang-switch{right:16px;bottom:16px;}.lang-btn{padding:9px 12px;}}",
   ].join("");
 
   var GLOBE = '<svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg>';
   var CARET = '<svg class="caret" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><path d="M1 3l4 4 4-4z"/></svg>';
 
   function buildSwitch() {
-    var host = document.querySelector(".topbar-right");
-    if (!host || document.querySelector(".lang-switch")) return;
+    if (document.querySelector(".lang-switch")) return;
 
     var style = document.createElement("style");
     style.textContent = STYLE;
@@ -151,9 +151,7 @@
     switchEl.appendChild(btn);
     switchEl.appendChild(menu);
 
-    var toggle = host.querySelector(".nav-toggle");
-    if (toggle) host.insertBefore(switchEl, toggle);
-    else host.insertBefore(switchEl, host.firstChild);
+    document.body.appendChild(switchEl);
 
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
