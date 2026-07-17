@@ -443,17 +443,118 @@
 .gate .err { color: #d99c8a; font-size: 12px; min-height: 16px; margin: 0 0 12px; }
 `;
 
-  function fmtRelative(ts) {
-    const diff = Date.now() - ts;
-    const m = Math.round(diff / 60000);
-    if (m < 1) return "just now";
-    if (m < 60) return m + " minute" + (m === 1 ? "" : "s") + " ago";
-    const h = Math.round(m / 60);
-    if (h < 24) return h + " hour" + (h === 1 ? "" : "s") + " ago";
-    const d = Math.round(h / 24);
-    if (d < 7) return d + " day" + (d === 1 ? "" : "s") + " ago";
-    return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-  }
+  // UI strings by language (visitor messages themselves are never translated).
+  // Kept in sync with the site-wide switcher in scripts/i18n.js.
+  const LW_LABELS = {
+    en: {
+      from: "From", namePh: "Your name",
+      relLabel: "Your relationship to Carli", optional: "(optional)",
+      relPh: "e.g. Uncle · Aunt · Family friend",
+      msgLabel: "Your message",
+      msgPh: "A memory, a thank-you, a goodbye. As long as you'd like.",
+      photos: "Photos", upTo: (n) => `(up to ${n}, optional)`,
+      light: "Light a Lantern", sending: "Sending…",
+      lanternsLit: (n) => `${n} lanterns lit`,
+      newest: "Newest", oldest: "Oldest",
+      stamp: "A Message for Carli",
+      gateTitle: "Family password",
+      gateBody: "This wall is for family and close friends. Enter the password you were given to light a lantern.",
+      passwordPh: "Password", cancel: "Cancel", continue: "Continue",
+      prev: "Previous", next: "Next", prevPhoto: "Previous photo", nextPhoto: "Next photo",
+      loading: "Loading…", beFirst: "Be the first to light a lantern.",
+      loadError: "Couldn't load the wall. Refresh the page to try again.",
+      readFull: "Read in full", open: "Open",
+      posOf: (i, n) => `${i} of ${n}`,
+      errName: "Please enter your name.",
+      errNameLong: (m) => `Name is too long (max ${m}).`,
+      errRoleLong: (m) => `Relationship is too long (max ${m}).`,
+      errMsg: "Please write a message.",
+      errMsgLong: (m) => `Message is too long (max ${m}).`,
+      errMaxPhotos: (n) => `Up to ${n} photos per lantern.`,
+      errPhotoType: "Photos only — PNG, JPEG, WebP, or AVIF.",
+      errPhotoSize: "Each photo must be 8 MB or smaller.",
+      errNetwork: "Couldn't reach the server. Please try again.",
+      errBadPw: "That password isn't right.",
+      errGeneric: "Something looked off with that submission.",
+      relNow: "just now",
+      relMin: (n) => `${n} minute${n === 1 ? "" : "s"} ago`,
+      relHour: (n) => `${n} hour${n === 1 ? "" : "s"} ago`,
+      relDay: (n) => `${n} day${n === 1 ? "" : "s"} ago`,
+      dateLocale: undefined,
+    },
+    fr: {
+      from: "De la part de", namePh: "Votre nom",
+      relLabel: "Votre lien avec Carli", optional: "(facultatif)",
+      relPh: "ex. Oncle · Tante · Ami de la famille",
+      msgLabel: "Votre message",
+      msgPh: "Un souvenir, un merci, un adieu. Aussi long que vous le souhaitez.",
+      photos: "Photos", upTo: (n) => `(jusqu'à ${n}, facultatif)`,
+      light: "Allumer une lanterne", sending: "Envoi…",
+      lanternsLit: (n) => `${n} lanterne${n === 1 ? "" : "s"} allumée${n === 1 ? "" : "s"}`,
+      newest: "Plus récentes", oldest: "Plus anciennes",
+      stamp: "Un message pour Carli",
+      gateTitle: "Mot de passe famille",
+      gateBody: "Ce mur est réservé à la famille et aux amis proches. Saisissez le mot de passe qui vous a été communiqué pour allumer une lanterne.",
+      passwordPh: "Mot de passe", cancel: "Annuler", continue: "Continuer",
+      prev: "Précédent", next: "Suivant", prevPhoto: "Photo précédente", nextPhoto: "Photo suivante",
+      loading: "Chargement…", beFirst: "Soyez le premier à allumer une lanterne.",
+      loadError: "Impossible de charger le mur. Actualisez la page pour réessayer.",
+      readFull: "Lire en entier", open: "Ouvrir",
+      posOf: (i, n) => `${i} sur ${n}`,
+      errName: "Veuillez saisir votre nom.",
+      errNameLong: (m) => `Le nom est trop long (max ${m}).`,
+      errRoleLong: (m) => `Le lien est trop long (max ${m}).`,
+      errMsg: "Veuillez écrire un message.",
+      errMsgLong: (m) => `Le message est trop long (max ${m}).`,
+      errMaxPhotos: (n) => `Jusqu'à ${n} photos par lanterne.`,
+      errPhotoType: "Photos uniquement — PNG, JPEG, WebP ou AVIF.",
+      errPhotoSize: "Chaque photo doit faire 8 Mo ou moins.",
+      errNetwork: "Impossible de joindre le serveur. Veuillez réessayer.",
+      errBadPw: "Ce mot de passe est incorrect.",
+      errGeneric: "Un problème est survenu avec cet envoi.",
+      relNow: "à l'instant",
+      relMin: (n) => `il y a ${n} minute${n === 1 ? "" : "s"}`,
+      relHour: (n) => `il y a ${n} heure${n === 1 ? "" : "s"}`,
+      relDay: (n) => `il y a ${n} jour${n === 1 ? "" : "s"}`,
+      dateLocale: "fr-FR",
+    },
+    zh: {
+      from: "来自", namePh: "您的名字",
+      relLabel: "您与卡莉的关系", optional: "（选填）",
+      relPh: "例如：叔叔 · 阿姨 · 家庭好友",
+      msgLabel: "您的留言",
+      msgPh: "一段回忆、一句感谢、一声道别。想写多长都可以。",
+      photos: "照片", upTo: (n) => `（最多 ${n} 张，选填）`,
+      light: "点一盏心灯", sending: "提交中…",
+      lanternsLit: (n) => `已点亮 ${n} 盏心灯`,
+      newest: "最新", oldest: "最早",
+      stamp: "写给卡莉的话",
+      gateTitle: "家人密码",
+      gateBody: "此墙仅供家人与挚友使用。请输入您收到的密码以点亮一盏心灯。",
+      passwordPh: "密码", cancel: "取消", continue: "继续",
+      prev: "上一个", next: "下一个", prevPhoto: "上一张照片", nextPhoto: "下一张照片",
+      loading: "加载中…", beFirst: "成为第一个点亮心灯的人。",
+      loadError: "无法加载留言墙。请刷新页面重试。",
+      readFull: "阅读全文", open: "展开",
+      posOf: (i, n) => `第 ${i} / ${n} 条`,
+      errName: "请填写您的名字。",
+      errNameLong: (m) => `名字太长（最多 ${m} 个字符）。`,
+      errRoleLong: (m) => `关系描述太长（最多 ${m} 个字符）。`,
+      errMsg: "请写下您的留言。",
+      errMsgLong: (m) => `留言太长（最多 ${m} 个字符）。`,
+      errMaxPhotos: (n) => `每盏心灯最多 ${n} 张照片。`,
+      errPhotoType: "仅限图片——PNG、JPEG、WebP 或 AVIF。",
+      errPhotoSize: "每张照片不得超过 8 MB。",
+      errNetwork: "无法连接服务器，请重试。",
+      errBadPw: "密码不正确。",
+      errGeneric: "提交内容似乎有误。",
+      relNow: "刚刚",
+      relMin: (n) => `${n} 分钟前`,
+      relHour: (n) => `${n} 小时前`,
+      relDay: (n) => `${n} 天前`,
+      dateLocale: "zh-CN",
+    },
+  };
 
   function parseSqliteTs(s) {
     if (!s) return Date.now();
@@ -484,6 +585,71 @@
       return this.getAttribute("endpoint") || "/api/lanterns";
     }
 
+    _lang() {
+      return (window.I18N && window.I18N.lang) || "en";
+    }
+
+    _t(key, ...args) {
+      const dict = LW_LABELS[this._lang()] || LW_LABELS.en;
+      let v = dict[key];
+      if (v == null) v = LW_LABELS.en[key];
+      return typeof v === "function" ? v(...args) : v;
+    }
+
+    // Localized relative time for the focus view. User content is untouched;
+    // only this timestamp label is translated.
+    _fmtRelative(ts) {
+      const diff = Date.now() - ts;
+      const m = Math.round(diff / 60000);
+      if (m < 1) return this._t("relNow");
+      if (m < 60) return this._t("relMin", m);
+      const h = Math.round(m / 60);
+      if (h < 24) return this._t("relHour", h);
+      const d = Math.round(h / 24);
+      if (d < 7) return this._t("relDay", d);
+      const locale = (LW_LABELS[this._lang()] || LW_LABELS.en).dateLocale;
+      return new Date(ts).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    // Refresh every translatable UI string in place (no full rebuild, so form
+    // input, previews, and an open modal are preserved). Called on load and
+    // whenever the site language changes.
+    _applyI18n() {
+      const r = this.shadowRoot;
+      if (!r) return;
+      const set = (sel, text) => { const el = r.querySelector(sel); if (el) el.textContent = text; };
+      const ph = (sel, text) => { const el = r.querySelector(sel); if (el) el.setAttribute("placeholder", text); };
+      const aria = (sel, text) => { const el = r.querySelector(sel); if (el) el.setAttribute("aria-label", text); };
+
+      set('label[for="lname"]', this._t("from"));
+      ph("#lname", this._t("namePh"));
+      const relLabel = r.querySelector('label[for="lrole"]');
+      if (relLabel) relLabel.innerHTML =
+        `${escapeHtml(this._t("relLabel"))} <span style="color:var(--lw-ink-soft);opacity:0.6;text-transform:none;letter-spacing:0;font-size:11px">${escapeHtml(this._t("optional"))}</span>`;
+      ph("#lrole", this._t("relPh"));
+      set('label[for="lmsg"]', this._t("msgLabel"));
+      ph("#lmsg", this._t("msgPh"));
+      set("#attachLabel", this._t("photos"));
+      set("#attachOptional", this._t("upTo", MEDIA_MAX_COUNT));
+      set('[data-sort="newest"]', this._t("newest"));
+      set('[data-sort="oldest"]', this._t("oldest"));
+      set(".modal .stamp", this._t("stamp"));
+      aria("#navPrev", this._t("prev"));
+      aria("#navNext", this._t("next"));
+      set("#gateTitle", this._t("gateTitle"));
+      set(".gate p", this._t("gateBody"));
+      ph("#gateInput", this._t("passwordPh"));
+      set("#gateCancel", this._t("cancel"));
+      set(".gate button.go", this._t("continue"));
+
+      // Dynamic regions that embed translated text.
+      this._setSubmitting(this._submitting);
+      this.render();
+      if (r.getElementById("modal").classList.contains("shown") && this.focusIndex >= 0) {
+        this.openByIndex(this.focusIndex);
+      }
+    }
+
     connectedCallback() {
       this.shadowRoot.innerHTML = `
         <style>${css}</style>
@@ -500,9 +666,9 @@
             <div class="meta">
               <button type="button" class="attach" id="attachBtn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
-                Photos
+                <span id="attachLabel">Photos</span>
               </button>
-              <span class="optional">(up to ${MEDIA_MAX_COUNT}, optional)</span>
+              <span class="optional" id="attachOptional">(up to ${MEDIA_MAX_COUNT}, optional)</span>
               <input type="file" id="attachInput" accept="image/png,image/jpeg,image/webp,image/avif" multiple>
               <span class="count"><span id="lcount">0</span> / ${MSG_MAX}</span>
             </div>
@@ -512,7 +678,7 @@
 
         <div class="wall">
           <div class="controls">
-            <span class="count-pill"><span class="dot"></span> <span id="totalCount">0</span> lanterns lit</span>
+            <span class="count-pill"><span class="dot"></span> <span id="countText">0</span></span>
             <div class="sort">
               <button type="button" data-sort="newest" class="active">Newest</button>
               <button type="button" data-sort="oldest">Oldest</button>
@@ -556,13 +722,21 @@
         </div>
       `;
       this.bind();
+      this._applyI18n();
       this.fetchEntries();
+      // Re-translate UI in place when the site language changes (scripts/i18n.js).
+      this._onLang = () => this._applyI18n();
+      document.addEventListener("i18n:changed", this._onLang);
+    }
+
+    disconnectedCallback() {
+      if (this._onLang) document.removeEventListener("i18n:changed", this._onLang);
     }
 
     async fetchEntries() {
       const r = this.shadowRoot;
       const grid = r.getElementById("grid");
-      grid.innerHTML = `<div class="empty">Loading…</div>`;
+      grid.innerHTML = `<div class="empty">${escapeHtml(this._t("loading"))}</div>`;
       try {
         const res = await fetch(this._endpoint, { headers: { Accept: "application/json" } });
         if (!res.ok) throw new Error("server_" + res.status);
@@ -595,16 +769,16 @@
         attachInput.value = "";
         if (!incoming.length) return;
         if (this._pendingMedia.length + incoming.length > MEDIA_MAX_COUNT) {
-          this._showFormError(`Up to ${MEDIA_MAX_COUNT} photos per lantern.`);
+          this._showFormError(this._t("errMaxPhotos", MEDIA_MAX_COUNT));
           return;
         }
         for (const file of incoming) {
           if (!MEDIA_MIMES.includes(file.type)) {
-            this._showFormError("Photos only — PNG, JPEG, WebP, or AVIF.");
+            this._showFormError(this._t("errPhotoType"));
             return;
           }
           if (file.size > MEDIA_MAX_BYTES) {
-            this._showFormError("Each photo must be 8 MB or smaller.");
+            this._showFormError(this._t("errPhotoSize"));
             return;
           }
         }
@@ -692,7 +866,7 @@
       const r = this.shadowRoot;
       const btn = r.getElementById("submitBtn");
       btn.disabled = !!flag;
-      btn.textContent = flag ? "Sending…" : "Light a Lantern";
+      btn.textContent = flag ? this._t("sending") : this._t("light");
     }
 
     _renderPreview() {
@@ -744,11 +918,11 @@
       const role = r.getElementById("lrole").value.trim();
       const msg = r.getElementById("lmsg").value.trim();
 
-      if (!name) return this._showFormError("Please enter your name.");
-      if (name.length > NAME_MAX) return this._showFormError(`Name is too long (max ${NAME_MAX}).`);
-      if (role.length > ROLE_MAX) return this._showFormError(`Relationship is too long (max ${ROLE_MAX}).`);
-      if (!msg) return this._showFormError("Please write a message.");
-      if (msg.length > MSG_MAX) return this._showFormError(`Message is too long (max ${MSG_MAX}).`);
+      if (!name) return this._showFormError(this._t("errName"));
+      if (name.length > NAME_MAX) return this._showFormError(this._t("errNameLong", NAME_MAX));
+      if (role.length > ROLE_MAX) return this._showFormError(this._t("errRoleLong", ROLE_MAX));
+      if (!msg) return this._showFormError(this._t("errMsg"));
+      if (msg.length > MSG_MAX) return this._showFormError(this._t("errMsgLong", MSG_MAX));
 
       // TEMP: lantern post password disabled. Restore the gate to re-enable.
       const password = sessionStorage.getItem(POST_PW_KEY) || "";
@@ -771,14 +945,14 @@
         });
       } catch {
         this._setSubmitting(false);
-        return this._showFormError("Couldn't reach the server. Please try again.");
+        return this._showFormError(this._t("errNetwork"));
       }
 
       if (res.status === 401) {
         sessionStorage.removeItem(POST_PW_KEY);
         this._setSubmitting(false);
         this._gate.open();
-        this._gate.setError("That password isn't right.");
+        this._gate.setError(this._t("errBadPw"));
         return;
       }
 
@@ -787,7 +961,7 @@
 
       if (!res.ok) {
         this._setSubmitting(false);
-        return this._showFormError(body?.error || "Something looked off with that submission.");
+        return this._showFormError(body?.error || this._t("errGeneric"));
       }
 
       const created = body?.lantern ? normalizeEntry(body.lantern) : null;
@@ -814,16 +988,16 @@
     render() {
       const r = this.shadowRoot;
       const grid = r.getElementById("grid");
-      r.getElementById("totalCount").textContent = this.entries.length;
+      r.getElementById("countText").textContent = this._t("lanternsLit", this.entries.length);
       const list = this.sortedEntries();
       this._currentList = list;
 
       if (this._loadError && !this.entries.length) {
-        grid.innerHTML = `<div class="empty">${escapeHtml(this._loadError)}</div>`;
+        grid.innerHTML = `<div class="empty">${escapeHtml(this._t("loadError"))}</div>`;
         return;
       }
       if (!list.length) {
-        grid.innerHTML = `<div class="empty">${this._loaded ? "Be the first to light a lantern." : "Loading…"}</div>`;
+        grid.innerHTML = `<div class="empty">${escapeHtml(this._loaded ? this._t("beFirst") : this._t("loading"))}</div>`;
         return;
       }
 
@@ -843,7 +1017,7 @@
               <div class="name">${escapeHtml(e.name)}</div>
               ${e.role ? `<div class="role">${escapeHtml(e.role)}</div>` : `<div class="role">&nbsp;</div>`}
               <div class="text">${escapeHtml(e.msg)}</div>
-              <div class="more ${overflow ? "has-overflow" : ""}">${overflow ? "Read in full" : "Open"}</div>
+              <div class="more ${overflow ? "has-overflow" : ""}">${escapeHtml(overflow ? this._t("readFull") : this._t("open"))}</div>
               <div class="tail"></div>
             </div>
           </div>
@@ -870,8 +1044,8 @@
       r.getElementById("mRole").textContent = e.role || "";
       r.getElementById("mRole").style.display = e.role ? "" : "none";
       r.getElementById("mText").textContent = e.msg;
-      r.getElementById("mWhen").textContent = fmtRelative(e.ts);
-      r.getElementById("mPos").textContent = (this.focusIndex + 1) + " of " + list.length;
+      r.getElementById("mWhen").textContent = this._fmtRelative(e.ts);
+      r.getElementById("mPos").textContent = this._t("posOf", this.focusIndex + 1, list.length);
 
       this._renderMedia(e.media);
       r.getElementById("modal").classList.add("shown");
@@ -912,13 +1086,13 @@
       const prev = document.createElement("button");
       prev.type = "button";
       prev.className = "carousel-btn prev";
-      prev.setAttribute("aria-label", "Previous photo");
+      prev.setAttribute("aria-label", this._t("prevPhoto"));
       prev.textContent = "‹";
 
       const next = document.createElement("button");
       next.type = "button";
       next.className = "carousel-btn next";
-      next.setAttribute("aria-label", "Next photo");
+      next.setAttribute("aria-label", this._t("nextPhoto"));
       next.textContent = "›";
 
       const dots = document.createElement("div");
