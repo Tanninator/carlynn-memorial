@@ -25,13 +25,13 @@
   .crest-mark { width: 34px; height: 34px; border: 1px solid var(--brass); display: grid; place-items: center; color: var(--brass-light); font-family: "Cormorant Garamond", serif; font-size: 16px; text-decoration: none; }
   .crest-text small { display: block; color: var(--brass); font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; }
   .crest-text strong { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 17px; letter-spacing: 0.04em; }
-  nav.links { display: flex; gap: 26px; }
-  nav.links a { color: var(--ivory-soft); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+  nav.links { display: flex; gap: 20px; }
+  nav.links a { color: var(--ivory-soft); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
   nav.links a:hover { color: var(--brass-light); }
   nav.links a[aria-current="page"] { color: var(--brass-light); }
   .nav-toggle { display: none; }
   .topbar-inner { position: relative; z-index: 100; }
-  .topbar-right { display: flex; align-items: center; gap: 24px; }
+  .topbar-right { display: flex; align-items: center; gap: 18px; }
   .rsvp-open { display: inline-flex; align-items: center; padding: 9px 16px; cursor: pointer; background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); font-family: "Inter", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: filter 0.2s ease, transform 0.2s ease; }
   .rsvp-open:hover { filter: brightness(1.07); transform: translateY(-1px); color: var(--navy-deep); }
   /* Secondary "Support" button — outline style that sits beside the RSVP button. */
@@ -86,11 +86,10 @@
   .svc-value { font-family: "Cormorant Garamond", serif; font-size: 24px; color: var(--ivory); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
   @media (max-width: 600px) { .svc-row { grid-template-columns: 1fr; gap: 6px; } }
 
-  .svc-subhead { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(28px, 4vw, 40px); color: var(--ivory); text-align: center; margin: 72px 0 8px; }
-  .svc-subhead em { font-style: italic; color: var(--brass-light); font-weight: 400; }
-  .svc-intro { text-align: center; color: var(--ivory-soft); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 19px; max-width: 560px; margin: 0 auto 32px; line-height: 1.5; }
-  .svc-itinerary .svc-value { font-size: 20px; line-height: 1.5; }
-  .svc-itinerary .svc-note { font-style: italic; color: var(--brass-light); }
+  .svc-schedule { display: block; }
+  .svc-time-item { display: block; font-size: 19px; line-height: 1.45; }
+  .svc-time-item + .svc-time-item { margin-top: 12px; }
+  .svc-time-item b { color: var(--brass-light); font-weight: 500; }
 
   .svc-cta { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 48px; }
   .svc-cta a { display: inline-block; padding: 15px 42px; background: var(--brass); color: var(--navy-deep); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; transition: filter 0.2s ease; }
@@ -145,14 +144,11 @@
   <div class="svc-details">
       <div class="svc-row"><span class="svc-label" data-i18n-fr="Lieu" data-i18n-zh="地点">Location</span><span class="svc-value">Valley Presbyterian Church<br>945 Portola Rd, Portola Valley, CA 94028</span></div>
     <div class="svc-row"><span class="svc-label" data-i18n-fr="Date" data-i18n-zh="日期">Date</span><span class="svc-value" data-i18n-fr="Samedi 25 juillet 2026" data-i18n-zh="2026年7月25日 星期六">Saturday, July 25, 2026</span></div>
-    <div class="svc-row"><span class="svc-label" data-i18n-fr="Heure" data-i18n-zh="时间">Time</span><span class="svc-value" data-i18n-fr="10 h (heure du Pacifique)" data-i18n-zh="上午10点（太平洋时间）">10 AM PST</span></div>
-  </div>
-  <h2 class="svc-subhead" data-i18n-fr="Déroulé de la <em>matinée</em>" data-i18n-zh="当天<em>流程</em>">The <em>itinerary</em></h2>
-  <p class="svc-intro" data-i18n-fr="Rejoignez-nous le matin du samedi 25 juillet pour célébrer la vie de Carli." data-i18n-zh="诚邀您于7月25日星期六上午与我们一同缅怀卡莉的一生。">Join us the morning of Saturday, July 25 to celebrate Carli&rsquo;s life.</p>
-  <div class="svc-details svc-itinerary">
-    <div class="svc-row"><span class="svc-label">10 AM</span><span class="svc-value" data-i18n-fr="Station artistique en hommage à Carli et viennoiseries, à l&rsquo;extérieur et dans le sanctuaire" data-i18n-zh="卡莉纪念艺术站及糕点，于圣所内外">Carli Celebration Art Station + pastries, outside and in the sanctuary</span></div>
-    <div class="svc-row"><span class="svc-label">11 AM</span><span class="svc-value" data-i18n-fr="Célébration de la vie de Carli, dans le sanctuaire" data-i18n-zh="卡莉追思会，于圣所内">Carli Celebration of Life, in the sanctuary</span></div>
-    <div class="svc-row"><span class="svc-label" data-i18n-fr="Déjeuner" data-i18n-zh="午餐">Lunch</span><span class="svc-value" data-i18n-fr="Restez pour le déjeuner — Carli adorait quand nous déjeunions après l&rsquo;église&nbsp;!" data-i18n-zh="请留步共进午餐——卡莉最喜欢我们在礼拜后一起吃午餐！">Stay for lunch &mdash; Carli loved when we had lunch after church!</span></div>
+    <div class="svc-row"><span class="svc-label" data-i18n-fr="Heure" data-i18n-zh="时间">Time</span><span class="svc-value svc-schedule">
+      <span class="svc-time-item"><b>10 AM</b> &mdash; <span data-i18n-fr="Station artistique en hommage à Carli et viennoiseries, à l&rsquo;extérieur et dans le sanctuaire" data-i18n-zh="卡莉纪念艺术站及糕点，于圣所内外">Carli Celebration Art Station + pastries, outside and in the sanctuary</span></span>
+      <span class="svc-time-item"><b>11 AM</b> &mdash; <span data-i18n-fr="Célébration de la vie de Carli, dans le sanctuaire" data-i18n-zh="卡莉追思会，于圣所内">Carli Celebration of Life, in the sanctuary</span></span>
+      <span class="svc-time-item"><b data-i18n-fr="Déjeuner" data-i18n-zh="午餐">Lunch</b> &mdash; <span data-i18n-fr="Restez pour le déjeuner — Carli adorait quand nous déjeunions après l&rsquo;église&nbsp;!" data-i18n-zh="请留步共进午餐——卡莉最喜欢我们在礼拜后一起吃午餐！">Stay for lunch, Carli loved when we had lunch after church!</span></span>
+    </span></div>
   </div>
 
   <div class="svc-cta">
