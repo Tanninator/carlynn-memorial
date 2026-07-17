@@ -288,7 +288,7 @@ button.submit:disabled { opacity: 0.65; cursor: not-allowed; }
           <label class="fld">
             <span>Notes <span class="opt">(optional)</span></span>
             <textarea class="notes" name="notes" rows="3" maxlength="1000"
-                      placeholder="I need help with childcare, if possible"
+                      placeholder="Questions, childcare needs, or any other comments."
                       ${isSubmitting ? "disabled" : ""}>${escapeHtml(this._pendingNotes ?? "")}</textarea>
           </label>
 
