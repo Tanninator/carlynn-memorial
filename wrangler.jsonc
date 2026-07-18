@@ -30,23 +30,12 @@
 			"database_name": "carlynn-rsvps",
 			"database_id": "cc43dac3-e2fa-4af1-9dfc-9bd3b07f632a",
 			"migrations_dir": "migrations"
-		},
-		{
-			"binding": "carlynn_rsvps",
-			"database_name": "carlynn-rsvps",
-			"database_id": "cc43dac3-e2fa-4af1-9dfc-9bd3b07f632a",
-			"remote": true
 		}
 	],
 	"r2_buckets": [
 		{
 			"binding": "MEDIA",
 			"bucket_name": "carlynn-lanterns"
-		},
-		{
-			"bucket_name": "carlynn-lanterns",
-			"binding": "carlynn_lanterns",
-			"remote": true
 		}
 	]
 }
