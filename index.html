@@ -327,16 +327,16 @@
   .lantern-field > .lanterns { background: transparent; }
   .lantern-field > .lanterns, .lantern-field > footer.foot { position: relative; z-index: 1; }
   .lantern-field > footer.foot { background: transparent; }
-  .lantern-flutter .fl { top: 108%; bottom: auto; will-change: top, opacity; animation-name: lantern-rise; }
+  .lantern-flutter .fl { top: auto; bottom: auto; will-change: transform, opacity; animation-name: lantern-rise; }
   .lantern-flutter .fl-in { animation-name: lantern-sway; }
   .lantern-flutter .is-lantern svg { fill: #e79a45; filter: drop-shadow(0 0 6px rgba(240,160,80,0.65)); }
   .lantern-flutter .is-lantern .lantern-glow { fill: #ffd79a; }
   .lantern-flutter .is-lantern .lantern-cap { fill: var(--brass-deep); }
   @keyframes lantern-rise {
-    0%   { top: 108%; opacity: 0; }
+    0%   { transform: translateY(40vh);   opacity: 0; }
     8%   { opacity: var(--fl-op, 0.75); }
     90%  { opacity: var(--fl-op, 0.75); }
-    100% { top: -12%;  opacity: 0; }
+    100% { transform: translateY(-140vh); opacity: 0; }
   }
   @keyframes lantern-sway {
     from { transform: translateX(-7px) rotate(-4deg); }
@@ -697,6 +697,9 @@
     var outer = document.createElement("span");
     outer.className = "fl is-lantern";
     outer.style.left = (Math.random() * 100).toFixed(2) + "%";
+    // Scatter vertically across the (tall) field; each lantern then drifts a
+    // fixed viewport-relative distance, so speed is independent of page length.
+    outer.style.top = (Math.random() * 100).toFixed(2) + "%";
     outer.style.width = size.toFixed(1) + "px";
     outer.style.height = (size * 1.25).toFixed(1) + "px";
     outer.style.animationDuration = dur.toFixed(2) + "s";
