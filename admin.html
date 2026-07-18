@@ -329,12 +329,21 @@
 
   function updateStats() {
     if (activeTab === "rsvps" && rsvpData) {
-      const totalParties = Number(rsvpData?.total_parties) || (rsvpData.rsvps || []).length;
+      const rsvps = Array.isArray(rsvpData.rsvps) ? rsvpData.rsvps : [];
+      const totalParties = Number(rsvpData?.total_parties) || rsvps.length;
       const totalAttendees = Number(rsvpData?.total_attendees) || 0;
-      // both values coerced via Number above, so innerHTML is safe
+      let inPerson = 0;
+      let virtual = 0;
+      for (const r of rsvps) {
+        const size = Number(r.party_size) || 0;
+        if (r.attendance === "in_person") inPerson += size;
+        else if (r.attendance === "virtual") virtual += size;
+      }
+      // all values coerced via Number above, so innerHTML is safe
       statsEl.innerHTML =
         "<b>" + totalParties + "</b> parties · " +
-        "<b>" + totalAttendees + "</b> attendees";
+        "<b>" + totalAttendees + "</b> attendees " +
+        "(<b>" + inPerson + "</b> in person · <b>" + virtual + "</b> virtual)";
       exportBtn.classList.remove("hidden");
     } else if (activeTab === "lanterns" && lanternData) {
       const total = (lanternData.lanterns || []).length;
