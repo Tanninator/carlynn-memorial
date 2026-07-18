@@ -133,7 +133,8 @@
   .story-grid-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 32px 0; }
   .story-grid-row .cell { aspect-ratio: 1 / 1; border: 1px solid var(--brass); padding: 4px; background: var(--navy); }
   .story-grid-row .cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @media (max-width: 600px) { .story-grid-row { grid-template-columns: 1fr 1fr; } .story-grid-row .cell:nth-child(3) { grid-column: span 2; aspect-ratio: 16/9; } }
+  .story-grid-row.duo { grid-template-columns: repeat(2, 1fr); width: calc((100% - 20px) * 2 / 3 + 10px); margin-left: auto; margin-right: auto; }
+  @media (max-width: 600px) { .story-grid-row { grid-template-columns: 1fr 1fr; } .story-grid-row .cell:nth-child(3) { grid-column: span 2; aspect-ratio: 16/9; } .story-grid-row.duo { width: 100%; } }
 
   /* Birthday card photo pair (cover + interior, side by side) */
   .story-card-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 32px 0; }
@@ -184,8 +185,8 @@
     </nav>
     <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="cta-group">
-      <a href="https://gofund.me/aae105bef" target="_blank" rel="noopener" class="support-btn support-top" data-i18n-fr="Soutien" data-i18n-zh="支持">Support</a>
-      <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席">RSVP</a>
+      <a href="https://gofund.me/aae105bef" target="_blank" rel="noopener" class="support-btn support-top" data-i18n-fr="Soutien" data-i18n-zh="表达心意">Support</a>
+      <a href="index.html#rsvp" class="rsvp-open rsvp-top" data-i18n-zh="出席仪式">RSVP</a>
     </div>
     </div>
   </div>
@@ -203,7 +204,7 @@
 <section class="story-body">
 
   <article class="story-chapter">
-    <p class="lede" data-i18n-fr="Carli Wu est née le 10 septembre 2021, premier enfant bien-aimé de Cindy et Peter. Dès ses premiers jours, elle rayonnait de lumière &mdash; prompte à rire, à s&rsquo;émerveiller et à aimer. En quatre courtes années, elle est devenue ce qu&rsquo;il y avait de plus lumineux dans chaque pièce où elle entrait." data-i18n-zh="卡小粒·吴出生于2021年9月10日，是 Cindy 与 Peter 心爱的第一个孩子。从最初的日子起，她便浑身洋溢着光——爱笑、好奇，也满怀着爱。在她四年里，她成了她所踏入的每一个房间里最明亮的存在。">Carli Wu was born on September 10, 2021, the beloved first child of Cindy and Peter. From her earliest days she was full of light &mdash; quick to laugh, quick to wonder, and quick to love. In four short years she became the brightest part of every room she entered.</p>
+    <p class="lede" data-i18n-fr="Carli Wu est née le 10 septembre 2021, premier enfant bien-aimé de Cindy et Peter. Dès ses premiers jours, elle rayonnait de lumière &mdash; prompte à rire, à s&rsquo;émerveiller et à aimer. En quatre courtes années, elle est devenue ce qu&rsquo;il y avait de plus lumineux dans chaque pièce où elle entrait." data-i18n-zh="卡小粒吴悦晗出生于2021年9月10日，是 Cindy 与Peter心爱的第一个孩子。从她出生开始，她便浑身洋溢着亮光和爱——爱笑、好奇，眼睛深邃，可以看到人的心里。在她生命里的每一天，她在她所到之处都是最明亮的存在。">Carli Wu was born on September 10, 2021, the beloved first child of Cindy and Peter. From her earliest days she was full of light &mdash; quick to laugh, quick to wonder, and quick to love. In four short years she became the brightest part of every room she entered.</p>
     <figure class="story-fig">
       <img src="assets/carlynn-poppies.webp" alt="Carli walking down a garden path lined with poppies">
       <figcaption data-i18n-fr="À la poursuite de la lumière" data-i18n-zh="追逐光芒">Chasing the light</figcaption>
@@ -212,47 +213,68 @@
   </article>
 
   <article class="story-chapter">
-    <h3 data-i18n-fr="Une artiste née" data-i18n-zh="天生的艺术家">A Born Artist</h3>
-    <p data-i18n-fr="Plus que tout, Carli aimait créer. Un pinceau, un peu de peinture et une feuille blanche suffisaient à la plonger, heureuse, dans un monde bien à elle. La couleur fut son langage bien avant les mots, et elle le parlait couramment." data-i18n-zh="卡小粒最爱的事，莫过于动手创作。只要给她一支画笔、一些颜料和一张干净的纸，她便会欢欢喜喜地沉浸进属于自己的世界。远在学会说话之前，色彩就已是她的语言，而她说得无比流利。">More than anything, Carli loved to make things. Give her a brush, some paint, and a fresh sheet of paper and she would disappear happily into a world of her own. Color was her language long before words were, and she spoke it fluently.</p>
-    <figure class="story-fig">
-      <img src="assets/carlynn-cindy-painting.webp" alt="Carli and her mother Cindy painting together at an easel">
-      <figcaption data-i18n-fr="Au chevalet, avec Maman" data-i18n-zh="在画架旁，与妈妈一起">At the easel, with Mama</figcaption>
-    </figure>
-    <p data-i18n-fr="Ses tableaux ornent notre maison comme autant de petites fenêtres sur sa façon de voir le monde &mdash; lumineuse, audacieuse et sans peur." data-i18n-zh="她的画作挂在我们家中，宛如一扇扇小窗，让人得以窥见她眼中的世界——明亮、大胆、无所畏惧。">Her paintings hang in our home like little windows into the way she saw everything &mdash; bright, bold, and unafraid.</p>
-    <div class="story-grid-row">
-      <div class="cell"><img src="assets/art/thumb/17CED547-F9EE-487D-9B19-1A4884AE3DC6.jpg" alt="A painting by Carli"></div>
-      <div class="cell"><img src="assets/art/thumb/18DBD4AB-2E7B-4EF2-8AAC-AF9B431810D5.jpg" alt="A painting by Carli"></div>
-      <div class="cell"><img src="assets/art/thumb/2002885A-0BDE-4D9C-A897-7CD20B4066F2.jpg" alt="A painting by Carli"></div>
+    <h3 data-i18n-fr="Aventures du quotidien" data-i18n-zh="她眼里的世界">Everyday Adventures</h3>
+    <div data-i18n-fr="<p>Carli abordait le monde avec une curiosité grande ouverte. Elle adorait être dehors &mdash; les aires de jeux et les sentiers de randonnée, les fleurs sauvages et les vastes horizons, et chaque petite merveille croisée en chemin. Partout où sa famille allait, elle allait aussi, généralement quelques pas joyeux en avant.</p>" data-i18n-zh="<p>卡小粒以敞开的好奇心热爱这个世界。她喜欢待在户外——游乐场与登山步道、野花与海边沙滩。她最喜欢挖沙、挖土、挖木屑。两三岁的时候，她每天都从学校偷偷装满一口袋的木屑带回家来，弄的家里到处都是。后来我们在前院找到了一块石头叫Daddy石头，旁边一块小一点的叫Mommy石头，她带回来的木屑、石头、土和沙子便都有了家——她会把这些都放在Daddy石头旁边，成了每天放学进家门前小小的仪式。她最喜欢“家”这个概念，木屑和沙子也必须有家。</p>">
+      <p>Carli met the world with wide-open curiosity. She loved being outside &mdash; playgrounds and hiking trails, wildflowers and wide horizons, and every small wonder she could find along the way. Wherever her family went, she went too, usually a few happy steps ahead.</p>
     </div>
-  </article>
-
-  <article class="story-chapter">
-    <h3 data-i18n-fr="Aventures du quotidien" data-i18n-zh="日常的小冒险">Everyday Adventures</h3>
-    <p data-i18n-fr="Carli abordait le monde avec une curiosité grande ouverte. Elle adorait être dehors &mdash; les aires de jeux et les sentiers de randonnée, les fleurs sauvages et les vastes horizons, et chaque petite merveille croisée en chemin. Partout où sa famille allait, elle allait aussi, généralement quelques pas joyeux en avant." data-i18n-zh="卡小粒以敞开的好奇心迎接这个世界。她喜欢待在户外——游乐场与登山步道、野花与辽阔的天际，还有一路上她能发现的每一个小小惊喜。无论家人去往何处，她都同行，而且常常欢快地跑在前头几步。">Carli met the world with wide-open curiosity. She loved being outside &mdash; playgrounds and hiking trails, wildflowers and wide horizons, and every small wonder she could find along the way. Wherever her family went, she went too, usually a few happy steps ahead.</p>
     <div class="story-grid-row">
       <div class="cell"><img src="assets/carlynn-park.webp" alt="Carli sitting at a park on a sunny day"></div>
       <div class="cell"><img src="assets/cindy-carlynn-goldengate.webp" alt="Carli and her mother at a playground at dusk, the Golden Gate in the distance"></div>
       <div class="cell"><img src="assets/carlynn-vista.webp" alt="Carli held in her mother's arms overlooking a mountain vista"></div>
     </div>
+    <div data-i18n-zh="<p>卡小粒眼里的世界是安全的。她很小的时候就能去好朋友家过夜，愿意把自己交给任何人的拥抱。因为她知道她永远都在最爱她的爸爸妈妈的注视下，这个世界也带着对她深沉的善意和爱意。整个世界都是她的家。但她其实胆子没多大，爸爸叫她小胆兔兔。我们用很多的耐心浇灌她的勇气，等着它一点点长出来，而她也是带着越来越大的勇气，在她眼中这个美好的世界散发出越来越耀眼的光芒。</p>
+<p>她很小，但是她的爱似乎很大，是我们最向往的那种丰盛的爱。她爱她每一个娃娃，她爱她的床，她的碗，每一朵花，蜇过她的蜜蜂和最害怕的蜘蛛。她爱她遇见的每一个人，而且不会因为他们做过错的事情而停止爱他们。她知道人可以犯错——不但可以，她知道犯错是人类最正常不过的事情，甚至对此不以为然。她的爱很大，又很流动，被她流过的地方便都愈合了。</p>
+<p>她很会爱，也很会被爱——这是我们最羡慕她的地方。她是真的知道自己被深深爱着的，每一天都知道，毫无疑问地知道。她知道如何创造被爱，不管是抱住一个很毛的毛毯，还是索求她需要的拥抱。她被爱的样子真美。</p>
+<p>但她又是我见过最搞怪的小孩，疯的要命。但她大笑的声音好好听，会让再大的地方都觉得很满。也许这就是为什么小小的她消失以后，整个世界都空了。她深深地享受着她拥有的每一寸祝福。数不清有多少个晚上她大哭着入睡，就因为她不想结束这天——“我不想这个Day结束”是她另一句高频金句。她是真的把每一天都体验到极致的人，真的把每一天都当作最后一天而活却不自知。这样来看，她在任何时候离开，确实都是真的毫无遗憾。</p>"></div>
+    <div class="story-grid-row">
+      <div class="cell"><img src="assets/carlynn-upside-down.webp" alt="Carli mid-laugh, upside down on the bed"></div>
+      <div class="cell"><img src="assets/carlynn-strawberry.webp" alt="Carli with a whole strawberry in her mouth"></div>
+      <div class="cell"><img src="assets/carlynn-scarf-laugh.webp" alt="Carli laughing in a red scarf, a plush pony in her arms"></div>
+    </div>
+    <div data-i18n-zh="<p>卡小粒其实知道什么是死亡，也有比我们更纯的信仰。我们每天晚上一起祷告的时候，有时候会说到永远离开的朋友。她有时候会悲伤，有时候会心疼，但总会跟我确认，他们是否去到了上帝爸爸的旁边。我们会一起想象那里的样子，然后继续去说其他的事情。过一阵子她可能又会提起，就这样慢慢地度过。我想此刻她最想要告诉我的就是上帝爸爸身边到底是什么样的吧。她曾经说过我们给她的幸福是紫色的在肚子里会流动的水。不知道上帝爸爸给她的幸福是什么样的呢？</p>"></div>
     <!-- FAMILY: add a favorite trip, outing, or everyday moment here. -->
   </article>
 
   <article class="story-chapter">
-    <h3 data-i18n-fr="Sa famille" data-i18n-zh="她的家人">Her Family</h3>
-    <p data-i18n-fr="Durant sa dernière année, Carli est devenue la grande sœur du petit Leonardo &mdash; un rôle qu&rsquo;elle a embrassé avec une fierté tendre et farouche. Ses parents, Cindy et Peter, l&rsquo;aimaient sans mesure, et elle le leur rendait de tout son cœur." data-i18n-zh="在生命的最后一年，卡小粒成了小 Leonardo 的姐姐——她怀着温柔而炽烈的骄傲，全心投入这个角色。父母 Cindy 与 Peter 无尽地爱着她，而她也用整颗心回报着这份爱。">In her last year, Carli became a big sister to baby Leonardo &mdash; a role she took to with gentle, fierce pride. She was endlessly loved by her parents, Cindy and Peter, and she loved them back with her whole heart.</p>
-    <div class="story-card-photos">
-      <figure><img src="assets/family-hospital.webp" alt="Carli with her parents, welcoming newborn baby Leonardo in the hospital"></figure>
-      <figure><img src="assets/family-autumn.webp" alt="Cindy and Peter kissing their baby beneath golden autumn leaves"></figure>
-    </div>
+    <h3 data-i18n-fr="Une artiste née" data-i18n-zh="天生的艺术家">A Born Artist</h3>
+    <p data-i18n-fr="Plus que tout, Carli aimait créer. Un pinceau, un peu de peinture et une feuille blanche suffisaient à la plonger, heureuse, dans un monde bien à elle. La couleur fut son langage bien avant les mots, et elle le parlait couramment." data-i18n-zh="卡小粒很爱很爱画画。只要给她一支画笔、一些颜料和一张干净的纸，她便会欢欢喜喜地沉浸在属于自己的色彩世界。我们总会给她放上她画画时专属的音乐，再给她一杯最爱喝的饮料。她安静、享受，美好的作品就从笔尖流淌出来。但她最喜欢的还是和妈妈一起画画。妈妈其实不会画，画画是妈妈未曾实现的梦想，是因为卡小粒才敢提笔创作的。但在她眼里，妈妈的画是最好的，她的画也最好。而最最好的，一定是和妈妈一起创作的过程中色彩斑斓的爱意。">More than anything, Carli loved to make things. Give her a brush, some paint, and a fresh sheet of paper and she would disappear happily into a world of her own. Color was her language long before words were, and she spoke it fluently.</p>
     <figure class="story-fig">
-      <img src="assets/cindy-carlynn-sunset.webp" alt="Cindy holding Carli close at sunset">
-      <figcaption data-i18n-fr="Tout contre elle" data-i18n-zh="紧紧相拥">Held close</figcaption>
+      <img src="assets/carlynn-cindy-painting.webp" alt="Carli and her mother Cindy painting together at an easel">
+      <figcaption data-i18n-fr="Au chevalet, avec Maman" data-i18n-zh="在画架旁，与妈妈一起">At the easel, with Mama</figcaption>
     </figure>
+    <div data-i18n-fr="<p>Ses tableaux ornent notre maison comme autant de petites fenêtres sur sa façon de voir le monde &mdash; lumineuse, audacieuse et sans peur.</p>" data-i18n-zh="<p>她的画作挂在我们家中，宛如一扇扇小窗，让人得以窥见她眼中的世界——明亮、大胆、无所畏惧。她的画笔是自由的。妈妈又一次问她，你拿起的颜色是随机的还是你想好的呢？她斩钉截铁地回答：我想好的。她知道她想要的颜色，她知道她的表达。她在妈妈忍不住指手画脚的时候，总会清楚地告诉她：这是我的作品，我想怎么画都可以。</p>
+<p>这就是我们自由而自信的小画家。其实爸爸妈妈从来不知道如何评估她的天赋，但如果真如有些画家朋友说的那样——“热爱就是天赋”——那她一定是最有天赋的画家。</p>">
+      <p>Her paintings hang in our home like little windows into the way she saw everything &mdash; bright, bold, and unafraid.</p>
+    </div>
+    <div class="story-grid-row">
+      <div class="cell"><img src="assets/art/thumb/_DSC4280.jpg" alt="A painting by Carli"></div>
+      <div class="cell"><img src="assets/art/thumb/IMG_2674.jpg" alt="A painting by Carli"></div>
+      <div class="cell"><img src="assets/art/thumb/IMG_8714.jpg" alt="A painting by Carli"></div>
+    </div>
   </article>
 
   <article class="story-chapter">
-    <h3 data-i18n-fr="À jamais notre petite fille" data-i18n-zh="永远是我们的女孩">Always Our Girl</h3>
-    <p data-i18n-fr="Quatre ans et demi, c&rsquo;était bien trop peu. Mais chacune de ces années fut un cadeau, et chaque tableau, chaque rire et chaque petite merveille qu&rsquo;elle nous a laissés est une part d&rsquo;elle que nous gardons pour toujours." data-i18n-zh="四年半，远远不够。但那些岁月里的每一年都是一份礼物；她留下的每一幅画、每一串笑声、每一个小小的惊喜，都是我们得以永远珍藏的、属于她的一部分。">Four and a half years was not nearly enough. But every one of those years was a gift, and every painting, every laugh, and every small wonder she left behind is a part of her we get to keep.</p>
+    <h3 data-i18n-fr="Sa famille" data-i18n-zh="她的家人">Her Family</h3>
+    <div data-i18n-fr="<p>Durant sa dernière année, Carli est devenue la grande sœur du petit Leonardo &mdash; un rôle qu&rsquo;elle a embrassé avec une fierté tendre et farouche. Ses parents, Cindy et Peter, l&rsquo;aimaient sans mesure, et elle le leur rendait de tout son cœur.</p>" data-i18n-zh="<p>卡小粒每天都会说的三句话是“我太爱我的Family了”，“妈妈我爱你爱得都没有办法了”，和“Daddy daddy I love you”。这几天我们在收拾卡小粒随手乱扔的涂鸦，才发现每一张的背面都用彩虹的颜色写着I love you Cindy / Peter / Leo，有些我们知道，有些我们没看过。我想她是真的没办法了吧——满心的爱真的不知道要怎么办，只好在任何有机会的时候都浅浅写一笔她深深的爱意。在这个家里，妈妈给她的是极致的用心，却深深责备自己太过窒息；爸爸给她的是丰沛的松弛，却深深责备自己做的不够。但我们知道，卡小粒眼里的爸爸和妈妈给的都是最好的。</p>">
+      <p>In her last year, Carli became a big sister to baby Leonardo &mdash; a role she took to with gentle, fierce pride. She was endlessly loved by her parents, Cindy and Peter, and she loved them back with her whole heart.</p>
+    </div>
+    <div class="story-grid-row">
+      <div class="cell"><img src="assets/carlynn-peter-reading.webp" alt="Carli and her father Peter reading a picture book together in bed"></div>
+      <div class="cell"><img src="assets/family-newborn.webp" alt="Cindy and Peter cradling their newborn at the hospital"></div>
+      <div class="cell"><img src="assets/carlynn-cindy-apple.webp" alt="Carli and her mother Cindy sharing a bite of the same apple"></div>
+    </div>
+    <div data-i18n-zh="<p>去年三月，卡小粒成为一个姐姐——雷小欧的姐姐。她怀着温柔而期待，小心翼翼地学习这个角色。她的爱很真实，不夸大。她有她的嫉妒，有她的胆怯，有她的尴尬和迟疑，有她对新秩序的不确认。我们很珍惜她的真实——珍惜她在学习责任的过程中没有忘记自己，更珍惜她耐心地等待对弟弟的爱自然地生长。雷小欧的眼里满满的都是姐姐，卡小粒知道。这几天整理视频和照片，我们才发现她在看不见的角落偷偷照顾弟弟的很多画面，心里觉得很甜美，很感恩。她对弟弟一点点靠近，一点点亲昵的样子，真像一朵慢慢绽放的花。</p>"></div>
+    <div class="story-grid-row duo">
+      <div class="cell"><img src="assets/carlynn-leo-newborn.webp" alt="Carli beaming on the bed beside newborn Leo"></div>
+      <div class="cell"><img src="assets/carlynn-leo-hug.webp" alt="Carli hugging her little brother Leo by the alphabet wall"></div>
+    </div>
+    <div data-i18n-zh="<p>她爱她的Family。我们从来没有被一个人这样全然地爱过。从来没有被一个人这样懂过。而体验过被这样爱过和懂过之后，我们的灵魂便被永远地改变了。</p>"></div>
+  </article>
+
+  <article class="story-chapter">
+    <h3 data-i18n-fr="À jamais notre petite fille" data-i18n-zh="永远是我们的">Always Our Girl</h3>
+    <p data-i18n-fr="Quatre ans et demi, c&rsquo;était bien trop peu. Mais chacune de ces années fut un cadeau, et chaque tableau, chaque rire et chaque petite merveille qu&rsquo;elle nous a laissés est une part d&rsquo;elle que nous gardons pour toujours." data-i18n-zh="四年半，远远不够。但那些岁月里发生过的每一帧回忆，都是我们得以永远珍藏的、永远属于她也属于我们生命的一部分。">Four and a half years was not nearly enough. But every one of those years was a gift, and every painting, every laugh, and every small wonder she left behind is a part of her we get to keep.</p>
+    <div data-i18n-zh="<p>这些天有人说，天堂的时间与地上的时间是不同的——实际上天堂是没有时间的，时间是困住世界的维度。所以在卡小粒的新世界里，她已经跟我们在一起了，而且自始至终都在一起。地上的时间会缓慢而痛苦地流过我们，每天地想念和期待。终于团聚的时候，再告诉你在这漫长的日子里，我们每一个痛苦的、快乐的的故事。</p>"></div>
     <p data-i18n-fr="Nous t&rsquo;aimons, Carli. Pour toujours." data-i18n-zh="我们爱你，卡小粒。永远爱你。">We love you, Carli. We always will.</p>
     <figure class="story-fig">
       <img src="assets/carlynn-portrait.webp" alt="Portrait of Carli, laughing">
@@ -274,7 +296,7 @@
     <a href="grief-resources.html" data-i18n-fr="Ressources de deuil" data-i18n-zh="哀伤支持">Grief Resources</a>
   </div>
   <div class="foot-rule"></div>
-  <div class="foot-copy" data-i18n-fr="En mémoire affectueuse · La famille de Carli · MMXXVI" data-i18n-zh="深切缅怀 · 卡小粒的家人 · MMXXVI">In Loving Memory · Carli's Family · MMXXVI</div>
+  <div class="foot-copy" data-i18n-fr="En mémoire affectueuse · MMXXVI" data-i18n-zh="深切缅怀 · MMXXVI">In Loving Memory · MMXXVI</div>
 </footer>
 
 <script>
