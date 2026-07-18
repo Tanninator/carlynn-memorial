@@ -419,13 +419,14 @@ async function handleListLanterns(env) {
     ).all();
     rows = result.results ?? [];
     if (rows.length) {
-      const placeholders = rows.map(() => "?").join(",");
+      // Fetch all media in one query and group in JS. We already return every
+      // lantern, so an unfiltered read is equivalent to WHERE lantern_id IN (...)
+      // while avoiding D1's ~100 bound-variable cap as the wall keeps growing.
       const mediaResult = await env.DB.prepare(
         `SELECT lantern_id, position, media_key, media_type
            FROM lantern_media
-          WHERE lantern_id IN (${placeholders})
           ORDER BY lantern_id, position`
-      ).bind(...rows.map((r) => r.id)).all();
+      ).all();
       mediaRows = mediaResult.results ?? [];
     } else {
       mediaRows = [];
